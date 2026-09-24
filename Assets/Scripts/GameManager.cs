@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public Button[] responseButtons;   // 4 buttons
 
     [Header("End")]
+    public ResponseLogger logger;
     public Button restartButton;
 
     // Placeholder Chapter 1 content (moves into a ChapterData file later)
@@ -132,9 +133,7 @@ public class GameManager : MonoBehaviour
         string choiceText = partnerChoice >= 0 ? choiceLabels[partnerChoice] : "none";
 
         // Temporary log. ResponseLogger will write this to a file later.
-        Debug.Log("LOG chapter=1 | choice=" + choiceText +
-                  " | response=" + responseLabels[index] +
-                  " | ms=" + ms);
+        logger.Log(1, "SelfHour", choiceText, responseLabels[index], ms);
 
         ShowOnly(endPanel);
     }
