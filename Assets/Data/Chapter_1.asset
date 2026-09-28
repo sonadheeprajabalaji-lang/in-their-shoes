@@ -22,7 +22,23 @@ MonoBehaviour:
     mind: 0.03
     feelingLikeAPerson: 0.02
     mask: 0.03
-  choices: []
-  choiceTriggerTaskId: 
-  responses: []
-  selfHourCueTaskId: 
+  choices:
+  - label: 'Mute and step away '
+    multipliers:
+      body: 1
+      mind: 1.6
+      feelingLikeAPerson: 1
+      mask: 0.4
+  - label: Push through the call
+    multipliers:
+      body: 1
+      mind: 0.6
+      feelingLikeAPerson: 1
+      mask: 1.6
+  choiceTriggerTaskId: laptop
+  responses:
+  - label: Make something she can eat
+  - label: Ask how she's really feeling
+  - label: Clear it away quietly
+  - label: Carry on as normal
+  selfHourCueTaskId: coffee
