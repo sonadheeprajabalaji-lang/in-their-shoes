@@ -4,21 +4,20 @@ using UnityEngine.UI;
 using TMPro;
 
 // Runs a chapter's flow, driven by a ChapterData asset:
-// Content warning -> Partner Hour (roam the room, then a choice popup at
-// the trigger task) -> Self Hour (roam the same room, only the seeded cue
-// task is unlocked, interacting with it opens the response popup) -> End.
+// Content warning -> Partner Hour (roam the room; holding the choice
+// trigger task to completion or letting go early decides the choice) ->
+// Self Hour (roam the same room, only the seeded cue task is unlocked) ->
+// End.
 public class GameManager : MonoBehaviour
 {
     [Header("Chapter data")]
-    [Tooltip("Drag the chapter's ChapterData asset here")]
     public ChapterData chapterData;
 
     [Header("Panels")]
     public GameObject contentWarningPanel;
-    public GameObject partnerHourPanel;   // the room + meters HUD, visible for the whole Partner Hour phase
-    public GameObject choicePopup;        // shown only once the choice trigger task is interacted with
-    public GameObject selfHourPanel;      // the room, visible for the whole Self Hour phase
-    public GameObject responsePanel;      // shown only once the seeded cue task is interacted with
+    public GameObject partnerHourPanel;   // the room + meters HUD
+    public GameObject selfHourPanel;      // the room
+    public GameObject responsePanel;      // shown once the seeded cue task is interacted with
     public GameObject endPanel;
 
     [Header("Content warning")]
@@ -29,8 +28,7 @@ public class GameManager : MonoBehaviour
     [Header("Partner Hour")]
     public MeterController meters;
     public PartnerHourController partnerHourController;
-    public Button choiceAButton;
-    public Button choiceBButton;
+    public TaskChecklistUI checklist;
 
     [Header("Self Hour")]
     public SelfHourController selfHourController;
@@ -49,10 +47,9 @@ public class GameManager : MonoBehaviour
         continueButton.onClick.AddListener(StartPartnerHour);
         restartButton.onClick.AddListener(ShowContentWarning);
 
-        partnerHourController.ChoiceTriggerReached += OnChoiceTriggerReached;
+        partnerHourController.ChoiceMade += OnChoiceMade;
         selfHourController.CueInteracted += OnCueInteracted;
 
-        SetUpChoiceButtons();
         SetUpResponseButtons();
 
         if (contentWarningText != null)
@@ -61,26 +58,6 @@ public class GameManager : MonoBehaviour
         }
 
         ShowContentWarning();
-    }
-
-    void SetUpChoiceButtons()
-    {
-        // Supports exactly two Partner Hour choices, matching choiceAButton/choiceBButton
-        // in the scene. A chapter needing more than two would need both this method and
-        // the scene's choice popup extended.
-        var choices = chapterData.choices;
-
-        choiceAButton.onClick.AddListener(() => OnPartnerChoice(0));
-        if (choices != null && choices.Length > 0)
-        {
-            choiceAButton.GetComponentInChildren<TMP_Text>(true).text = choices[0].label;
-        }
-
-        choiceBButton.onClick.AddListener(() => OnPartnerChoice(1));
-        if (choices != null && choices.Length > 1)
-        {
-            choiceBButton.GetComponentInChildren<TMP_Text>(true).text = choices[1].label;
-        }
     }
 
     void SetUpResponseButtons()
@@ -106,7 +83,6 @@ public class GameManager : MonoBehaviour
     void ShowContentWarning()
     {
         ShowOnly(contentWarningPanel);
-        choicePopup.SetActive(false);
         responsePanel.SetActive(false);
     }
 
@@ -114,23 +90,30 @@ public class GameManager : MonoBehaviour
     {
         partnerChoice = -1;
         responded = false;
-        choiceAButton.interactable = true;
-        choiceBButton.interactable = true;
-        choicePopup.SetActive(false);
 
         ShowOnly(partnerHourPanel);
         meters.Configure(chapterData.baseDrain);
         meters.StartDraining();
         partnerHourController.BeginRoaming(chapterData);
+        checklist.BuildList();
         StartCoroutine(PartnerHourTimer());
     }
 
     IEnumerator PartnerHourTimer()
     {
-        yield return new WaitForSeconds(chapterData.partnerHourSeconds);
+        // Partner Hour normally ends because a meter hits zero, not
+        // because time runs out. partnerHourSeconds is a generous safety
+        // cap, not the usual way the hour ends.
+        float elapsed = 0f;
+        while (elapsed < chapterData.partnerHourSeconds && !meters.IsDepleted)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
         meters.StopDraining();
         partnerHourController.EndRoaming();
-        choicePopup.SetActive(false);
+        checklist.Clear();
         StartSelfHour();
     }
 
@@ -143,22 +126,13 @@ public class GameManager : MonoBehaviour
 
     // ---------- Player actions ----------
 
-    void OnChoiceTriggerReached()
+    void OnChoiceMade(int choice)
     {
-        choicePopup.SetActive(true);
-    }
-
-    void OnPartnerChoice(int choice)
-    {
-        if (partnerChoice != -1) return;   // only one choice allowed
+        if (partnerChoice != -1) return;   // first outcome is final
         if (chapterData.choices == null || choice >= chapterData.choices.Length) return;
 
         partnerChoice = choice;
         meters.ApplyChoice(chapterData.choices[choice]);
-        choiceAButton.interactable = false;
-        choiceBButton.interactable = false;
-        choicePopup.SetActive(false);
-        partnerHourController.ResumeAfterChoice();
     }
 
     void OnCueInteracted()

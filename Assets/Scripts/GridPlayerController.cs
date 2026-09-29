@@ -26,6 +26,10 @@ public class GridPlayerController : MonoBehaviour
     // screen so the player can't wander off mid-decision.
     public bool InputLocked { get; set; }
 
+    // True while the player is sliding between two cells. Interactor uses
+    // this to hide the prompt mid-step.
+    public bool IsMoving => moving;
+
     SpriteRenderer sr;
     bool moving;
     Vector3 moveStart;

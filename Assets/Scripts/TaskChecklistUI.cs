@@ -1,0 +1,99 @@
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+// A simple on-screen checklist of the BAU tasks in the room (dishes,
+// stove, etc), separate from the main/hold task. Ticks each one off as
+// the player completes it. Rows are built entirely at runtime, so there
+// is nothing to hand-build in the Editor beyond an empty RectTransform to
+// hold them, assigned to Container below.
+//
+// The main task isn't included, since it already has its own hold-progress
+// prompt above it in the world; showing it here too would be redundant.
+public class TaskChecklistUI : MonoBehaviour
+{
+    [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where checklist rows will be created.")]
+    public RectTransform container;
+
+    public float rowFontSize = 20f;
+    public Color pendingColor = Color.white;
+    public Color doneColor = new Color(0.6f, 0.6f, 0.6f);
+
+    readonly Dictionary<InteractableTask, TMP_Text> rows = new Dictionary<InteractableTask, TMP_Text>();
+
+    void Awake()
+    {
+        if (container.GetComponent<VerticalLayoutGroup>() == null)
+        {
+            var layout = container.gameObject.AddComponent<VerticalLayoutGroup>();
+            layout.childForceExpandHeight = false;
+            layout.childForceExpandWidth = false;
+            layout.childAlignment = TextAnchor.UpperLeft;
+            layout.spacing = 4f;
+        }
+        if (container.GetComponent<ContentSizeFitter>() == null)
+        {
+            var fitter = container.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
+    }
+
+    // Called by GameManager when Partner Hour starts.
+    public void BuildList()
+    {
+        Clear();
+
+        foreach (var task in InteractableTask.All)
+        {
+            if (task.RequiresHold) continue; // the main task isn't on this checklist
+
+            var row = CreateRow(task);
+            rows[task] = row;
+            task.Interacted += OnTaskDone;
+        }
+    }
+
+    // Called by GameManager when Partner Hour ends.
+    public void Clear()
+    {
+        foreach (var kvp in rows)
+        {
+            kvp.Key.Interacted -= OnTaskDone;
+        }
+        rows.Clear();
+
+        for (int i = container.childCount - 1; i >= 0; i--)
+        {
+            Destroy(container.GetChild(i).gameObject);
+        }
+    }
+
+    TMP_Text CreateRow(InteractableTask task)
+    {
+        var go = new GameObject("Checklist_" + task.taskId);
+        go.transform.SetParent(container, false);
+
+        var text = go.AddComponent<TextMeshProUGUI>();
+        text.text = Label(task, false);
+        text.fontSize = rowFontSize;
+        text.color = pendingColor;
+
+        return text;
+    }
+
+    void OnTaskDone(InteractableTask task)
+    {
+        if (!rows.TryGetValue(task, out var row)) return;
+
+        row.text = Label(task, true);
+        row.color = doneColor;
+        row.fontStyle |= FontStyles.Strikethrough;
+    }
+
+    string Label(InteractableTask task, bool done)
+    {
+        string name = string.IsNullOrEmpty(task.displayName) ? task.gameObject.name : task.displayName;
+        return (done ? "\u2611 " : "\u2610 ") + name;
+    }
+}

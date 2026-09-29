@@ -468,6 +468,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
   player: {fileID: 153307980}
+  promptFontSize: 3
+  promptHeight: 0.9
+  promptColor: {r: 1, g: 1, b: 1, a: 1}
+  holdingColor: {r: 1, g: 0.7, b: 0.3, a: 1}
 --- !u!114 &153307980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,6 +745,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartnerHourController
   player: {fileID: 153307980}
+  interactor: {fileID: 0}
+  meters: {fileID: 0}
 --- !u!4 &193147801
 Transform:
   m_ObjectHideFlags: 0
@@ -864,7 +870,7 @@ RectTransform:
   m_Father: {fileID: 470821623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -940,11 +946,11 @@ RectTransform:
   - {fileID: 1742123391}
   m_Father: {fileID: 1724499133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 450, y: -250}
-  m_SizeDelta: {x: 500, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 350, y: 50}
+  m_SizeDelta: {x: 450, y: 100}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &346684709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,7 +1325,7 @@ RectTransform:
   m_Father: {fileID: 608805902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1653,8 +1659,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: stove
+  displayName: 
   promptText: Press E
   locked: 0
+  cost:
+    body: 0.05
+    mind: 0.3
+    feelingLikeAPerson: 0.1
+    mask: 0.2
+  holdDuration: 0
+  holdingLabel: Holding
 --- !u!212 &481779001
 SpriteRenderer:
   serializedVersion: 2
@@ -2655,8 +2669,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: dishes
+  displayName: 
   promptText: Press E
   locked: 0
+  cost:
+    body: 0.3
+    mind: 0.05
+    feelingLikeAPerson: 0.1
+    mask: 0.1
+  holdDuration: 0
+  holdingLabel: Holding
 --- !u!212 &710413125
 SpriteRenderer:
   serializedVersion: 2
@@ -2871,7 +2893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &773528092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3175,7 +3197,7 @@ RectTransform:
   m_Father: {fileID: 1491763888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3293,6 +3315,98 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861445471}
   m_CullTransparentMesh: 1
+--- !u!1 &875275539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 875275540}
+  - component: {fileID: 875275543}
+  - component: {fileID: 875275542}
+  - component: {fileID: 875275541}
+  m_Layer: 5
+  m_Name: Checklist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &875275540
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875275539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1023543075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 100}
+  m_SizeDelta: {x: 300, y: 400}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &875275541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875275539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9383f32fc0b64a28a89e339090c231cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskChecklistUI
+  container: {fileID: 875275540}
+  rowFontSize: 20
+  pendingColor: {r: 1, g: 1, b: 1, a: 1}
+  doneColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+--- !u!114 &875275542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875275539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &875275543
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875275539}
+  m_CullTransparentMesh: 1
 --- !u!1 &961546574
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,11 +3441,11 @@ RectTransform:
   - {fileID: 1865418549}
   m_Father: {fileID: 1724499133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: -250}
-  m_SizeDelta: {x: 500, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -350, y: 50}
+  m_SizeDelta: {x: 450, y: 100}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &961546576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3506,7 +3620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1023543075
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3523,6 +3637,7 @@ RectTransform:
   - {fileID: 1076980671}
   - {fileID: 1801388636}
   - {fileID: 1724499133}
+  - {fileID: 875275540}
   m_Father: {fileID: 106200373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3605,7 +3720,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -100}
-  m_SizeDelta: {x: 500, y: 342}
+  m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1169294742
 GameObject:
@@ -3951,11 +4066,11 @@ RectTransform:
   - {fileID: 76360708}
   m_Father: {fileID: 1076980671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 54.000015}
-  m_SizeDelta: {x: 500, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 300, y: 30}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1374651042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4331,7 +4446,7 @@ RectTransform:
   m_Father: {fileID: 1169294743}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4487,8 +4602,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: laptop
+  displayName: 
   promptText: Press E
   locked: 0
+  cost:
+    body: 0
+    mind: 0
+    feelingLikeAPerson: 0
+    mask: 0
+  holdDuration: 10
+  holdingLabel: Hold E to proceed with meeting
 --- !u!212 &1496638931
 SpriteRenderer:
   serializedVersion: 2
@@ -4828,7 +4951,6 @@ MonoBehaviour:
   chapterData: {fileID: 11400000, guid: d140858e782044b5480657541e74313d, type: 2}
   contentWarningPanel: {fileID: 758877887}
   partnerHourPanel: {fileID: 1023543074}
-  choicePopup: {fileID: 1724499132}
   selfHourPanel: {fileID: 784379527}
   responsePanel: {fileID: 1577188519}
   endPanel: {fileID: 861445471}
@@ -4836,8 +4958,7 @@ MonoBehaviour:
   contentWarningText: {fileID: 1526612700}
   meters: {fileID: 1549917790}
   partnerHourController: {fileID: 1549917789}
-  choiceAButton: {fileID: 961546576}
-  choiceBButton: {fileID: 346684709}
+  checklist: {fileID: 875275541}
   selfHourController: {fileID: 1549917791}
   responseButtons:
   - {fileID: 1902162122}
@@ -4887,6 +5008,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartnerHourController
   player: {fileID: 153307980}
+  interactor: {fileID: 153307979}
+  meters: {fileID: 1549917790}
 --- !u!114 &1549917790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5111,7 +5234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1724499133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5340,11 +5463,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1023543075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 568, y: 271.28}
-  m_SizeDelta: {x: 1200, y: 110.5538}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 150, y: -100}
+  m_SizeDelta: {x: 500, y: 350}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1801388637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5374,8 +5497,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4293322470
+  m_fontColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5616,11 +5739,11 @@ RectTransform:
   - {fileID: 2037483897}
   m_Father: {fileID: 1076980671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -42.999985}
-  m_SizeDelta: {x: 500, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 300, y: 30}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1885567579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6009,8 +6132,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: coffee
+  displayName: 
   promptText: Press E
   locked: 0
+  cost:
+    body: 0.05
+    mind: 0.3
+    feelingLikeAPerson: 0.1
+    mask: 0.2
+  holdDuration: 0
+  holdingLabel: Holding
 --- !u!212 &1959020084
 SpriteRenderer:
   serializedVersion: 2
@@ -6518,11 +6649,11 @@ RectTransform:
   - {fileID: 2009770523}
   m_Father: {fileID: 1076980671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 156.00008}
-  m_SizeDelta: {x: 500, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 150}
+  m_SizeDelta: {x: 300, y: 30}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2130084999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6608,11 +6739,11 @@ RectTransform:
   - {fileID: 1637622794}
   m_Father: {fileID: 1076980671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -155.99992}
-  m_SizeDelta: {x: 500, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -150}
+  m_SizeDelta: {x: 300, y: 30}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2143305489
 MonoBehaviour:
   m_ObjectHideFlags: 0

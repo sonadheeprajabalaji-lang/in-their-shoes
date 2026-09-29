@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Chapter_1
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 1
-  chapterTitle: 
-  weekContext: 
-  contentWarningText: 
-  partnerHourSeconds: 20
+  chapterTitle: The First Trimester
+  weekContext: Nobody Knows Yet
+  contentWarningText: This game explores the emotional and physical strain of pregnancy
+    and early parenthood. You can exit at any time.
+  partnerHourSeconds: 120
   baseDrain:
     body: 0.03
     mind: 0.03
