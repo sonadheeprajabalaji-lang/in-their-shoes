@@ -24,6 +24,14 @@ public class TaskChecklistUI : MonoBehaviour
 
     void Awake()
     {
+        if (container.GetComponent<Image>() == null)
+        {
+            // A solid backing panel so the checklist stays legible no
+            // matter what's rendered underneath it in the room.
+            var bg = container.gameObject.AddComponent<Image>();
+            bg.color = new Color(0f, 0f, 0f, 0.65f);
+        }
+
         if (container.GetComponent<VerticalLayoutGroup>() == null)
         {
             var layout = container.gameObject.AddComponent<VerticalLayoutGroup>();
@@ -31,11 +39,13 @@ public class TaskChecklistUI : MonoBehaviour
             layout.childForceExpandWidth = false;
             layout.childAlignment = TextAnchor.UpperLeft;
             layout.spacing = 4f;
+            layout.padding = new RectOffset(8, 8, 8, 8);
         }
         if (container.GetComponent<ContentSizeFitter>() == null)
         {
             var fitter = container.gameObject.AddComponent<ContentSizeFitter>();
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
     }
 
@@ -78,6 +88,15 @@ public class TaskChecklistUI : MonoBehaviour
         text.text = Label(task, false);
         text.fontSize = rowFontSize;
         text.color = pendingColor;
+        text.enableWordWrapping = false;
+        text.overflowMode = TextOverflowModes.Overflow;
+        text.rectTransform.sizeDelta = new Vector2(420f, 28f);
+
+        // Explicit size so the layout group can't collapse this row to
+        // zero before it ever gets a chance to render.
+        var layoutElement = go.AddComponent<LayoutElement>();
+        layoutElement.preferredWidth = 420f;
+        layoutElement.preferredHeight = 28f;
 
         return text;
     }

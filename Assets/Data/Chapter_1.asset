@@ -39,7 +39,26 @@ MonoBehaviour:
   choiceTriggerTaskId: laptop
   responses:
   - label: Make something she can eat
+    nextChapterEase:
+      body: 0.85
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
   - label: Ask how she's really feeling
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 0.85
+      mask: 1
   - label: Clear it away quietly
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
   - label: Carry on as normal
-  selfHourCueTaskId: coffee
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1

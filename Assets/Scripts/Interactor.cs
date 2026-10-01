@@ -54,6 +54,7 @@ public class Interactor : MonoBehaviour
         holding = task;
         holdElapsed = 0f;
         player.InputLocked = true;
+        task.BeginHold();
     }
 
     void UpdateHold()

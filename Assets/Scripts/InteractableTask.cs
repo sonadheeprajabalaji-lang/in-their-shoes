@@ -6,9 +6,10 @@ using UnityEngine;
 // stove, the laptop for the meeting, and so on.
 //
 // taskId must be unique within a chapter's room. ChapterData's
-// choiceTriggerTaskId and selfHourCueTaskId refer to objects by this id,
-// so whatever you type here has to match exactly what you put in the
-// ChapterData asset.
+// choiceTriggerTaskId refers to objects by this id, so whatever you type
+// here has to match exactly. Self Hour no longer needs a fixed cue id:
+// it automatically shows every non-hold task still unlocked when Partner
+// Hour ends (see SelfHourController).
 public class InteractableTask : MonoBehaviour
 {
     // Every InteractableTask currently in the scene registers itself here
@@ -16,7 +17,7 @@ public class InteractableTask : MonoBehaviour
     // everyone needing a direct reference wired up in the Inspector.
     public static readonly List<InteractableTask> All = new List<InteractableTask>();
 
-    [Tooltip("Unique within the chapter. Matched against ChapterData's choiceTriggerTaskId / selfHourCueTaskId.")]
+    [Tooltip("Unique within the chapter. Matched against ChapterData's choiceTriggerTaskId.")]
     public string taskId;
 
     [Tooltip("Name shown in the prompt, e.g. \"Dishes\". If left blank, the GameObject's name is used.")]
@@ -39,9 +40,14 @@ public class InteractableTask : MonoBehaviour
     [Tooltip("Shown while holding, e.g. \"Pushing through the call\"")]
     public string holdingLabel = "Holding";
 
+    [Header("Juggling while holding (optional)")]
+    [Tooltip("Only active while this task is being held. Each entry is its own lane (breathing, responding, composure...) firing independently on its own timer. Miss the window and its missCost applies immediately -- this adds pressure, it never affects whether the hold itself completes or cancels.")]
+    public JugglePrompt[] jugglePrompts;
+
     public bool RequiresHold => holdDuration > 0f;
 
     public event Action<InteractableTask> Interacted;
+    public event Action<InteractableTask> HoldStarted;      // the hold has just begun
     public event Action<InteractableTask> HoldCompleted;   // held for the full duration
     public event Action<InteractableTask> HoldCancelled;   // let go early
 
@@ -69,7 +75,14 @@ public class InteractableTask : MonoBehaviour
         Interacted?.Invoke(this);
     }
 
-    // Called by Interactor. Not meant to be called directly elsewhere.
+    // Called by Interactor the moment a hold begins. Not meant to be
+    // called directly elsewhere.
+    public void BeginHold()
+    {
+        if (locked) return;
+        HoldStarted?.Invoke(this);
+    }
+
     public void CompleteHold()
     {
         if (locked) return;
@@ -91,4 +104,27 @@ public class InteractableTask : MonoBehaviour
         }
         return null;
     }
+}
+
+// One "lane" of a juggle challenge: fires on its own timer while the
+// parent task is being held, independent of the other lanes. Give each
+// lane a different chapter-specific flavour (breathing, responding,
+// composure) and a small missCost -- small is deliberate, since this is
+// meant to add texture to the hold, not become its own fail state.
+[System.Serializable]
+public class JugglePrompt
+{
+    [Tooltip("Chapter-specific flavour text, e.g. \"Breathe through the nausea\"")]
+    public string label;
+
+    public KeyCode key = KeyCode.Space;
+
+    [Tooltip("Seconds between this lane's prompts while holding")]
+    public float interval = 4f;
+
+    [Tooltip("Seconds the player has to press the key once a prompt appears")]
+    public float responseWindow = 1.5f;
+
+    [Tooltip("Applied once if the player misses this prompt's window. Keep this small -- it's pressure, not a punishment.")]
+    public MeterRates missCost;
 }

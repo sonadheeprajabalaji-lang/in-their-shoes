@@ -1669,6 +1669,7 @@ MonoBehaviour:
     mask: 0.2
   holdDuration: 0
   holdingLabel: Holding
+  jugglePrompts: []
 --- !u!212 &481779001
 SpriteRenderer:
   serializedVersion: 2
@@ -2679,6 +2680,7 @@ MonoBehaviour:
     mask: 0.1
   holdDuration: 0
   holdingLabel: Holding
+  jugglePrompts: []
 --- !u!212 &710413125
 SpriteRenderer:
   serializedVersion: 2
@@ -3638,6 +3640,7 @@ RectTransform:
   - {fileID: 1801388636}
   - {fileID: 1724499133}
   - {fileID: 875275540}
+  - {fileID: 1766828073}
   m_Father: {fileID: 106200373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4612,6 +4615,34 @@ MonoBehaviour:
     mask: 0
   holdDuration: 10
   holdingLabel: Hold E to proceed with meeting
+  jugglePrompts:
+  - label: Breathe through the nausea
+    key: 32
+    interval: 1
+    responseWindow: 2
+    missCost:
+      body: 0.04
+      mind: 0
+      feelingLikeAPerson: 0
+      mask: 0
+  - label: Respond on the call
+    key: 113
+    interval: 2
+    responseWindow: 4
+    missCost:
+      body: 0
+      mind: 0
+      feelingLikeAPerson: 0
+      mask: 0.04
+  - label: Keep composure
+    key: 102
+    interval: 4
+    responseWindow: 6
+    missCost:
+      body: 0
+      mind: 0.04
+      feelingLikeAPerson: 0
+      mask: 0
 --- !u!212 &1496638931
 SpriteRenderer:
   serializedVersion: 2
@@ -4959,6 +4990,7 @@ MonoBehaviour:
   meters: {fileID: 1549917790}
   partnerHourController: {fileID: 1549917789}
   checklist: {fileID: 875275541}
+  juggle: {fileID: 1766828074}
   selfHourController: {fileID: 1549917791}
   responseButtons:
   - {fileID: 1902162122}
@@ -5431,6 +5463,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742123390}
   m_CullTransparentMesh: 1
+--- !u!1 &1766828072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1766828073}
+  - component: {fileID: 1766828074}
+  m_Layer: 5
+  m_Name: JuggleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1766828073
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766828072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1023543075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1766828074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766828072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e7fbf7c97844d698af203e45d3ae71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JuggleController
+  container: {fileID: 1766828073}
+  meters: {fileID: 1549917790}
+  dormantColor: {r: 1, g: 1, b: 1, a: 0.2}
+  activeColor: {r: 1, g: 0.85, b: 0.3, a: 1}
 --- !u!1 &1801388635
 GameObject:
   m_ObjectHideFlags: 0
@@ -6142,6 +6226,7 @@ MonoBehaviour:
     mask: 0.2
   holdDuration: 0
   holdingLabel: Holding
+  jugglePrompts: []
 --- !u!212 &1959020084
 SpriteRenderer:
   serializedVersion: 2

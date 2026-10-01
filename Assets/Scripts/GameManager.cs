@@ -4,10 +4,13 @@ using UnityEngine.UI;
 using TMPro;
 
 // Runs a chapter's flow, driven by a ChapterData asset:
-// Content warning -> Partner Hour (roam the room; holding the choice
-// trigger task to completion or letting go early decides the choice) ->
-// Self Hour (roam the same room, only the seeded cue task is unlocked) ->
-// End.
+// Content warning -> Partner Hour (roam, do BAU tasks, the main task's
+// hold decides the choice; ends the moment a meter hits zero) -> Self
+// Hour (roam the same room; every BAU task left unfinished becomes its
+// own cue, answered one at a time) -> End.
+//
+// Each Self Hour response also feeds CarryoverState, which eases (or
+// worsens) specific meters at the start of the NEXT chapter only.
 public class GameManager : MonoBehaviour
 {
     [Header("Chapter data")]
@@ -17,7 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject contentWarningPanel;
     public GameObject partnerHourPanel;   // the room + meters HUD
     public GameObject selfHourPanel;      // the room
-    public GameObject responsePanel;      // shown once the seeded cue task is interacted with
+    public GameObject responsePanel;      // shown for whichever cue is currently up
     public GameObject endPanel;
 
     [Header("Content warning")]
@@ -29,6 +32,7 @@ public class GameManager : MonoBehaviour
     public MeterController meters;
     public PartnerHourController partnerHourController;
     public TaskChecklistUI checklist;
+    public JuggleController juggle;
 
     [Header("Self Hour")]
     public SelfHourController selfHourController;
@@ -38,9 +42,9 @@ public class GameManager : MonoBehaviour
     public ResponseLogger logger;
     public Button restartButton;
 
-    int partnerChoice = -1;      // -1 = no choice made
+    int partnerChoice = -1;          // -1 = no choice made
+    InteractableTask currentCue;     // the cue currently shown in the response popup, or null
     float responseShownTime;
-    bool responded;
 
     void Start()
     {
@@ -49,6 +53,7 @@ public class GameManager : MonoBehaviour
 
         partnerHourController.ChoiceMade += OnChoiceMade;
         selfHourController.CueInteracted += OnCueInteracted;
+        selfHourController.AllCuesResolved += OnAllCuesResolved;
 
         SetUpResponseButtons();
 
@@ -82,6 +87,7 @@ public class GameManager : MonoBehaviour
 
     void ShowContentWarning()
     {
+        currentCue = null;
         ShowOnly(contentWarningPanel);
         responsePanel.SetActive(false);
     }
@@ -89,13 +95,16 @@ public class GameManager : MonoBehaviour
     void StartPartnerHour()
     {
         partnerChoice = -1;
-        responded = false;
 
         ShowOnly(partnerHourPanel);
-        meters.Configure(chapterData.baseDrain);
+
+        MeterRates carry = CarryoverState.ConsumeForNextChapter();
+        meters.Configure(MeterRates.Multiply(chapterData.baseDrain, carry));
         meters.StartDraining();
+
         partnerHourController.BeginRoaming(chapterData);
         checklist.BuildList();
+        juggle.BeginRoaming(chapterData);
         StartCoroutine(PartnerHourTimer());
     }
 
@@ -114,6 +123,7 @@ public class GameManager : MonoBehaviour
         meters.StopDraining();
         partnerHourController.EndRoaming();
         checklist.Clear();
+        juggle.EndRoaming();
         StartSelfHour();
     }
 
@@ -121,6 +131,7 @@ public class GameManager : MonoBehaviour
     {
         ShowOnly(selfHourPanel);
         responsePanel.SetActive(false);
+        currentCue = null;
         selfHourController.BeginRoaming(chapterData);
     }
 
@@ -135,23 +146,39 @@ public class GameManager : MonoBehaviour
         meters.ApplyChoice(chapterData.choices[choice]);
     }
 
-    void OnCueInteracted()
+    void OnCueInteracted(InteractableTask cue)
     {
+        if (currentCue != null) return;   // already answering one cue at a time
+
+        currentCue = cue;
         responsePanel.SetActive(true);
         responseShownTime = Time.time;
     }
 
     void OnResponse(int index)
     {
-        if (responded) return;
-        responded = true;
+        if (currentCue == null) return;   // no cue is currently awaiting a response
+        if (chapterData.responses == null || index >= chapterData.responses.Length) return;
 
         int ms = Mathf.RoundToInt((Time.time - responseShownTime) * 1000f);
         string choiceText = partnerChoice >= 0 ? chapterData.choices[partnerChoice].label : "none";
         string responseText = chapterData.responses[index].label;
 
         logger.Log(chapterData.chapterNumber, "SelfHour", choiceText, responseText, ms);
+        CarryoverState.AddEase(chapterData.responses[index].nextChapterEase);
 
+        var resolvedCue = currentCue;
+        currentCue = null;
+        responsePanel.SetActive(false);
+
+        selfHourController.MarkCueResolved(resolvedCue);
+        // If more cues are still pending, OnCueInteracted fires again
+        // when the player reaches the next one. If that was the last
+        // one, OnAllCuesResolved fires instead.
+    }
+
+    void OnAllCuesResolved()
+    {
         selfHourController.EndRoaming();
         ShowOnly(endPanel);
     }

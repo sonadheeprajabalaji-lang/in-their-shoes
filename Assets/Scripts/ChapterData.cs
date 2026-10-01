@@ -34,11 +34,8 @@ public class ChapterData : ScriptableObject
     public string choiceTriggerTaskId;
 
     [Header("Self Hour")]
-    [Tooltip("Up to as many responses as there are response buttons in the scene")]
+    [Tooltip("Up to as many responses as there are response buttons in the scene. Self Hour now shows one prompt per unfinished BAU task automatically, so there is no fixed cue to set here anymore.")]
     public SelfHourResponse[] responses;
-
-    [Tooltip("The taskId (see InteractableTask) that stays unlocked in Self Hour, seeded from what happened in Partner Hour")]
-    public string selfHourCueTaskId;
 }
 
 // The four Partner Hour meters, used both as base drain rates and as
@@ -58,6 +55,15 @@ public struct MeterRates
         this.feelingLikeAPerson = feelingLikeAPerson;
         this.mask = mask;
     }
+
+    public static MeterRates Multiply(MeterRates a, MeterRates b)
+    {
+        return new MeterRates(
+            a.body * b.body,
+            a.mind * b.mind,
+            a.feelingLikeAPerson * b.feelingLikeAPerson,
+            a.mask * b.mask);
+    }
 }
 
 [System.Serializable]
@@ -73,4 +79,7 @@ public class PartnerChoice
 public class SelfHourResponse
 {
     public string label;
+
+    [Tooltip("Multiplies the drain rate for each meter at the START of the next chapter only, then resets. 1 = no effect, below 1 = eases that meter, above 1 = makes it worse. Give different responses different meters to ease, so no single response is simply \"better\".")]
+    public MeterRates nextChapterEase = new MeterRates(1f, 1f, 1f, 1f);
 }
