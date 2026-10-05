@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -42,14 +43,39 @@ public class GameManager : MonoBehaviour
     public ResponseLogger logger;
     public Button restartButton;
 
+    [Header("Chapter transition")]
+    [Tooltip("Exact scene name to load when Next Chapter is pressed, e.g. \"Chapter2\". Must be added to File > Build Settings > Scenes in Build, or LoadScene will fail. Leave blank on the last chapter -- nextChapterButton hides itself automatically when this is empty.")]
+    public string nextSceneName;
+    [Tooltip("Optional. Shown on the End panel. Hidden automatically if nextSceneName is blank.")]
+    public Button nextChapterButton;
+
     int partnerChoice = -1;          // -1 = no choice made
     InteractableTask currentCue;     // the cue currently shown in the response popup, or null
     float responseShownTime;
 
     void Start()
     {
+        // Chapter 1 is where a playthrough begins, so this is where any
+        // leftover carryover from a previous playthrough gets cleared.
+        // Chapter 2+ must NOT do this -- they're meant to consume what
+        // the chapter before them earned.
+        if (chapterData.chapterNumber == 1)
+        {
+            CarryoverState.Reset();
+        }
+
         continueButton.onClick.AddListener(StartPartnerHour);
         restartButton.onClick.AddListener(ShowContentWarning);
+
+        if (nextChapterButton != null)
+        {
+            bool hasNextChapter = !string.IsNullOrEmpty(nextSceneName);
+            nextChapterButton.gameObject.SetActive(hasNextChapter);
+            if (hasNextChapter)
+            {
+                nextChapterButton.onClick.AddListener(LoadNextChapter);
+            }
+        }
 
         partnerHourController.ChoiceMade += OnChoiceMade;
         selfHourController.CueInteracted += OnCueInteracted;
@@ -63,6 +89,12 @@ public class GameManager : MonoBehaviour
         }
 
         ShowContentWarning();
+    }
+
+    void LoadNextChapter()
+    {
+        if (string.IsNullOrEmpty(nextSceneName)) return;
+        SceneManager.LoadScene(nextSceneName);
     }
 
     void SetUpResponseButtons()

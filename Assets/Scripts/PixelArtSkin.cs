@@ -35,7 +35,16 @@ public class PixelArtSkin : MonoBehaviour
     static void Install()
     {
         if (!AutoInstall) return;
-        if (FindFirstObjectByType<GameManager>() == null) return;
+
+        var gm = FindFirstObjectByType<GameManager>();
+        if (gm == null) return;
+
+        // This skin's TaskArtById and FurnitureCells are hand-built for
+        // Chapter 1's specific room and task set. Until a chapter has its
+        // own matching art, it should fall back to the placeholder
+        // squares rather than paint Chapter 1's kitchen over it.
+        if (gm.chapterData == null || gm.chapterData.chapterNumber != 1) return;
+
         if (FindFirstObjectByType<PixelArtSkin>() != null) return;
         new GameObject("PixelArtSkin").AddComponent<PixelArtSkin>();
     }
