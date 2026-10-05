@@ -23,7 +23,7 @@ using UnityEngine.UI;
 //     that deepens as Body drops; Chapter 2: grey "worry" vignette and
 //     thought bubbles as Mind drops), and an evening tint in Self Hour
 //   - restyles the meters, panels, buttons and text (Pixelify Sans font),
-//     and puts a dark panel behind the "Press E" prompt and any loose labels
+//     and puts a dark panel behind the "Press E" prompt
 //
 // To turn it off, set AutoInstall to false.
 //
@@ -202,7 +202,7 @@ public class PixelArtSkin : MonoBehaviour
     // Dark backing panels so text stays readable over the busy room.
     TextMeshPro worldPrompt;
     SpriteRenderer worldPromptBacking;
-    readonly Dictionary<TMP_Text, RectTransform> labelBackings = new Dictionary<TMP_Text, RectTransform>();
+    Image juggleBacking;
 
     Image moodVignette;
     Image eveningTint;
@@ -238,7 +238,10 @@ public class PixelArtSkin : MonoBehaviour
     {
         if (art == null) return;
         FitWorldPrompt();
-        FitLabelBackings();
+
+        // The juggle box shrinks to a small empty square when nothing is
+        // being held; only show its panel while it has prompt rows.
+        if (juggleBacking != null) juggleBacking.enabled = juggleBacking.transform.childCount > 0;
     }
 
     Sprite S(string name)
@@ -396,7 +399,11 @@ public class PixelArtSkin : MonoBehaviour
         }
 
         if (gm.checklist != null) StylePanel(gm.checklist.container);
-        if (gm.juggle != null) StylePanel(gm.juggle.container);
+        if (gm.juggle != null && gm.juggle.container != null)
+        {
+            StylePanel(gm.juggle.container);
+            juggleBacking = gm.juggle.container.GetComponent<Image>();
+        }
 
         foreach (var button in FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
@@ -479,10 +486,10 @@ public class PixelArtSkin : MonoBehaviour
     // runtime with the default font, so re-apply the pixel font now and then.
     void SweepFonts()
     {
+        if (pixelFont == null) return;
         foreach (var t in FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
             if (pixelFont != null && t.font != pixelFont) t.font = pixelFont;
-            if (t is TextMeshProUGUI ui) EnsureLabelBacking(ui);
         }
     }
 
@@ -492,10 +499,14 @@ public class PixelArtSkin : MonoBehaviour
     // gets a dark pixel panel behind it that resizes to fit the text.
     void SetUpWorldPrompt()
     {
-        var go = GameObject.Find("InteractionPrompt");
-        if (go == null) return;
-        worldPrompt = go.GetComponent<TextMeshPro>();
+        // Interactor creates the prompt hidden, so search inactive objects too
+        // (GameObject.Find would miss it).
+        foreach (var tmp in FindObjectsByType<TextMeshPro>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (tmp.gameObject.name == "InteractionPrompt") { worldPrompt = tmp; break; }
+        }
         if (worldPrompt == null) return;
+        var go = worldPrompt.gameObject;
 
         // The thin outline breaks up on a pixel font; the panel replaces it.
         worldPrompt.outlineWidth = 0f;
@@ -510,6 +521,7 @@ public class PixelArtSkin : MonoBehaviour
 
     void FitWorldPrompt()
     {
+        if (worldPrompt == null) SetUpWorldPrompt();   // in case it didn't exist yet at Start
         if (worldPrompt == null || worldPromptBacking == null || !worldPrompt.gameObject.activeInHierarchy) return;
 
         worldPrompt.ForceMeshUpdate();
@@ -520,66 +532,6 @@ public class PixelArtSkin : MonoBehaviour
 
         worldPromptBacking.size = new Vector2(b.size.x + 0.45f, b.size.y + 0.3f);
         worldPromptBacking.transform.localPosition = new Vector3(b.center.x, b.center.y, 0.01f);
-    }
-
-    // Screen labels that don't already sit on a panel or a button (the
-    // hour panels' photo backgrounds are switched off, so labels placed on
-    // them now float over the room) get a dark panel behind them too.
-    void EnsureLabelBacking(TextMeshProUGUI t)
-    {
-        if (labelBackings.ContainsKey(t)) return;
-        if (t.transform.parent == null || !NeedsBacking(t)) { labelBackings[t] = null; return; }
-
-        var go = new GameObject("LabelBacking");
-        var rt = go.AddComponent<RectTransform>();
-        rt.SetParent(t.transform.parent, false);
-        rt.SetSiblingIndex(t.transform.GetSiblingIndex());   // just behind the text
-        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
-        var img = go.AddComponent<Image>();
-        img.sprite = S("ui_panel");
-        img.type = Image.Type.Sliced;
-        img.raycastTarget = false;
-        var layout = go.AddComponent<LayoutElement>();
-        layout.ignoreLayout = true;   // don't disturb layout groups
-        labelBackings[t] = rt;
-    }
-
-    bool NeedsBacking(TMP_Text t)
-    {
-        if (t.GetComponentInParent<Button>(true) != null) return false;
-        for (var p = t.transform.parent; p != null; p = p.parent)
-        {
-            if (p.GetComponent<Canvas>() != null) break;
-            var img = p.GetComponent<Image>();
-            if (img != null && img.enabled && img.color.a > 0.3f) return false;   // already on a panel
-        }
-        return true;
-    }
-
-    void FitLabelBackings()
-    {
-        foreach (var kv in labelBackings)
-        {
-            var t = kv.Key;
-            var rt = kv.Value;
-            if (rt == null) continue;
-            if (t == null) { Destroy(rt.gameObject); continue; }
-
-            bool show = t.isActiveAndEnabled && !string.IsNullOrWhiteSpace(t.text) && t.color.a > 0.05f;
-            if (rt.gameObject.activeSelf != show) rt.gameObject.SetActive(show);
-            if (!show) continue;
-
-            var b = t.textBounds;
-            if (b.size.x <= 0.01f) { rt.gameObject.SetActive(false); continue; }
-
-            var parent = (RectTransform)rt.parent;
-            Vector3 worldMin = t.transform.TransformPoint(b.min);
-            Vector3 worldMax = t.transform.TransformPoint(b.max);
-            Vector3 localMin = parent.InverseTransformPoint(worldMin);
-            Vector3 localMax = parent.InverseTransformPoint(worldMax);
-            rt.localPosition = (localMin + localMax) * 0.5f;
-            rt.sizeDelta = new Vector2(Mathf.Abs(localMax.x - localMin.x) + 24f, Mathf.Abs(localMax.y - localMin.y) + 14f);
-        }
     }
 
     // ---------- Per-frame state ----------
