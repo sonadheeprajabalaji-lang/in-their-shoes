@@ -36,6 +36,9 @@ public class ChapterData : ScriptableObject
     [Header("Self Hour")]
     [Tooltip("Up to as many responses as there are response buttons in the scene. Self Hour now shows one prompt per unfinished BAU task automatically, so there is no fixed cue to set here anymore.")]
     public SelfHourResponse[] responses;
+
+    [Tooltip("Heading for the learning section of the card shown after each Self Hour response, e.g. \"In the first trimester\".")]
+    public string learnHeading = "Did you know?";
 }
 
 // The four Partner Hour meters, used both as base drain rates and as
@@ -82,4 +85,23 @@ public class SelfHourResponse
 
     [Tooltip("Multiplies the drain rate for each meter at the START of the next chapter only, then resets. 1 = no effect, below 1 = eases that meter, above 1 = makes it worse. Give different responses different meters to ease, so no single response is simply \"better\".")]
     public MeterRates nextChapterEase = new MeterRates(1f, 1f, 1f, 1f);
+
+    // Shown on a card straight after the player picks this response.
+    // Leave all four blank to skip the card for this response.
+    [Header("Card shown after choosing this")]
+    [Tooltip("How this choice lands for her, and what it changes next chapter.")]
+    [TextArea(2, 5)] public string impactText;
+
+    [Tooltip("A research-backed fact about this stage of pregnancy.")]
+    [TextArea(2, 6)] public string learnText;
+
+    [Tooltip("Practical, evidence-based ways the partner can help.")]
+    [TextArea(2, 6)] public string helpText;
+
+    [Tooltip("Where the facts come from, shown small at the bottom of the card.")]
+    [TextArea(1, 4)] public string sourceText;
+
+    public bool HasCard =>
+        !string.IsNullOrWhiteSpace(impactText) || !string.IsNullOrWhiteSpace(learnText) ||
+        !string.IsNullOrWhiteSpace(helpText) || !string.IsNullOrWhiteSpace(sourceText);
 }

@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     public SelfHourController selfHourController;
     public Button[] responseButtons;   // sized for the chapter with the most responses
 
+    [Tooltip("Optional. The card shown after each Self Hour response (impact, facts, how to help). Created automatically if left empty.")]
+    public ResponseFeedbackUI responseFeedback;
+
     [Header("End")]
     public ResponseLogger logger;
     public Button restartButton;
@@ -82,6 +85,11 @@ public class GameManager : MonoBehaviour
         selfHourController.AllCuesResolved += OnAllCuesResolved;
 
         SetUpResponseButtons();
+
+        if (responseFeedback == null)
+        {
+            responseFeedback = new GameObject("ResponseFeedback").AddComponent<ResponseFeedbackUI>();
+        }
 
         if (contentWarningText != null)
         {
@@ -200,9 +208,32 @@ public class GameManager : MonoBehaviour
         CarryoverState.AddEase(chapterData.responses[index].nextChapterEase);
 
         var resolvedCue = currentCue;
-        currentCue = null;
+        var response = chapterData.responses[index];
         responsePanel.SetActive(false);
 
+        if (responseFeedback != null && response.HasCard)
+        {
+            // Show what the choice means for her before moving on. The cue
+            // stays "current" until the card closes, so no other cue can
+            // open underneath it, and the player can't walk away.
+            selfHourController.player.InputLocked = true;
+            responseFeedback.Show(responseText, chapterData.learnHeading, response, () =>
+            {
+                int readMs = Mathf.RoundToInt(responseFeedback.LastReadSeconds * 1000f);
+                logger.Log(chapterData.chapterNumber, "SelfHourCard", choiceText, responseText, readMs);
+
+                selfHourController.player.InputLocked = false;
+                FinishCue(resolvedCue);
+            });
+            return;
+        }
+
+        FinishCue(resolvedCue);
+    }
+
+    void FinishCue(InteractableTask resolvedCue)
+    {
+        currentCue = null;
         selfHourController.MarkCueResolved(resolvedCue);
         // If more cues are still pending, OnCueInteracted fires again
         // when the player reaches the next one. If that was the last

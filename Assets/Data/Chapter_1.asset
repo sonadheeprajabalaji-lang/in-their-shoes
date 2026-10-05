@@ -44,21 +44,38 @@ MonoBehaviour:
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
+    impactText: "She manages a few bites of something plain, and the next wave of nausea is a little easier to ride out.\nNext chapter: her Body drains more slowly."
+    learnText: "Around half to two-thirds of pregnant women get nausea and vomiting, usually from about week 4 until weeks 12 to 14, and about 1 in 5 still have it in the second trimester. Despite the name, it can hit at any time of day, and the smell of food cooking can set it off."
+    helpText: "Offer small, frequent, plain meals that are high in carbohydrate and low in fat. Cold food often smells less than hot food. Dry crackers before she gets up, and sips of water, weak tea or ginger tea, can help. Ask before cooking anything strong-smelling."
+    sourceText: "Better Health Channel (Victorian Government), \"Pregnancy - morning sickness\"; NHS, \"Vomiting and morning sickness\""
   - label: Ask how she's really feeling
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
+    impactText: "She admits the day was much harder than she let on, and she isn't carrying it alone any more.\nNext chapter: Feeling like a person drains more slowly."
+    learnText: "Women with morning sickness report higher levels of stress, anxiety and depression. If you haven't told anyone about the pregnancy yet, you may be the only person she can be honest with."
+    helpText: "Start with what you noticed (\"Lunch went untouched. Was the nausea bad today?\") and listen without rushing to fix it. A review of 120 published studies found that emotional closeness, good communication and feeling supported by a partner protect against depression and anxiety during pregnancy and after birth."
+    sourceText: "Better Health Channel (Victorian Government), \"Pregnancy - morning sickness\"; Pilkington et al. (2015), J Affect Disord 178:165-80"
   - label: Clear it away quietly
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
+    impactText: "The mess is gone when she walks past, which takes one thing off her list. But she may not know you noticed how hard today was.\nNext chapter: no change to her meters."
+    learnText: "In a Norwegian study, nausea and vomiting in pregnancy lowered women's quality of life. Women with severe symptoms reported a major impact on household chores, their work, their social life and their relationship with their partner."
+    helpText: "Experts recommend partners take on household tasks without being asked. Pair it with a few words (\"I've got the dishes, go and rest\") so the help also tells her she has been seen."
+    sourceText: "Heitmann et al. (2017), BMC Pregnancy and Childbirth 17:231; Pilkington et al. (2016), BMC Psychiatry 16:23"
   - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
+    impactText: "Nothing changes for her. She keeps pushing through the nausea and tiredness on her own.\nNext chapter: all of her meters drain much faster."
+    learnText: "Nausea in early pregnancy is often brushed off as normal, but severe symptoms can stop women working, socialising and caring for others, and tiredness makes nausea worse. Severe vomiting (hyperemesis gravidarum) can cause dehydration and needs medical treatment."
+    helpText: "Notice it and share the load. Help her see a GP or midwife if she can't keep food or fluids down for a day, feels faint or dizzy when standing, has very dark urine or hasn't passed urine for 8 hours, or is losing weight."
+    sourceText: "Better Health Channel (Victorian Government), \"Pregnancy - morning sickness\"; NHS, \"Vomiting and morning sickness\"; Heitmann et al. (2017), BMC Pregnancy and Childbirth 17:231"
+  learnHeading: In the first trimester
