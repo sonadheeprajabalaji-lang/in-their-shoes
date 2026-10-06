@@ -16,6 +16,15 @@ public class ChapterData : ScriptableObject
     [Tooltip("Shown on the context cutscene, e.g. \"Week 5, postpartum\"")]
     public string weekContext;
 
+    [Header("Scene text (top-right box in Partner Hour)")]
+    [Tooltip("The main obstacle, e.g. \"A work call has started. The nausea hits. Everyone is watching.\"")]
+    [TextArea(2, 4)]
+    public string obstacleText;
+
+    [Tooltip("The main task, shown under the obstacle, e.g. \"Work video call (pregnancy not announced yet)\"")]
+    [TextArea(1, 3)]
+    public string mainTaskText;
+
     [Header("Content warning")]
     [TextArea(2, 4)]
     public string contentWarningText;

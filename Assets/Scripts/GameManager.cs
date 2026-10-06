@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public PartnerHourController partnerHourController;
     public TaskChecklistUI checklist;
     public JuggleController juggle;
+    [Tooltip("Optional. The top-right box that shows this chapter's main obstacle and main task (filled from ChapterData). Found by the name \"SceneText\" if left empty.")]
+    public TMP_Text sceneText;
 
     [Header("Self Hour")]
     public SelfHourController selfHourController;
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
         {
             responseFeedback = new GameObject("ResponseFeedback").AddComponent<ResponseFeedbackUI>();
         }
+
+        ApplySceneText();
 
         if (contentWarningText != null)
         {
@@ -275,6 +279,39 @@ public class GameManager : MonoBehaviour
     {
         selfHourController.EndRoaming();
         ShowOnly(endPanel);
+    }
+
+    // Fills the top-right box with this chapter's obstacle and main task.
+    // Leaves the scene's own text alone if the chapter has neither set.
+    void ApplySceneText()
+    {
+        if (sceneText == null && partnerHourPanel != null)
+        {
+            foreach (var t in partnerHourPanel.GetComponentsInChildren<TMP_Text>(true))
+            {
+                if (t.gameObject.name == "SceneText") { sceneText = t; break; }
+            }
+        }
+        if (sceneText == null) return;
+
+        bool hasObstacle = !string.IsNullOrWhiteSpace(chapterData.obstacleText);
+        bool hasTask = !string.IsNullOrWhiteSpace(chapterData.mainTaskText);
+        if (!hasObstacle && !hasTask) return;
+
+        var text = new System.Text.StringBuilder();
+        if (hasObstacle)
+        {
+            text.Append("<size=80%><color=#A8A0EC>Main obstacle</color></size>\n");
+            text.Append(chapterData.obstacleText.Trim());
+        }
+        if (hasTask)
+        {
+            if (hasObstacle) text.Append("\n\n");
+            text.Append("<size=80%><color=#EF9F27>Main task</color></size>\n");
+            text.Append(chapterData.mainTaskText.Trim());
+        }
+        sceneText.richText = true;
+        sceneText.text = text.ToString();
     }
 
     // ---------- Helper ----------
