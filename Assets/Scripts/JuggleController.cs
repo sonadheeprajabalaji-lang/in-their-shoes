@@ -5,30 +5,49 @@ using UnityEngine.UI;
 
 // Runs the juggle prompts on whichever task is currently being held (see
 // InteractableTask.jugglePrompts). Each prompt is its own lane with its
-// own timer, independent of the others. Miss the response window and a
-// small, fixed meter cost applies immediately -- the exact same
-// mechanism as a BAU task's cost. This only adds pressure and texture
-// to the hold; nothing here affects whether the hold itself completes
-// or cancels, so it can't become a hidden pass/fail layer on the choice.
+// own timer, independent of the others.
+//
+// A lane is either a tap ("Press Q: Respond on the call") or a hold
+// ("Hold SPACE 3s: Breathe through the nausea", with a progress bar);
+// see JugglePrompt.holdSeconds. Letting go of a hold early starts it
+// again. Miss the response window and a small, fixed meter cost applies
+// immediately -- the exact same mechanism as a BAU task's cost. This only
+// adds pressure and texture to the main hold; nothing here affects whether
+// the main hold itself completes or cancels, so it can't become a hidden
+// pass/fail layer on the choice.
 public class JuggleController : MonoBehaviour
 {
     [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where juggle prompt rows will be created.")]
     public RectTransform container;
     public MeterController meters;
 
+    [Header("Look")]
+    public float rowFontSize = 34f;
+    public float rowWidth = 760f;
     public Color dormantColor = new Color(1f, 1f, 1f, 0.2f);
     public Color activeColor = new Color(1f, 0.85f, 0.3f);
+    public Color successColor = new Color(0.45f, 0.85f, 0.6f);
+    public Color missColor = new Color(0.95f, 0.45f, 0.4f);
+
+    [Tooltip("How long \"Done\" or \"Missed\" stays on a row after a prompt ends.")]
+    public float resultShowSeconds = 0.7f;
 
     class LaneState
     {
         public JugglePrompt prompt;
         public TMP_Text row;
+        public RectTransform holdBar;      // fill of the hold progress bar (hold lanes only)
+        public GameObject holdBarRoot;
         public float nextPromptTime;
-        public float activeUntil = -1f; // -1 = dormant, waiting for nextPromptTime
+        public float activeUntil = -1f;    // -1 = dormant, waiting for nextPromptTime
+        public float held;                 // seconds held so far, for hold lanes
+        public float clearResultAt = -1f;  // when to clear "Done" / "Missed"
     }
 
     InteractableTask watchedTask;
     readonly List<LaneState> lanes = new List<LaneState>();
+
+    float RowHeight => rowFontSize * 1.5f;
 
     void Awake()
     {
@@ -46,8 +65,8 @@ public class JuggleController : MonoBehaviour
             layout.childForceExpandHeight = false;
             layout.childForceExpandWidth = false;
             layout.childAlignment = TextAnchor.UpperLeft;
-            layout.spacing = 4f;
-            layout.padding = new RectOffset(8, 8, 8, 8);
+            layout.spacing = 8f;
+            layout.padding = new RectOffset(18, 18, 14, 14);
         }
         if (container.GetComponent<ContentSizeFitter>() == null)
         {
@@ -90,12 +109,9 @@ public class JuggleController : MonoBehaviour
 
         foreach (var prompt in task.jugglePrompts)
         {
-            lanes.Add(new LaneState
-            {
-                prompt = prompt,
-                row = CreateRow(),
-                nextPromptTime = Time.time + prompt.interval
-            });
+            var lane = new LaneState { prompt = prompt, nextPromptTime = Time.time + prompt.interval };
+            CreateRow(lane);
+            lanes.Add(lane);
         }
     }
 
@@ -110,66 +126,154 @@ public class JuggleController : MonoBehaviour
         {
             if (lane.activeUntil < 0f)
             {
+                if (lane.clearResultAt > 0f && Time.time >= lane.clearResultAt)
+                {
+                    lane.clearResultAt = -1f;
+                    lane.row.text = "";
+                    lane.row.color = dormantColor;
+                }
                 if (Time.time >= lane.nextPromptTime) Activate(lane);
                 continue;
             }
 
-            if (Input.GetKeyDown(lane.prompt.key))
+            if (lane.prompt.holdSeconds > 0f)
             {
-                Deactivate(lane); // caught in time, no cost
+                // Hold lane: keep the key down until the bar fills.
+                if (Input.GetKey(lane.prompt.key)) lane.held += Time.deltaTime;
+                else lane.held = 0f;   // let go early: start the breath again
+
+                SetHoldBar(lane, lane.held / lane.prompt.holdSeconds);
+
+                if (lane.held >= lane.prompt.holdSeconds)
+                {
+                    Finish(lane, true);
+                    continue;
+                }
+            }
+            else if (Input.GetKeyDown(lane.prompt.key))
+            {
+                Finish(lane, true); // caught in time, no cost
                 continue;
             }
 
             if (Time.time > lane.activeUntil)
             {
                 meters.ApplyCost(lane.prompt.missCost); // missed, small cost
-                Deactivate(lane);
+                Finish(lane, false);
             }
         }
     }
 
     void Activate(LaneState lane)
     {
-        lane.activeUntil = Time.time + lane.prompt.responseWindow;
-        lane.row.text = $"[{lane.prompt.key}] {lane.prompt.label}";
+        // A hold needs at least the hold time plus a moment to react.
+        float window = Mathf.Max(lane.prompt.responseWindow, lane.prompt.holdSeconds + 1.5f);
+        lane.activeUntil = Time.time + window;
+        lane.held = 0f;
+        lane.clearResultAt = -1f;
+
+        string key = KeyName(lane.prompt.key);
+        lane.row.text = lane.prompt.holdSeconds > 0f
+            ? $"[Hold {key} {lane.prompt.holdSeconds:0}s] {lane.prompt.label}"
+            : $"[Press {key}] {lane.prompt.label}";
         lane.row.color = activeColor;
+
+        if (lane.holdBarRoot != null)
+        {
+            lane.holdBarRoot.SetActive(lane.prompt.holdSeconds > 0f);
+            SetHoldBar(lane, 0f);
+        }
     }
 
-    void Deactivate(LaneState lane)
+    void Finish(LaneState lane, bool success)
     {
         lane.activeUntil = -1f;
         lane.nextPromptTime = Time.time + lane.prompt.interval;
-        lane.row.text = "";
-        lane.row.color = dormantColor;
+        lane.held = 0f;
+        lane.row.text = success ? $"Done: {lane.prompt.label}" : $"Missed: {lane.prompt.label}";
+        lane.row.color = success ? successColor : missColor;
+        lane.clearResultAt = Time.time + resultShowSeconds;
+        if (lane.holdBarRoot != null) lane.holdBarRoot.SetActive(false);
     }
 
-    TMP_Text CreateRow()
+    static string KeyName(KeyCode key)
     {
-        var go = new GameObject("JuggleLane");
-        go.transform.SetParent(container, false);
+        switch (key)
+        {
+            case KeyCode.Space: return "SPACE";
+            case KeyCode.Return: return "ENTER";
+            case KeyCode.LeftShift:
+            case KeyCode.RightShift: return "SHIFT";
+            default: return key.ToString().ToUpperInvariant();
+        }
+    }
 
-        var text = go.AddComponent<TextMeshProUGUI>();
-        text.fontSize = 20f;
-        text.color = dormantColor;
-        text.text = "";
-        text.enableWordWrapping = false;
-        text.overflowMode = TextOverflowModes.Overflow;
-        text.rectTransform.sizeDelta = new Vector2(420f, 28f);
+    static void SetHoldBar(LaneState lane, float t)
+    {
+        if (lane.holdBar == null) return;
+        lane.holdBar.anchorMax = new Vector2(Mathf.Clamp01(t), 1f);
+    }
+
+    void CreateRow(LaneState lane)
+    {
+        var go = new GameObject("JuggleLane", typeof(RectTransform));
+        go.transform.SetParent(container, false);
 
         // Explicit size so the layout group can't collapse an empty-text
         // row to zero before it ever gets a chance to show a prompt.
         var layoutElement = go.AddComponent<LayoutElement>();
-        layoutElement.preferredWidth = 420f;
-        layoutElement.preferredHeight = 28f;
+        layoutElement.preferredWidth = rowWidth;
+        layoutElement.preferredHeight = RowHeight;
 
-        return text;
+        var textGo = new GameObject("Text", typeof(RectTransform));
+        textGo.transform.SetParent(go.transform, false);
+        var textRt = (RectTransform)textGo.transform;
+        textRt.anchorMin = Vector2.zero;
+        textRt.anchorMax = Vector2.one;
+        textRt.offsetMin = new Vector2(0f, 10f);   // leave room for the hold bar underneath
+        textRt.offsetMax = Vector2.zero;
+
+        var text = textGo.AddComponent<TextMeshProUGUI>();
+        text.fontSize = rowFontSize;
+        text.color = dormantColor;
+        text.text = "";
+        text.enableWordWrapping = false;
+        text.overflowMode = TextOverflowModes.Overflow;
+        text.alignment = TextAlignmentOptions.MidlineLeft;
+        lane.row = text;
+
+        if (lane.prompt.holdSeconds > 0f)
+        {
+            // A thin bar under the row that fills while the key is held.
+            var barGo = new GameObject("HoldBar", typeof(RectTransform));
+            barGo.transform.SetParent(go.transform, false);
+            var barRt = (RectTransform)barGo.transform;
+            barRt.anchorMin = new Vector2(0f, 0f);
+            barRt.anchorMax = new Vector2(1f, 0f);
+            barRt.pivot = new Vector2(0f, 0f);
+            barRt.sizeDelta = new Vector2(0f, 8f);
+            barGo.AddComponent<Image>().color = new Color(1f, 1f, 1f, 0.15f);
+
+            var fillGo = new GameObject("Fill", typeof(RectTransform));
+            fillGo.transform.SetParent(barGo.transform, false);
+            var fillRt = (RectTransform)fillGo.transform;
+            fillRt.anchorMin = Vector2.zero;
+            fillRt.anchorMax = new Vector2(0f, 1f);
+            fillRt.offsetMin = Vector2.zero;
+            fillRt.offsetMax = Vector2.zero;
+            fillGo.AddComponent<Image>().color = successColor;
+
+            lane.holdBar = fillRt;
+            lane.holdBarRoot = barGo;
+            barGo.SetActive(false);
+        }
     }
 
     void ClearLanes()
     {
         foreach (var lane in lanes)
         {
-            if (lane.row != null) Destroy(lane.row.gameObject);
+            if (lane.row != null) Destroy(lane.row.transform.parent.gameObject);
         }
         lanes.Clear();
     }

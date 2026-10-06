@@ -17,6 +17,8 @@ MonoBehaviour:
   weekContext: Nobody Knows Yet
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
+  showMeterIntro: 1
+  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. On the work call, hold E to stay in the meeting while you respond to the prompts: hold SPACE to breathe, and tap Q or F when they appear."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.03

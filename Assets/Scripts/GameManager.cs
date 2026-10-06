@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Optional. The card shown after each Self Hour response (impact, facts, how to help). Created automatically if left empty.")]
     public ResponseFeedbackUI responseFeedback;
 
+    [Tooltip("Optional. The screen that explains the meters before the Partner Hour (see ChapterData.showMeterIntro). Created automatically if left empty.")]
+    public MeterIntroUI meterIntro;
+
     [Header("End")]
     public ResponseLogger logger;
     public Button restartButton;
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour
             CarryoverState.Reset();
         }
 
-        continueButton.onClick.AddListener(StartPartnerHour);
+        continueButton.onClick.AddListener(LeaveContentWarning);
         restartButton.onClick.AddListener(ShowContentWarning);
 
         if (nextChapterButton != null)
@@ -85,6 +88,11 @@ public class GameManager : MonoBehaviour
         selfHourController.AllCuesResolved += OnAllCuesResolved;
 
         SetUpResponseButtons();
+
+        if (meterIntro == null && chapterData.showMeterIntro)
+        {
+            meterIntro = new GameObject("MeterIntro").AddComponent<MeterIntroUI>();
+        }
 
         if (responseFeedback == null)
         {
@@ -130,6 +138,29 @@ public class GameManager : MonoBehaviour
         currentCue = null;
         ShowOnly(contentWarningPanel);
         responsePanel.SetActive(false);
+    }
+
+    // Enter works on the content warning as well as the Continue button.
+    void Update()
+    {
+        if (contentWarningPanel != null && contentWarningPanel.activeInHierarchy
+            && (meterIntro == null || !meterIntro.IsShowing)
+            && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
+        {
+            LeaveContentWarning();
+        }
+    }
+
+    void LeaveContentWarning()
+    {
+        if (meterIntro != null && meterIntro.IsShowing) return;   // already on the explainer
+
+        if (chapterData.showMeterIntro && meterIntro != null)
+        {
+            meterIntro.Show(chapterData.chapterNumber, chapterData.meterIntroNote, StartPartnerHour);
+            return;
+        }
+        StartPartnerHour();
     }
 
     void StartPartnerHour()

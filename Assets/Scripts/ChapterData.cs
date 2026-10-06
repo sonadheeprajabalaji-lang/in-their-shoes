@@ -20,6 +20,14 @@ public class ChapterData : ScriptableObject
     [TextArea(2, 4)]
     public string contentWarningText;
 
+    [Header("Meter explainer")]
+    [Tooltip("Show the screen that explains her four meters between the content warning and the Partner Hour.")]
+    public bool showMeterIntro = false;
+
+    [Tooltip("Optional chapter-specific line on that screen, e.g. the controls and the main task.")]
+    [TextArea(2, 4)]
+    public string meterIntroNote;
+
     [Header("Partner Hour")]
     [Tooltip("How long Partner Hour runs before Self Hour begins")]
     public float partnerHourSeconds = 20f;

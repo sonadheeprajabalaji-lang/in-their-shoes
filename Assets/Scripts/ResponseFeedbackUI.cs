@@ -113,7 +113,7 @@ public class ResponseFeedbackUI : MonoBehaviour
         // The card: a vertical stack that grows to fit its text.
         var card = NewRect("Card", root.transform);
         card.anchorMin = card.anchorMax = card.pivot = new Vector2(0.5f, 0.5f);
-        card.sizeDelta = new Vector2(1150, 0);
+        card.sizeDelta = new Vector2(1400, 0);
         var cardImg = card.gameObject.AddComponent<Image>();
         var panelSprite = Resources.Load<Sprite>("PixelArt/ui_panel");
         if (panelSprite != null)
@@ -139,18 +139,18 @@ public class ResponseFeedbackUI : MonoBehaviour
         var fitter = card.gameObject.AddComponent<ContentSizeFitter>();
         fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        title = NewText("Title", card, 36, TitleColor);
+        title = NewText("Title", card, 42, TitleColor);
         Spacer(card, 8);
-        impactHead = NewText("ImpactHeading", card, 28, ImpactHeading);
-        impactBody = NewText("ImpactBody", card, 25, BodyColor);
+        impactHead = NewText("ImpactHeading", card, 32, ImpactHeading);
+        impactBody = NewText("ImpactBody", card, 29, BodyColor);
         Spacer(card, 6);
-        learnHead = NewText("LearnHeading", card, 28, LearnHeading);
-        learnBody = NewText("LearnBody", card, 25, BodyColor);
+        learnHead = NewText("LearnHeading", card, 32, LearnHeading);
+        learnBody = NewText("LearnBody", card, 29, BodyColor);
         Spacer(card, 6);
-        helpHead = NewText("HelpHeading", card, 28, HelpHeading);
-        helpBody = NewText("HelpBody", card, 25, BodyColor);
+        helpHead = NewText("HelpHeading", card, 32, HelpHeading);
+        helpBody = NewText("HelpBody", card, 29, BodyColor);
         Spacer(card, 8);
-        sources = NewText("Sources", card, 19, SourceColor);
+        sources = NewText("Sources", card, 22, SourceColor);
         Spacer(card, 10);
 
         continueButton = NewButton(card, "Continue  (Space)");
@@ -205,10 +205,10 @@ public class ResponseFeedbackUI : MonoBehaviour
         rowLayout.childControlHeight = false;
         rowLayout.childForceExpandWidth = false;
         var rowLe = row.gameObject.AddComponent<LayoutElement>();
-        rowLe.preferredHeight = 64;
+        rowLe.preferredHeight = 70;
 
         var rt = NewRect("ContinueButton", row);
-        rt.sizeDelta = new Vector2(320, 64);
+        rt.sizeDelta = new Vector2(360, 70);
         var img = rt.gameObject.AddComponent<Image>();
         var buttonSprite = Resources.Load<Sprite>("PixelArt/ui_button");
         if (buttonSprite != null)
@@ -222,7 +222,7 @@ public class ResponseFeedbackUI : MonoBehaviour
         }
         var button = rt.gameObject.AddComponent<Button>();
 
-        var text = NewText("Label", rt, 26, ButtonText);
+        var text = NewText("Label", rt, 30, ButtonText);
         Stretch((RectTransform)text.transform);
         text.alignment = TextAlignmentOptions.Center;
         text.text = label;

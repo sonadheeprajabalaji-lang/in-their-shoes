@@ -16,7 +16,8 @@ public class TaskChecklistUI : MonoBehaviour
     [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where checklist rows will be created.")]
     public RectTransform container;
 
-    public float rowFontSize = 20f;
+    public float rowFontSize = 30f;
+    public float rowWidth = 460f;
     public Color pendingColor = Color.white;
     public Color doneColor = new Color(0.6f, 0.6f, 0.6f);
 
@@ -90,13 +91,13 @@ public class TaskChecklistUI : MonoBehaviour
         text.color = pendingColor;
         text.enableWordWrapping = false;
         text.overflowMode = TextOverflowModes.Overflow;
-        text.rectTransform.sizeDelta = new Vector2(420f, 28f);
+        text.rectTransform.sizeDelta = new Vector2(rowWidth, rowFontSize * 1.4f);
 
         // Explicit size so the layout group can't collapse this row to
         // zero before it ever gets a chance to render.
         var layoutElement = go.AddComponent<LayoutElement>();
-        layoutElement.preferredWidth = 420f;
-        layoutElement.preferredHeight = 28f;
+        layoutElement.preferredWidth = rowWidth;
+        layoutElement.preferredHeight = rowFontSize * 1.4f;
 
         return text;
     }

@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
   player: {fileID: 153307980}
-  promptFontSize: 3
+  promptFontSize: 4.5
   promptHeight: 0.9
   promptColor: {r: 1, g: 1, b: 1, a: 1}
   holdingColor: {r: 1, g: 0.7, b: 0.3, a: 1}
@@ -2223,8 +2223,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3627,7 +3627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaskChecklistUI
   container: {fileID: 875275540}
-  rowFontSize: 20
+  rowFontSize: 30
   pendingColor: {r: 1, g: 1, b: 1, a: 1}
   doneColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
 --- !u!114 &875275542
@@ -4104,8 +4104,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4241,8 +4241,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4622,8 +4622,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4877,8 +4877,9 @@ MonoBehaviour:
   jugglePrompts:
   - label: Breathe through the nausea
     key: 32
-    interval: 1
-    responseWindow: 2
+    holdSeconds: 3
+    interval: 3
+    responseWindow: 5
     missCost:
       body: 0.04
       mind: 0

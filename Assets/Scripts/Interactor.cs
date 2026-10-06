@@ -14,7 +14,7 @@ public class Interactor : MonoBehaviour
     public GridPlayerController player;
 
     [Header("Prompt look")]
-    public float promptFontSize = 3f;
+    public float promptFontSize = 4.5f;
     public float promptHeight = 0.9f;
     public Color promptColor = Color.white;
     public Color holdingColor = new Color(1f, 0.7f, 0.3f);
@@ -118,7 +118,8 @@ public class Interactor : MonoBehaviour
         prompt.fontSize = promptFontSize;
         prompt.outlineWidth = 0.25f;
         prompt.outlineColor = Color.black;
-        prompt.rectTransform.sizeDelta = new Vector2(10f, 1f);
+        prompt.rectTransform.sizeDelta = new Vector2(20f, 1.5f);
+        prompt.enableWordWrapping = false;   // keep "Hold E: ... let go to stop" on one line
         go.GetComponent<MeshRenderer>().sortingOrder = 100;
         go.SetActive(false);
     }

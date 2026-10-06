@@ -119,6 +119,9 @@ public class JugglePrompt
 
     public KeyCode key = KeyCode.Space;
 
+    [Tooltip("0 = tap the key once. Above 0 = hold the key down for this many seconds (e.g. 3 for breathing through a wave). Letting go early starts the hold again. The response window is stretched if it's shorter than the hold.")]
+    public float holdSeconds = 0f;
+
     [Tooltip("Seconds between this lane's prompts while holding")]
     public float interval = 4f;
 
