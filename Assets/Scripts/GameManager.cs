@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Optional. The screen that explains the meters before the Partner Hour (see ChapterData.showMeterIntro). Created automatically if left empty.")]
     public MeterIntroUI meterIntro;
 
+    [Tooltip("Optional. The brief message shown between Partner Hour ending and Self Hour starting (see ChapterData.hourTransitionText). Created automatically if left empty.")]
+    public HourTransitionUI hourTransition;
+
     [Header("End")]
     public ResponseLogger logger;
     public Button restartButton;
@@ -100,6 +103,14 @@ public class GameManager : MonoBehaviour
         {
             responseFeedback = new GameObject("ResponseFeedback").AddComponent<ResponseFeedbackUI>();
         }
+
+        if (hourTransition == null)
+        {
+            hourTransition = new GameObject("HourTransition").AddComponent<HourTransitionUI>();
+        }
+
+        AudioManager.Get().PlayMusic(chapterData.musicClip);
+        AudioManager.Get().PlayAmbience(chapterData.ambienceClip);
 
         ApplySceneText();
 
@@ -199,7 +210,8 @@ public class GameManager : MonoBehaviour
         partnerHourController.EndRoaming();
         checklist.Clear();
         juggle.EndRoaming();
-        StartSelfHour();
+
+        hourTransition.Show(chapterData.hourTransitionText, minShowSeconds: 1.5f, autoDismissAfter: 3.5f, done: StartSelfHour);
     }
 
     void StartSelfHour()

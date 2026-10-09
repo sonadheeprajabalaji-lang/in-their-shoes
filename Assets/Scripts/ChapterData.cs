@@ -37,6 +37,17 @@ public class ChapterData : ScriptableObject
     [TextArea(2, 4)]
     public string meterIntroNote;
 
+    [Header("Audio (optional -- safe to leave empty until you have clips)")]
+    [Tooltip("Looping background music for this chapter.")]
+    public AudioClip musicClip;
+    [Tooltip("Looping ambient background sound for the room (distinct from music).")]
+    public AudioClip ambienceClip;
+
+    [Header("Hour transition")]
+    [Tooltip("Shown briefly between Partner Hour ending and Self Hour starting.")]
+    [TextArea(1, 3)]
+    public string hourTransitionText = "She's become too tired to continue.";
+
     [Header("Partner Hour")]
     [Tooltip("How long Partner Hour runs before Self Hour begins")]
     public float partnerHourSeconds = 20f;

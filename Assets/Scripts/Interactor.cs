@@ -18,11 +18,17 @@ public class Interactor : MonoBehaviour
     public float promptHeight = 0.9f;
     public Color promptColor = Color.white;
     public Color holdingColor = new Color(1f, 0.7f, 0.3f);
+    public Color graceColor = new Color(1f, 0.45f, 0.35f);
+
+    [Header("Hold forgiveness")]
+    [Tooltip("If E is released mid-hold, this is how long the player has to press it again before the hold actually cancels. Protects against an accidental quick tap breaking the hold.")]
+    public float holdReleaseGrace = 0.3f;
 
     TextMeshPro prompt;
 
     InteractableTask holding;
     float holdElapsed;
+    float graceUntil = -1f;   // -1 = not currently in a release grace window
 
     void Awake()
     {
@@ -53,20 +59,40 @@ public class Interactor : MonoBehaviour
     {
         holding = task;
         holdElapsed = 0f;
+        graceUntil = -1f;
         player.InputLocked = true;
         task.BeginHold();
     }
 
     void UpdateHold()
     {
-        // Released early: cancelled, locked in, no retry on this attempt
-        if (Input.GetKeyUp(KeyCode.E))
+        bool keyDown = Input.GetKey(KeyCode.E);
+
+        if (!keyDown)
         {
-            var cancelled = holding;
-            EndHold();
-            cancelled.CancelHold();
+            // E isn't down right now. Rather than cancel on the spot, give
+            // the player a short window to press it again -- this is what
+            // protects against an accidental quick tap breaking the hold.
+            // Progress simply doesn't advance while waiting.
+            if (graceUntil < 0f)
+            {
+                graceUntil = Time.time + holdReleaseGrace;
+            }
+
+            if (Time.time >= graceUntil)
+            {
+                var cancelled = holding;
+                EndHold();
+                cancelled.CancelHold();
+                return;
+            }
+
+            ShowGracePrompt(holding);
             return;
         }
+
+        // E is down: clear any pending grace and progress as normal.
+        graceUntil = -1f;
 
         holdElapsed += Time.deltaTime;
         float t = Mathf.Clamp01(holdElapsed / holding.holdDuration);
@@ -80,10 +106,19 @@ public class Interactor : MonoBehaviour
         }
     }
 
+    void ShowGracePrompt(InteractableTask task)
+    {
+        prompt.text = $"Press E again to keep {task.holdingLabel.ToLowerInvariant()}\u2026";
+        prompt.color = graceColor;
+        prompt.transform.position = task.transform.position + Vector3.up * promptHeight;
+        if (!prompt.gameObject.activeSelf) prompt.gameObject.SetActive(true);
+    }
+
     void EndHold()
     {
         player.InputLocked = false;
         holding = null;
+        graceUntil = -1f;
     }
 
     // Called by PartnerHourController if Partner Hour ends (a meter hit

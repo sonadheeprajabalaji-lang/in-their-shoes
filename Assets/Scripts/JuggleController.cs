@@ -17,9 +17,18 @@ using UnityEngine.UI;
 // pass/fail layer on the choice.
 public class JuggleController : MonoBehaviour
 {
-    [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where juggle prompt rows will be created.")]
+    [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where juggle prompt rows will be created. Point this at the same RectTransform as TaskChecklistUI's Container to show both lists in one consolidated box.")]
     public RectTransform container;
     public MeterController meters;
+
+    [Header("Audio (optional)")]
+    public AudioClip hitClip;
+    public AudioClip missClip;
+
+    [Tooltip("Shown only while a hold with juggle prompts is active. Leave blank for no heading.")]
+    public string sectionHeading = "Right now";
+    public Color headingColor = new Color(1f, 0.85f, 0.3f);
+    GameObject heading;
 
     [Header("Look")]
     public float rowFontSize = 34f;
@@ -105,7 +114,12 @@ public class JuggleController : MonoBehaviour
     {
         ClearLanes();
 
-        if (task.jugglePrompts == null) return;
+        if (task.jugglePrompts == null || task.jugglePrompts.Length == 0) return;
+
+        if (!string.IsNullOrEmpty(sectionHeading))
+        {
+            heading = CreateHeading(sectionHeading, headingColor);
+        }
 
         foreach (var prompt in task.jugglePrompts)
         {
@@ -113,6 +127,25 @@ public class JuggleController : MonoBehaviour
             CreateRow(lane);
             lanes.Add(lane);
         }
+    }
+
+    GameObject CreateHeading(string text, Color color)
+    {
+        var go = new GameObject("Heading_Juggle", typeof(RectTransform));
+        go.transform.SetParent(container, false);
+
+        var label = go.AddComponent<TextMeshProUGUI>();
+        label.text = text;
+        label.fontSize = rowFontSize * 0.7f;
+        label.fontStyle = FontStyles.Bold;
+        label.color = color;
+        label.enableWordWrapping = false;
+
+        var layoutElement = go.AddComponent<LayoutElement>();
+        layoutElement.preferredWidth = rowWidth;
+        layoutElement.preferredHeight = rowFontSize * 0.9f;
+
+        return go;
     }
 
     void OnHoldEnded(InteractableTask task)
@@ -194,6 +227,8 @@ public class JuggleController : MonoBehaviour
         lane.row.color = success ? successColor : missColor;
         lane.clearResultAt = Time.time + resultShowSeconds;
         if (lane.holdBarRoot != null) lane.holdBarRoot.SetActive(false);
+
+        AudioManager.Get().PlaySFX(success ? hitClip : missClip);
     }
 
     static string KeyName(KeyCode key)
@@ -276,5 +311,11 @@ public class JuggleController : MonoBehaviour
             if (lane.row != null) Destroy(lane.row.transform.parent.gameObject);
         }
         lanes.Clear();
+
+        if (heading != null)
+        {
+            Destroy(heading);
+            heading = null;
+        }
     }
 }

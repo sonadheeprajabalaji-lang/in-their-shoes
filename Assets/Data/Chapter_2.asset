@@ -15,10 +15,19 @@ MonoBehaviour:
   chapterNumber: 2
   chapterTitle: Setting Up the Nursery
   weekContext: Week 22, second trimester
-  obstacleText: "Worries about the birth and coping as a parent (intrusive 'what if' thoughts)"
-  mainTaskText: "Setting up the nursery"
+  obstacleText: Worries about the birth and coping as a parent (intrusive 'what if'
+    thoughts)
+  mainTaskText: Setting up the nursery
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
+  showMeterIntro: 1
+  meterIntroNote: 'Move with the arrow keys or WASD, and press E to use things. While
+    setting up the nursery, hold E to keep sorting through it while you respond to
+    the prompts: tap SPACE to keep sorting, Q to sound excited for mum, and F to
+    quiet the what-ifs.'
+  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  ambienceClip: {fileID: 0}
+  hourTransitionText: The what-ifs win, for tonight. She needs to stop.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.02
@@ -46,21 +55,40 @@ MonoBehaviour:
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
+    impactText: '[PLACEHOLDER -- narrative impact + next-chapter effect summary,
+      matching Chapter 1''s tone]'
+    learnText: '[PLACEHOLDER -- real second-trimester research on antenatal anxiety
+      / intrusive thoughts, matching Chapter 1''s citation rigor]'
+    helpText: '[PLACEHOLDER -- practical, specific partner guidance]'
+    sourceText: '[PLACEHOLDER -- real citations, e.g. Author et al. (Year), Journal]'
   - label: Ask how she's really feeling
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
+    impactText: '[PLACEHOLDER]'
+    learnText: '[PLACEHOLDER]'
+    helpText: '[PLACEHOLDER]'
+    sourceText: '[PLACEHOLDER]'
   - label: Clear it away quietly
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
+    impactText: '[PLACEHOLDER]'
+    learnText: '[PLACEHOLDER]'
+    helpText: '[PLACEHOLDER]'
+    sourceText: '[PLACEHOLDER]'
   - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
+    impactText: '[PLACEHOLDER]'
+    learnText: '[PLACEHOLDER]'
+    helpText: '[PLACEHOLDER]'
+    sourceText: '[PLACEHOLDER]'
+  learnHeading: '[PLACEHOLDER -- e.g. "In the second trimester"]'

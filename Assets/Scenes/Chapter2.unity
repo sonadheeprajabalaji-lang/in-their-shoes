@@ -472,6 +472,8 @@ MonoBehaviour:
   promptHeight: 0.9
   promptColor: {r: 1, g: 1, b: 1, a: 1}
   holdingColor: {r: 1, g: 0.7, b: 0.3, a: 1}
+  graceColor: {r: 1, g: 0.45, b: 0.35, a: 1}
+  holdReleaseGrace: 0.3
 --- !u!114 &153307980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1663,11 +1665,21 @@ MonoBehaviour:
   displayName: 
   promptText: Press E
   locked: 0
+  showIndicator: 1
+  indicatorGlyph: '!'
+  indicatorColor: {r: 1, g: 0.82, b: 0.15, a: 1}
+  indicatorOutline: {r: 0.25, g: 0.05, b: 0.05, a: 1}
+  indicatorPulseSpeed: 2.4
+  indicatorBobHeight: 0.08
+  indicatorScalePulse: 0.15
   cost:
     body: 0.3
     mind: 0.1
     feelingLikeAPerson: 0.1
     mask: 0.1
+  completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
+  holdCompleteClip: {fileID: 0}
+  holdCancelClip: {fileID: 0}
   holdDuration: 0
   holdingLabel: Holding
   jugglePrompts: []
@@ -2674,11 +2686,21 @@ MonoBehaviour:
   displayName: 
   promptText: Press E
   locked: 0
+  showIndicator: 1
+  indicatorGlyph: '!'
+  indicatorColor: {r: 1, g: 0.82, b: 0.15, a: 1}
+  indicatorOutline: {r: 0.25, g: 0.05, b: 0.05, a: 1}
+  indicatorPulseSpeed: 2.4
+  indicatorBobHeight: 0.08
+  indicatorScalePulse: 0.15
   cost:
     body: 0.1
     mind: 0.4
     feelingLikeAPerson: 0.1
     mask: 0.2
+  completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
+  holdCompleteClip: {fileID: 0}
+  holdCancelClip: {fileID: 0}
   holdDuration: 0
   holdingLabel: Holding
   jugglePrompts: []
@@ -3369,7 +3391,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaskChecklistUI
   container: {fileID: 875275540}
+  sectionHeading: Tasks
+  headingColor: {r: 0.9, g: 0.88, b: 0.75, a: 1}
   rowFontSize: 20
+  rowWidth: 460
   pendingColor: {r: 1, g: 1, b: 1, a: 1}
   doneColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
 --- !u!114 &875275542
@@ -4609,16 +4634,27 @@ MonoBehaviour:
   displayName: 
   promptText: Press E
   locked: 0
+  showIndicator: 1
+  indicatorGlyph: '!'
+  indicatorColor: {r: 1, g: 0.82, b: 0.15, a: 1}
+  indicatorOutline: {r: 0.25, g: 0.05, b: 0.05, a: 1}
+  indicatorPulseSpeed: 2.4
+  indicatorBobHeight: 0.08
+  indicatorScalePulse: 0.15
   cost:
     body: 0
     mind: 0
     feelingLikeAPerson: 0
     mask: 0
+  completeClip: {fileID: 0}
+  holdCompleteClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
+  holdCancelClip: {fileID: 0}
   holdDuration: 10
   holdingLabel: Hold E to sort through the nursery
   jugglePrompts:
   - label: Keep sorting
     key: 32
+    holdSeconds: 0
     interval: 4
     responseWindow: 5
     missCost:
@@ -4628,6 +4664,7 @@ MonoBehaviour:
       mask: 0
   - label: Sound excited for mom
     key: 113
+    holdSeconds: 0
     interval: 2
     responseWindow: 3
     missCost:
@@ -4637,6 +4674,7 @@ MonoBehaviour:
       mask: 0.04
   - label: Quiet the what-ifs
     key: 102
+    holdSeconds: 0
     interval: 1
     responseWindow: 2
     missCost:
@@ -4992,14 +5030,20 @@ MonoBehaviour:
   partnerHourController: {fileID: 1549917789}
   checklist: {fileID: 875275541}
   juggle: {fileID: 1766828074}
+  sceneText: {fileID: 0}
   selfHourController: {fileID: 1549917791}
   responseButtons:
   - {fileID: 1902162122}
   - {fileID: 545231365}
   - {fileID: 564206439}
   - {fileID: 622439511}
+  responseFeedback: {fileID: 0}
+  meterIntro: {fileID: 0}
+  hourTransition: {fileID: 0}
   logger: {fileID: 1549917788}
   restartButton: {fileID: 2118493556}
+  nextSceneName: 
+  nextChapterButton: {fileID: 0}
 --- !u!4 &1549917786
 Transform:
   m_ObjectHideFlags: 0
@@ -5207,11 +5251,21 @@ MonoBehaviour:
   displayName: 
   promptText: Press E
   locked: 0
+  showIndicator: 1
+  indicatorGlyph: '!'
+  indicatorColor: {r: 1, g: 0.82, b: 0.15, a: 1}
+  indicatorOutline: {r: 0.25, g: 0.05, b: 0.05, a: 1}
+  indicatorPulseSpeed: 2.4
+  indicatorBobHeight: 0.08
+  indicatorScalePulse: 0.15
   cost:
     body: 0.1
     mind: 0.6
     feelingLikeAPerson: 0.1
     mask: 0.1
+  completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
+  holdCompleteClip: {fileID: 0}
+  holdCancelClip: {fileID: 0}
   holdDuration: 0
   holdingLabel: Holding
   jugglePrompts: []
@@ -5677,8 +5731,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JuggleController
   container: {fileID: 1766828073}
   meters: {fileID: 1549917790}
+  hitClip: {fileID: 0}
+  missClip: {fileID: 0}
+  sectionHeading: Right now
+  headingColor: {r: 1, g: 0.85, b: 0.3, a: 1}
+  rowFontSize: 34
+  rowWidth: 760
   dormantColor: {r: 1, g: 1, b: 1, a: 0.2}
   activeColor: {r: 1, g: 0.85, b: 0.3, a: 1}
+  successColor: {r: 0.45, g: 0.85, b: 0.6, a: 1}
+  missColor: {r: 0.95, g: 0.45, b: 0.4, a: 1}
+  resultShowSeconds: 0.7
 --- !u!1 &1801388635
 GameObject:
   m_ObjectHideFlags: 0
@@ -6383,11 +6446,21 @@ MonoBehaviour:
   displayName: 
   promptText: Press E
   locked: 0
+  showIndicator: 1
+  indicatorGlyph: '!'
+  indicatorColor: {r: 1, g: 0.82, b: 0.15, a: 1}
+  indicatorOutline: {r: 0.25, g: 0.05, b: 0.05, a: 1}
+  indicatorPulseSpeed: 2.4
+  indicatorBobHeight: 0.08
+  indicatorScalePulse: 0.15
   cost:
     body: 0.4
     mind: 0.1
     feelingLikeAPerson: 0.1
     mask: 0.2
+  completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
+  holdCompleteClip: {fileID: 0}
+  holdCancelClip: {fileID: 0}
   holdDuration: 0
   holdingLabel: Holding
   jugglePrompts: []

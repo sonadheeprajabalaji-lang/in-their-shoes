@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 // Put this on any object the player can interact with: the dishes, the
@@ -29,9 +30,33 @@ public class InteractableTask : MonoBehaviour
     [Tooltip("While locked, interacting does nothing. Self Hour locks every task except the seeded cue.")]
     public bool locked;
 
+    [Header("Always-visible indicator")]
+    [Tooltip("A small marker shown above this object whenever it's unlocked, so the player can tell from a distance it's interactable -- separate from the detailed \"Press E\" prompt, which only shows up close. Hides automatically once locked.")]
+    public bool showIndicator = true;
+    public string indicatorGlyph = "!";
+    public Color indicatorColor = new Color(1f, 0.82f, 0.15f, 1f);     // high-contrast gold
+    public Color indicatorOutline = new Color(0.25f, 0.05f, 0.05f, 1f); // dark red-brown, not plain black
+
+    [Tooltip("How fast the indicator pulses (bob + scale). Higher = more urgent-looking.")]
+    public float indicatorPulseSpeed = 2.4f;
+    [Tooltip("How far the indicator bobs up and down, in world units.")]
+    public float indicatorBobHeight = 0.08f;
+    [Tooltip("How much the indicator grows and shrinks (0.15 = \u00b115% scale).")]
+    public float indicatorScalePulse = 0.15f;
+
+    TextMeshPro indicator;
+    Vector3 indicatorBasePos;
+
     [Header("BAU task cost (dishes, stove, etc)")]
     [Tooltip("Applied once, immediately, when this task is completed. Leave at 0 for the main/hold task, which affects drain speed instead (see PartnerChoice multipliers).")]
     public MeterRates cost;
+
+    [Header("Audio (optional)")]
+    [Tooltip("Played on a normal tap-complete (BAU tasks). Leave empty for silence.")]
+    public AudioClip completeClip;
+    [Tooltip("Played when a hold completes (push through) or cancels (step away). Leave empty for silence.")]
+    public AudioClip holdCompleteClip;
+    public AudioClip holdCancelClip;
 
     [Header("Hold to complete (optional)")]
     [Tooltip("0 = a normal tap interaction (dishes, stove, etc). Above 0 = the player must hold Interact for this many seconds, and letting go early counts as a different outcome.")]
@@ -61,8 +86,56 @@ public class InteractableTask : MonoBehaviour
         }
     }
 
-    void OnEnable() { All.Add(this); }
+    void OnEnable()
+    {
+        All.Add(this);
+        if (showIndicator && indicator == null) CreateIndicator();
+    }
+
     void OnDisable() { All.Remove(this); }
+
+    void Update()
+    {
+        if (indicator == null) return;
+
+        bool shouldShow = showIndicator && !locked;
+        if (indicator.gameObject.activeSelf != shouldShow)
+        {
+            indicator.gameObject.SetActive(shouldShow);
+        }
+        if (!shouldShow) return;
+
+        // A small bob + scale pulse, offset per-instance (via GetInstanceID)
+        // so a room full of indicators doesn't pulse in perfect unison,
+        // which reads as more alive and is easier to notice at a glance.
+        float phase = Time.time * indicatorPulseSpeed + (GetInstanceID() % 100) * 0.1f;
+        float pulse = Mathf.Sin(phase);
+
+        indicator.transform.localPosition = indicatorBasePos + Vector3.up * (pulse * indicatorBobHeight);
+        indicator.transform.localScale = Vector3.one * (1f + pulse * indicatorScalePulse);
+    }
+
+    void CreateIndicator()
+    {
+        var go = new GameObject("InteractIndicator");
+        go.transform.SetParent(transform, false);
+        // Sits above the detailed "Press E" prompt (promptHeight ~0.9 by
+        // default on Interactor), so both can be visible at once up close.
+        indicatorBasePos = Vector3.up * (GridPlayerController.CellSize * 1.2f);
+        go.transform.localPosition = indicatorBasePos;
+
+        indicator = go.AddComponent<TextMeshPro>();
+        indicator.text = indicatorGlyph;
+        indicator.fontSize = 4.2f;
+        indicator.fontStyle = FontStyles.Bold;
+        indicator.color = indicatorColor;
+        indicator.alignment = TextAlignmentOptions.Center;
+        indicator.outlineWidth = 0.35f; // thicker, higher-contrast outline than before
+        indicator.outlineColor = indicatorOutline;
+
+        var mr = go.GetComponent<MeshRenderer>();
+        if (mr != null) mr.sortingOrder = 50; // above the room, below the close-up prompt (100)
+    }
 
     public bool OccupiesCell(Vector3 worldPos)
     {
@@ -72,6 +145,7 @@ public class InteractableTask : MonoBehaviour
     public void Interact()
     {
         if (locked) return;
+        AudioManager.Get().PlaySFX(completeClip);
         Interacted?.Invoke(this);
     }
 
@@ -86,12 +160,14 @@ public class InteractableTask : MonoBehaviour
     public void CompleteHold()
     {
         if (locked) return;
+        AudioManager.Get().PlaySFX(holdCompleteClip);
         HoldCompleted?.Invoke(this);
     }
 
     public void CancelHold()
     {
         if (locked) return;
+        AudioManager.Get().PlaySFX(holdCancelClip);
         HoldCancelled?.Invoke(this);
     }
 

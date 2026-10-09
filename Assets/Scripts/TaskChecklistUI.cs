@@ -13,8 +13,12 @@ using UnityEngine.UI;
 // prompt above it in the world; showing it here too would be redundant.
 public class TaskChecklistUI : MonoBehaviour
 {
-    [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where checklist rows will be created.")]
+    [Tooltip("An empty RectTransform under your Canvas, inside the Partner Hour panel, where checklist rows will be created. Point this at the same RectTransform as JuggleController's Container to show both lists in one consolidated box.")]
     public RectTransform container;
+
+    [Tooltip("Shown once, above the rows. Leave blank for no heading.")]
+    public string sectionHeading = "Tasks";
+    public Color headingColor = new Color(0.9f, 0.88f, 0.75f);
 
     public float rowFontSize = 30f;
     public float rowWidth = 460f;
@@ -22,6 +26,7 @@ public class TaskChecklistUI : MonoBehaviour
     public Color doneColor = new Color(0.6f, 0.6f, 0.6f);
 
     readonly Dictionary<InteractableTask, TMP_Text> rows = new Dictionary<InteractableTask, TMP_Text>();
+    GameObject heading;
 
     void Awake()
     {
@@ -55,6 +60,11 @@ public class TaskChecklistUI : MonoBehaviour
     {
         Clear();
 
+        if (!string.IsNullOrEmpty(sectionHeading))
+        {
+            heading = CreateHeading(sectionHeading, headingColor);
+        }
+
         foreach (var task in InteractableTask.All)
         {
             if (task.RequiresHold) continue; // the main task isn't on this checklist
@@ -65,19 +75,42 @@ public class TaskChecklistUI : MonoBehaviour
         }
     }
 
-    // Called by GameManager when Partner Hour ends.
+    // Called by GameManager when Partner Hour ends. Only destroys rows
+    // this script created -- the container may be shared with
+    // JuggleController, so it must never sweep every child.
     public void Clear()
     {
         foreach (var kvp in rows)
         {
             kvp.Key.Interacted -= OnTaskDone;
+            if (kvp.Value != null) Destroy(kvp.Value.gameObject);
         }
         rows.Clear();
 
-        for (int i = container.childCount - 1; i >= 0; i--)
+        if (heading != null)
         {
-            Destroy(container.GetChild(i).gameObject);
+            Destroy(heading);
+            heading = null;
         }
+    }
+
+    GameObject CreateHeading(string text, Color color)
+    {
+        var go = new GameObject("Heading_" + name);
+        go.transform.SetParent(container, false);
+
+        var label = go.AddComponent<TextMeshProUGUI>();
+        label.text = text;
+        label.fontSize = rowFontSize * 0.85f;
+        label.fontStyle = FontStyles.Bold;
+        label.color = color;
+        label.enableWordWrapping = false;
+
+        var layoutElement = go.AddComponent<LayoutElement>();
+        layoutElement.preferredWidth = rowWidth;
+        layoutElement.preferredHeight = rowFontSize * 1.1f;
+
+        return go;
     }
 
     TMP_Text CreateRow(InteractableTask task)
