@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edad3068bd72c46f0a544237e3cec695, type: 3}
+  m_Name: Chapter_3
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterData
+  chapterNumber: 3
+  chapterTitle: Packing the Hospital Bag
+  weekContext: Week 37, third trimester
+  obstacleText: "Broken sleep, heartburn and breathlessness"
+  mainTaskText: "Packing the hospital bag and getting the house ready"
+  contentWarningText: This game explores the emotional and physical strain of pregnancy
+    and early parenthood. You can exit at any time.
+  showMeterIntro: 1
+  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While packing the hospital bag, hold E and respond to the prompts: hold SPACE to catch her breath, tap Q to walk slowly, and tap F to notice the baby's kicks."
+  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  ambienceClip: {fileID: 0}
+  hourTransitionText: "She has to lie down. The bag can wait."
+  partnerHourSeconds: 120
+  baseDrain:
+    body: 0.035
+    mind: 0.025
+    feelingLikeAPerson: 0.025
+    mask: 0.02
+  choices:
+  - label: "Stop and rest"
+    multipliers:
+      body: 0.5
+      mind: 1.3
+      feelingLikeAPerson: 1
+      mask: 1
+  - label: "Keep packing"
+    multipliers:
+      body: 1.6
+      mind: 0.6
+      feelingLikeAPerson: 1
+      mask: 1
+  choiceTriggerTaskId: hospital_bag
+  responses:
+  - label: Make something she can eat
+    nextChapterEase:
+      body: 0.85
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Ask how she's really feeling
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 0.85
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Clear it away quietly
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Carry on as normal
+    nextChapterEase:
+      body: 3
+      mind: 3
+      feelingLikeAPerson: 3
+      mask: 3
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  learnHeading: Did you know?

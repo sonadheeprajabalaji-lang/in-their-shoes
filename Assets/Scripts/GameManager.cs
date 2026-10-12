@@ -76,6 +76,13 @@ public class GameManager : MonoBehaviour
         }
 
         continueButton.onClick.AddListener(LeaveContentWarning);
+        // Scenes made by copying a chapter without a Next Chapter button
+        // still get one: copy Play again, relabel it, and stack the two.
+        if (nextChapterButton == null && !string.IsNullOrEmpty(nextSceneName) && restartButton != null)
+        {
+            nextChapterButton = CreateNextChapterButton();
+        }
+
         restartButton.onClick.AddListener(ShowContentWarning);
 
         if (nextChapterButton != null)
@@ -120,6 +127,22 @@ public class GameManager : MonoBehaviour
         }
 
         ShowContentWarning();
+    }
+
+    Button CreateNextChapterButton()
+    {
+        var restartRt = (RectTransform)restartButton.transform;
+        var copy = Instantiate(restartButton.gameObject, restartRt.parent);
+        copy.name = "NextChapter";
+        var rt = (RectTransform)copy.transform;
+        rt.anchoredPosition = restartRt.anchoredPosition + new Vector2(0f, 40f);
+        restartRt.anchoredPosition += new Vector2(0f, -40f);
+
+        var button = copy.GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
+        var label = copy.GetComponentInChildren<TMP_Text>(true);
+        if (label != null) label.text = "Next Chapter";
+        return button;
     }
 
     void LoadNextChapter()

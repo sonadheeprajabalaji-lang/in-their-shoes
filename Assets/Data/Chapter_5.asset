@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edad3068bd72c46f0a544237e3cec695, type: 3}
+  m_Name: Chapter_5
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterData
+  chapterNumber: 5
+  chapterTitle: Three in the Morning
+  weekContext: Week 6, postpartum
+  obstacleText: "Severe sleep deprivation"
+  mainTaskText: "Settling a crying baby to sleep"
+  contentWarningText: This game explores the emotional and physical strain of pregnancy
+    and early parenthood. You can exit at any time.
+  showMeterIntro: 1
+  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While settling the baby, hold E and respond to the prompts: hold SPACE to rock and shush, tap Q to stay awake, and tap F to text back friends who are checking in."
+  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  ambienceClip: {fileID: 0}
+  hourTransitionText: "The baby's finally asleep. She can't remember the last time she was."
+  partnerHourSeconds: 120
+  baseDrain:
+    body: 0.03
+    mind: 0.04
+    feelingLikeAPerson: 0.03
+    mask: 0.025
+  choices:
+  - label: "Put the baby down and step away"
+    multipliers:
+      body: 1
+      mind: 0.6
+      feelingLikeAPerson: 1.4
+      mask: 1
+  - label: "Keep rocking"
+    multipliers:
+      body: 1.3
+      mind: 1.3
+      feelingLikeAPerson: 0.7
+      mask: 1
+  choiceTriggerTaskId: settle_baby
+  responses:
+  - label: Make something she can eat
+    nextChapterEase:
+      body: 0.85
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Ask how she's really feeling
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 0.85
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Clear it away quietly
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Carry on as normal
+    nextChapterEase:
+      body: 3
+      mind: 3
+      feelingLikeAPerson: 3
+      mask: 3
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  learnHeading: Did you know?

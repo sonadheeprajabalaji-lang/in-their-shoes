@@ -19,9 +19,10 @@ using UnityEngine.UI;
 //   - draws her in Partner Hour and the partner in Self Hour, with 4-way
 //     facing and a 2-frame walk
 //   - marks the traces still left in Self Hour with a small sparkle
-//   - adds the chapter's mood overlay (Chapter 1: green "nausea" vignette
-//     that deepens as Body drops; Chapter 2: grey "worry" vignette and
-//     thought bubbles as Mind drops), and an evening tint in Self Hour
+//   - adds the chapter's mood overlay: a coloured vignette that deepens as
+//     one meter drops (e.g. green nausea on Body in Chapter 1, grey worry on
+//     Mind in Chapter 2), optional thought bubbles over her, and an evening
+//     tint in Self Hour
 //   - restyles the meters, panels, buttons and text (Pixelify Sans font),
 //     and puts a dark panel behind the "Press E" prompt
 //
@@ -95,13 +96,15 @@ public class PixelArtSkin : MonoBehaviour
         public string cancelled;      // let go early (or never started)
     }
 
-    enum Mood { Nausea, Worry }
+    enum MoodMeter { Body, Mind }
 
     class ChapterArt
     {
         public string room;                 // full-room sprite, 11 x 10 cells, x -5..5, y -4..5
         public string herPrefix = "her";    // her sprites: <prefix>_<down|up|side>_<0|1>
-        public Mood mood;
+        public MoodMeter moodMeter;         // which meter deepens the mood vignette
+        public Color moodColor;             // vignette colour (alpha is driven at runtime)
+        public string bubble;               // sprite popping up over her as that meter drops; null = none
         public Dictionary<string, TaskArt> tasks;
         public HoldArt hold;
         // Grid cells (x, y) covered by furniture drawn into the room. They get
@@ -116,7 +119,8 @@ public class PixelArtSkin : MonoBehaviour
             1, new ChapterArt
             {
                 room = "room_base",
-                mood = Mood.Nausea,
+                moodMeter = MoodMeter.Body,
+                moodColor = new Color(0.55f, 0.7f, 0.38f, 0f),   // queasy green
                 tasks = new Dictionary<string, TaskArt>
                 {
                     { "dishes", new TaskArt { todo = new[] { "sink_dirty" }, done = "sink_clean", trace = new[] { "sink_dirty" } } },
@@ -147,7 +151,9 @@ public class PixelArtSkin : MonoBehaviour
             {
                 room = "room_base_ch2",
                 herPrefix = "her_bump",
-                mood = Mood.Worry,
+                moodMeter = MoodMeter.Mind,
+                moodColor = new Color(0.43f, 0.41f, 0.59f, 0f),  // grey-violet worry
+                bubble = "worry_bubble",
                 tasks = new Dictionary<string, TaskArt>
                 {
                     { "dinner",   new TaskArt { todo = new[] { "stove_cooking_0", "stove_cooking_1" }, done = "stove_off", trace = new[] { "stove_cold" } } },
@@ -171,6 +177,145 @@ public class PixelArtSkin : MonoBehaviour
                     new Vector2Int(-4, -3),                                                                      // plant
                     new Vector2Int(4, -1),                                                                       // armchair
                     new Vector2Int(1, -3),                                                                       // car seat box
+                    new Vector2Int(3, -3), new Vector2Int(4, -3),                                                // cot
+                },
+            }
+        },
+        {
+            // Third trimester, ~37 weeks: packing the hospital bag.
+            3, new ChapterArt
+            {
+                room = "room_base_ch3",
+                herPrefix = "her_late",
+                moodMeter = MoodMeter.Body,
+                moodColor = new Color(0.25f, 0.3f, 0.55f, 0f),   // heavy, sleepless blue
+                tasks = new Dictionary<string, TaskArt>
+                {
+                    { "dinner",           new TaskArt { todo = new[] { "stove_cooking_0", "stove_cooking_1" }, done = "stove_off", trace = new[] { "stove_cold" } } },
+                    { "baby_clothes",     new TaskArt { todo = new[] { "washer_running_0", "washer_running_1" }, done = "washer_done", trace = new[] { "washer_wet_0", "washer_wet_1" } } },
+                    { "messages",         new TaskArt { todo = new[] { "phone_ring_0", "phone_ring_1" }, done = "phone_down", trace = new[] { "phone_missed" } } },
+                    { "hospital_numbers", new TaskArt { todo = new[] { "note_todo_0", "note_todo_1" }, done = "note_done", trace = new[] { "note_half" } } },
+                },
+                hold = new HoldArt
+                {
+                    idle = "bag_idle",
+                    active = new[] { "bag_packing_0", "bag_packing_1", "bag_packing_2", "bag_packing_3" },
+                    activeFps = 3f,
+                    completed = "bag_packed",
+                    cancelled = "bag_half_packed",
+                },
+                furniture = new[]
+                {
+                    new Vector2Int(-4, 3), new Vector2Int(-3, 3), new Vector2Int(-2, 3), new Vector2Int(-1, 3),   // fridge, sink, counters
+                    new Vector2Int(1, 3), new Vector2Int(2, 3), new Vector2Int(4, 3),                            // counters, fruit bowl
+                    new Vector2Int(-4, -2), new Vector2Int(-4, -3),                                              // desk, plant
+                    new Vector2Int(4, -1),                                                                       // armchair
+                    new Vector2Int(1, -3),                                                                       // car seat
+                    new Vector2Int(3, -3), new Vector2Int(4, -3),                                                // cot
+                },
+            }
+        },
+        {
+            // Postpartum week 1: feeding the baby.
+            4, new ChapterArt
+            {
+                room = "room_base_ch4",
+                herPrefix = "her_gown",
+                moodMeter = MoodMeter.Body,
+                moodColor = new Color(0.7f, 0.3f, 0.3f, 0f),     // raw, sore red
+                bubble = "pain_bubble",
+                tasks = new Dictionary<string, TaskArt>
+                {
+                    { "dishes",      new TaskArt { todo = new[] { "sink_dirty" }, done = "sink_clean", trace = new[] { "sink_dirty" } } },
+                    { "visitors",    new TaskArt { todo = new[] { "visitors_todo_0", "visitors_todo_1" }, done = "visitors_done", trace = new[] { "visitors_left" } } },
+                    { "pain_relief", new TaskArt { todo = new[] { "pills_todo_0", "pills_todo_1" }, done = "pills_done", trace = new[] { "pills_missed" } } },
+                    { "eat_drink",   new TaskArt { todo = new[] { "eat_todo" }, done = "eat_done", trace = new[] { "eat_untouched" } } },
+                },
+                hold = new HoldArt
+                {
+                    idle = "feed_idle",
+                    active = new[] { "feed_active_0", "feed_active_1", "feed_active_2", "feed_active_3" },
+                    activeFps = 2f,
+                    completed = "feed_done",
+                    cancelled = "feed_crying_0",
+                },
+                furniture = new[]
+                {
+                    new Vector2Int(-4, 3), new Vector2Int(-2, 3), new Vector2Int(-1, 3), new Vector2Int(0, 3),    // fridge, counters, stove
+                    new Vector2Int(1, 3), new Vector2Int(2, 3), new Vector2Int(4, 3),                            // counters, fruit bowl
+                    new Vector2Int(-4, -2), new Vector2Int(-4, -3),                                              // desk, plant
+                    new Vector2Int(4, -1),                                                                       // armchair
+                    new Vector2Int(1, -3),                                                                       // car seat
+                    new Vector2Int(3, -3), new Vector2Int(4, -3),                                                // cot
+                },
+            }
+        },
+        {
+            // Postpartum ~6 weeks, 3 am: settling a crying baby.
+            5, new ChapterArt
+            {
+                room = "room_base_ch5",
+                herPrefix = "her_gown",
+                moodMeter = MoodMeter.Mind,
+                moodColor = new Color(0.12f, 0.14f, 0.3f, 0f),   // dark, foggy night
+                bubble = "sleep_bubble",
+                tasks = new Dictionary<string, TaskArt>
+                {
+                    { "sterilise",    new TaskArt { todo = new[] { "bottles_dirty" }, done = "bottles_clean", trace = new[] { "bottles_dirty" } } },
+                    { "tea",          new TaskArt { todo = new[] { "kettle_0", "kettle_1" }, done = "tea_hot", trace = new[] { "tea_cold" } } },
+                    { "baby_laundry", new TaskArt { todo = new[] { "washer_running_0", "washer_running_1" }, done = "washer_done", trace = new[] { "washer_wet_0", "washer_wet_1" } } },
+                    { "nurse_call",   new TaskArt { todo = new[] { "phone_ring_0", "phone_ring_1" }, done = "phone_down", trace = new[] { "phone_missed" } } },
+                },
+                hold = new HoldArt
+                {
+                    idle = "bassinet_crying_0",
+                    active = new[] { "bassinet_rocking_0", "bassinet_rocking_1", "bassinet_rocking_2", "bassinet_rocking_3" },
+                    activeFps = 3f,
+                    completed = "bassinet_asleep",
+                    cancelled = "bassinet_crying_1",
+                },
+                furniture = new[]
+                {
+                    new Vector2Int(-4, 3), new Vector2Int(-2, 3), new Vector2Int(-1, 3),                         // fridge, counters
+                    new Vector2Int(1, 3), new Vector2Int(2, 3), new Vector2Int(4, 3),                            // counters, fruit bowl
+                    new Vector2Int(-4, -2), new Vector2Int(-3, -2), new Vector2Int(-4, -3),                      // desk, plant
+                    new Vector2Int(4, -1),                                                                       // armchair
+                    new Vector2Int(1, -3),                                                                       // car seat
+                    new Vector2Int(3, -3), new Vector2Int(4, -3),                                                // cot
+                },
+            }
+        },
+        {
+            // Postpartum ~4 months: getting ready for work.
+            6, new ChapterArt
+            {
+                room = "room_base_ch6",
+                herPrefix = "her_work",
+                moodMeter = MoodMeter.Mind,
+                moodColor = new Color(0.43f, 0.41f, 0.59f, 0f),  // grey-violet worry
+                bubble = "worry_bubble",
+                tasks = new Dictionary<string, TaskArt>
+                {
+                    { "nappy_bag",     new TaskArt { todo = new[] { "nappybag_todo" }, done = "nappybag_packed", trace = new[] { "nappybag_no_nappies" } } },
+                    { "express_milk",  new TaskArt { todo = new[] { "milk_todo_0", "milk_todo_1" }, done = "milk_labelled", trace = new[] { "milk_unlabelled" } } },
+                    { "carer_call",    new TaskArt { todo = new[] { "phone_ring_0", "phone_ring_1" }, done = "phone_down", trace = new[] { "phone_missed" } } },
+                    { "handover_list", new TaskArt { todo = new[] { "note_todo_0", "note_todo_1" }, done = "note_done", trace = new[] { "note_half" } } },
+                },
+                hold = new HoldArt
+                {
+                    idle = "outfit_idle",
+                    active = new[] { "outfit_trying_0", "outfit_trying_1", "outfit_trying_2", "outfit_trying_3" },
+                    activeFps = 1.5f,
+                    completed = "outfit_ready",
+                    cancelled = "outfit_pile",
+                },
+                furniture = new[]
+                {
+                    new Vector2Int(-4, 3), new Vector2Int(-3, 3), new Vector2Int(-2, 3), new Vector2Int(-1, 3),   // fridge, sink, counters
+                    new Vector2Int(0, 3), new Vector2Int(1, 3), new Vector2Int(2, 3), new Vector2Int(4, 3),      // stove, counters, fruit bowl
+                    new Vector2Int(-4, -2), new Vector2Int(-4, -3),                                              // desk, plant
+                    new Vector2Int(4, -1),                                                                       // armchair
+                    new Vector2Int(1, -3),                                                                       // car seat
                     new Vector2Int(3, -3), new Vector2Int(4, -3),                                                // cot
                 },
             }
@@ -347,17 +492,16 @@ public class PixelArtSkin : MonoBehaviour
 
         eveningTint = MakeFullScreen(canvasGo.transform, "EveningTint", null, new Color(1f, 0.55f, 0.35f, 0f));
         eveningVignette = MakeFullScreen(canvasGo.transform, "EveningVignette", S("vignette"), new Color(0.13f, 0.1f, 0.2f, 0f));
-        Color moodColor = art.mood == Mood.Nausea
-            ? new Color(0.55f, 0.7f, 0.38f, 0f)    // queasy green
-            : new Color(0.43f, 0.41f, 0.59f, 0f);  // grey-violet worry
+        var moodColor = art.moodColor;
+        moodColor.a = 0f;
         moodVignette = MakeFullScreen(canvasGo.transform, "MoodVignette", S("vignette"), moodColor);
 
-        if (art.mood == Mood.Worry)
+        if (!string.IsNullOrEmpty(art.bubble))
         {
-            var go = new GameObject("WorryBubble");
+            var go = new GameObject("MoodBubble");
             go.transform.SetParent(transform, false);
             worryBubble = go.AddComponent<SpriteRenderer>();
-            worryBubble.sprite = S("worry_bubble");
+            worryBubble.sprite = S(art.bubble);
             worryBubble.sortingOrder = 21;
             worryBubble.enabled = false;
         }
@@ -672,9 +816,9 @@ public class PixelArtSkin : MonoBehaviour
     {
         if (moodVignette == null) return;
 
-        // Chapter 1 is driven by Body (nausea), Chapter 2 by Mind (worry).
+        // Each chapter's mood follows one meter (see ChapterArt.moodMeter).
         Slider driver = null;
-        if (gm.meters != null) driver = art.mood == Mood.Nausea ? gm.meters.body : gm.meters.mind;
+        if (gm.meters != null) driver = art.moodMeter == MoodMeter.Body ? gm.meters.body : gm.meters.mind;
         float value = driver != null ? driver.value : 1f;
         float target = phase == Phase.Partner ? Mathf.Clamp01((1f - value) * 1.1f) * 0.85f : 0f;
         // A slow, uneasy pulse that grows as the meter drops.
@@ -688,8 +832,8 @@ public class PixelArtSkin : MonoBehaviour
         SetAlpha(eveningVignette, Mathf.MoveTowards(eveningVignette.color.a, evening ? 0.55f : 0f, Time.deltaTime * 0.5f));
     }
 
-    // Thought bubbles pop up over her more often as Mind drops: one every
-    // few seconds at first, almost constantly near the bottom.
+    // Thought bubbles pop up over her more often as the mood meter drops:
+    // one every few seconds at first, almost constantly near the bottom.
     float nextBubbleTime;
     float bubbleHideTime;
 

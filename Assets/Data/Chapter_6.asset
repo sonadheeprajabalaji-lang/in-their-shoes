@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edad3068bd72c46f0a544237e3cec695, type: 3}
+  m_Name: Chapter_6
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterData
+  chapterNumber: 6
+  chapterTitle: First Day Back
+  weekContext: Month 4, postpartum
+  obstacleText: "Guilt and separation anxiety about leaving the baby"
+  mainTaskText: "Getting ready for work"
+  contentWarningText: This game explores the emotional and physical strain of pregnancy
+    and early parenthood. You can exit at any time.
+  showMeterIntro: 1
+  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While getting ready for work, hold E and respond to the prompts: hold SPACE to get herself ready, tap Q to push past the clothes that don't fit, and tap F to quiet the worry loop."
+  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  ambienceClip: {fileID: 0}
+  hourTransitionText: "She's out the door. Part of her isn't."
+  partnerHourSeconds: 120
+  baseDrain:
+    body: 0.02
+    mind: 0.035
+    feelingLikeAPerson: 0.035
+    mask: 0.035
+  choices:
+  - label: "Sit down and have a moment"
+    multipliers:
+      body: 1
+      mind: 0.6
+      feelingLikeAPerson: 1
+      mask: 1.4
+  - label: "Push on and get out the door"
+    multipliers:
+      body: 1
+      mind: 1.5
+      feelingLikeAPerson: 1
+      mask: 0.6
+  choiceTriggerTaskId: get_ready
+  responses:
+  - label: Make something she can eat
+    nextChapterEase:
+      body: 0.85
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Ask how she's really feeling
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 0.85
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Clear it away quietly
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  - label: Carry on as normal
+    nextChapterEase:
+      body: 3
+      mind: 3
+      feelingLikeAPerson: 3
+      mask: 3
+    impactText: 
+    learnText: 
+    helpText: 
+    sourceText: 
+  learnHeading: Did you know?
