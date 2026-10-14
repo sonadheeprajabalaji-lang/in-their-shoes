@@ -77,6 +77,32 @@ public class MeterController : MonoBehaviour
     // each meter actually dropped, so MeterEffects can make it visible.
     public event System.Action<MeterRates> HitTaken;
 
+    public Slider Get(HerMeter m) => m switch
+    {
+        HerMeter.Body => body,
+        HerMeter.Mind => mind,
+        HerMeter.FeelingLikeAPerson => feelingLikeAPerson,
+        _ => mask,
+    };
+
+    // Cuts one meter by a fraction of what's left (0.5 = halves it): the
+    // main task's big hit. A fraction can never empty it.
+    public void ApplyMainTaskHit(HerMeter meter, float fraction)
+    {
+        var s = Get(meter);
+        if (s == null) return;
+        float amount = s.value * Mathf.Clamp01(fraction);
+        var hit = new MeterRates(0f, 0f, 0f, 0f);
+        switch (meter)
+        {
+            case HerMeter.Body: hit.body = amount; break;
+            case HerMeter.Mind: hit.mind = amount; break;
+            case HerMeter.FeelingLikeAPerson: hit.feelingLikeAPerson = amount; break;
+            default: hit.mask = amount; break;
+        }
+        ApplyHit(hit, 0f);
+    }
+
     // A big one-off hit that never takes a meter below floor (and leaves a
     // meter already under the floor alone). Used when the main task is done.
     public void ApplyHit(MeterRates hit, float floor)

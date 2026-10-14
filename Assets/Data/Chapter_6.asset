@@ -48,12 +48,8 @@ MonoBehaviour:
       feelingLikeAPerson: 1
       mask: 0.6
   choiceTriggerTaskId: get_ready
-  mainTaskHit:
-    body: 0.2
-    mind: 0.3
-    feelingLikeAPerson: 0.2
-    mask: 0.35
-  mainTaskHitFloor: 0.45
+  mainTaskHitMeter: 2
+  mainTaskHitFraction: 0.5
   responses:
   - label: "Take over the baby admin"
     nextChapterEase:

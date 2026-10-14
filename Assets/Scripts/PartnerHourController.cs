@@ -100,10 +100,11 @@ public class PartnerHourController : MonoBehaviour
         if (choiceMade) return;
         choiceMade = true;
         choiceTask.locked = true;
-        // Getting through it costs her: a big hit, but never enough on its
-        // own to end the hour (see ChapterData.mainTaskHitFloor), and the drain
+        // Getting through it costs her: the chapter's main meter is cut in
+        // half (ChapterData.mainTaskHitMeter / mainTaskHitFraction), which
+        // can't end the hour by itself, and the drain
         // eases back in afterwards (MeterController.afterHitRampSeconds).
-        meters.ApplyHit(chapterData.mainTaskHit, chapterData.mainTaskHitFloor);
+        meters.ApplyMainTaskHit(chapterData.mainTaskHitMeter, chapterData.mainTaskHitFraction);
         SetChoresWaiting(false, null);
         ChoiceMade?.Invoke(1);
     }

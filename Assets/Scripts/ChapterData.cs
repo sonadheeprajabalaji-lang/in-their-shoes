@@ -68,11 +68,11 @@ public class ChapterData : ScriptableObject
     [Tooltip("The taskId (see InteractableTask) whose interaction triggers the Partner Hour choice popup")]
     public string choiceTriggerTaskId;
 
-    [Tooltip("Taken off her meters in one go when she finishes the main task: it should feel like a big hit.")]
-    public MeterRates mainTaskHit = new MeterRates(0.3f, 0.3f, 0.2f, 0.3f);
-    [Tooltip("The main task's hit never takes a meter below this (0..1), so it hurts but doesn't end the hour by itself. A meter already below it isn't hit.")]
-    [Range(0f, 0.8f)]
-    public float mainTaskHitFloor = 0.45f;
+    [Tooltip("The meter the main task hits hardest, e.g. The Mask for a work call she has to fake her way through, Mind for the nursery's what-ifs.")]
+    public HerMeter mainTaskHitMeter = HerMeter.Mask;
+    [Tooltip("How much of that meter's current value is taken when she finishes the main task. 0.5 = it's cut in half. A fraction can't empty it, so the hit never ends the hour by itself.")]
+    [Range(0f, 0.9f)]
+    public float mainTaskHitFraction = 0.5f;
 
     [Header("Self Hour")]
     [Tooltip("Up to as many responses as there are response buttons in the scene. Self Hour now shows one prompt per unfinished BAU task automatically, so there is no fixed cue to set here anymore.")]
@@ -85,6 +85,9 @@ public class ChapterData : ScriptableObject
     [TextArea(1, 3)]
     public string selfHourNotice;
 }
+
+// Names one of her four meters (e.g. the one the main task hits).
+public enum HerMeter { Body, Mind, FeelingLikeAPerson, Mask }
 
 // The four Partner Hour meters, used both as base drain rates and as
 // per-choice multipliers on those rates.
