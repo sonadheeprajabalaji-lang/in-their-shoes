@@ -91,7 +91,7 @@ public class PartnerHourController : MonoBehaviour
 
     void OnBauTaskDone(InteractableTask task)
     {
-        meters.ApplyCost(task.cost);
+        meters.ApplyCost(task.cost, meters.choreCostScale);
         task.locked = true; // done is done; no repeat cost, no lingering prompt
     }
 
@@ -100,6 +100,10 @@ public class PartnerHourController : MonoBehaviour
         if (choiceMade) return;
         choiceMade = true;
         choiceTask.locked = true;
+        // Getting through it costs her: a big hit, but never enough on its
+        // own to end the hour (see ChapterData.mainTaskHitFloor), and the drain
+        // eases back in afterwards (MeterController.afterHitRampSeconds).
+        meters.ApplyHit(chapterData.mainTaskHit, chapterData.mainTaskHitFloor);
         SetChoresWaiting(false, null);
         ChoiceMade?.Invoke(1);
     }

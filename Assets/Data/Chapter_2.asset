@@ -52,6 +52,12 @@ MonoBehaviour:
       feelingLikeAPerson: 0.6
       mask: 1
   choiceTriggerTaskId: nursery
+  mainTaskHit:
+    body: 0.2
+    mind: 0.35
+    feelingLikeAPerson: 0.2
+    mask: 0.2
+  mainTaskHitFloor: 0.45
   responses:
   - label: "Talk about the worries"
     nextChapterEase:

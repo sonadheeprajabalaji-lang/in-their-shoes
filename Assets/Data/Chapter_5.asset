@@ -48,6 +48,12 @@ MonoBehaviour:
       feelingLikeAPerson: 0.7
       mask: 1
   choiceTriggerTaskId: settle_baby
+  mainTaskHit:
+    body: 0.3
+    mind: 0.35
+    feelingLikeAPerson: 0.2
+    mask: 0.15
+  mainTaskHitFloor: 0.45
   responses:
   - label: "Give her real sleep"
     nextChapterEase:

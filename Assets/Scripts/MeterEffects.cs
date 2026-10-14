@@ -61,6 +61,9 @@ public class MeterEffects : MonoBehaviour
     public float lowFlashAt = 0.25f;
     [Tooltip("Flashes per second when a bar has just gone low, and when it's almost empty.")]
     public float lowFlashSlow = 1.5f, lowFlashFast = 4.5f;
+    [Tooltip("How long a bar flashes red and shakes after a big hit (the main task).")]
+    public float hitFlashSeconds = 1.2f;
+    public string hitCaption = "That took a lot out of her.";
 
     static readonly Color BodyColor = new Color32(240, 140, 100, 255);
     static readonly Color MindColor = new Color32(245, 185, 80, 255);
@@ -79,7 +82,8 @@ public class MeterEffects : MonoBehaviour
     class Ghost { public SpriteRenderer source; public SpriteRenderer copy; }
     readonly List<Ghost> ghosts = new List<Ghost>();
 
-    class Bar { public Slider slider; public Image fill; public Color baseColor; public CanvasGroup group; }
+    class Bar { public Slider slider; public Image fill; public Color baseColor; public CanvasGroup group; public float hitUntil; public Vector2 basePos; public bool shaking; }
+    static readonly Color HitColor = new Color32(255, 70, 60, 255);
     readonly List<Bar> bars = new List<Bar>();
     bool barColoursKnown;
     float partnerStartedAt;
@@ -120,6 +124,7 @@ public class MeterEffects : MonoBehaviour
             AddBar(gm.meters.mind);
             AddBar(gm.meters.feelingLikeAPerson);
             AddBar(gm.meters.mask);
+            gm.meters.HitTaken += OnHit;
         }
     }
 
@@ -128,6 +133,7 @@ public class MeterEffects : MonoBehaviour
         if (slider == null) return;
         var bar = new Bar { slider = slider };
         if (slider.fillRect != null) bar.fill = slider.fillRect.GetComponent<Image>();
+        bar.basePos = ((RectTransform)slider.transform).anchoredPosition;
         bar.group = slider.GetComponent<CanvasGroup>();
         if (bar.group == null) bar.group = slider.gameObject.AddComponent<CanvasGroup>();
         bars.Add(bar);
@@ -198,6 +204,24 @@ public class MeterEffects : MonoBehaviour
 
     // ---------- Meter bars: blink at the start, flash when nearly empty ----------
 
+    void OnHit(MeterRates dropped)
+    {
+        float[] d = { dropped.body, dropped.mind, dropped.feelingLikeAPerson, dropped.mask };
+        bool any = false;
+        for (int i = 0; i < bars.Count && i < d.Length; i++)
+        {
+            if (d[i] <= 0.001f) continue;
+            bars[i].hitUntil = Time.time + hitFlashSeconds;
+            any = true;
+        }
+        if (any) ShowCaption(hitCaption, new Color32(255, 150, 140, 255));
+    }
+
+    void OnDestroy()
+    {
+        if (gm != null && gm.meters != null) gm.meters.HitTaken -= OnHit;
+    }
+
     void UpdateBars(bool partner)
     {
         // The skin colours the bars before this runs; remember those colours
@@ -217,6 +241,20 @@ public class MeterEffects : MonoBehaviour
         {
             if (bar.group != null) bar.group.alpha = introAlpha;
             if (bar.fill == null || !barColoursKnown) continue;
+
+            // Just hit: flash red and shake for a moment.
+            var rt = (RectTransform)bar.slider.transform;
+            float hitLeft = bar.hitUntil - Time.time;
+            if (partner && hitLeft > 0f)
+            {
+                float k = hitLeft / hitFlashSeconds;                              // 1 -> 0
+                bool on = Mathf.Repeat(Time.time * 8f, 1f) < 0.5f;
+                bar.fill.color = on ? HitColor : Color.Lerp(bar.baseColor, HitColor, 0.4f);
+                rt.anchoredPosition = bar.basePos + new Vector2(Mathf.Sin(Time.time * 70f) * 6f * k, 0f);
+                bar.shaking = true;
+                continue;
+            }
+            if (bar.shaking) { rt.anchoredPosition = bar.basePos; bar.shaking = false; }
 
             float v = bar.slider.value;
             if (partner && v > 0f && v < lowFlashAt)

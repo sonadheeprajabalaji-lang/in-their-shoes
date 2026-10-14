@@ -68,6 +68,12 @@ public class ChapterData : ScriptableObject
     [Tooltip("The taskId (see InteractableTask) whose interaction triggers the Partner Hour choice popup")]
     public string choiceTriggerTaskId;
 
+    [Tooltip("Taken off her meters in one go when she finishes the main task: it should feel like a big hit.")]
+    public MeterRates mainTaskHit = new MeterRates(0.3f, 0.3f, 0.2f, 0.3f);
+    [Tooltip("The main task's hit never takes a meter below this (0..1), so it hurts but doesn't end the hour by itself. A meter already below it isn't hit.")]
+    [Range(0f, 0.8f)]
+    public float mainTaskHitFloor = 0.45f;
+
     [Header("Self Hour")]
     [Tooltip("Up to as many responses as there are response buttons in the scene. Self Hour now shows one prompt per unfinished BAU task automatically, so there is no fixed cue to set here anymore.")]
     public SelfHourResponse[] responses;

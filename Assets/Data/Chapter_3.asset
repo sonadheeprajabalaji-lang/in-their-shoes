@@ -48,6 +48,12 @@ MonoBehaviour:
       feelingLikeAPerson: 1
       mask: 1
   choiceTriggerTaskId: hospital_bag
+  mainTaskHit:
+    body: 0.35
+    mind: 0.2
+    feelingLikeAPerson: 0.15
+    mask: 0.15
+  mainTaskHitFloor: 0.45
   responses:
   - label: "Make something she can eat"
     nextChapterEase:
