@@ -3,40 +3,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// A short screen between the content warning and the Partner Hour that
-// explains her four meters, each next to a bar in its own colour, plus the
-// controls. Enter, Space or the Start button begins the chapter.
+// A short screen before each chapter's Partner Hour. The tutorial scene
+// teaches the keys and meters in full, so this is just a picture of what
+// this chapter needs:
+//   - the chapter's number and title
+//   - her four meters as icons (a reminder, no explanations)
+//   - the main task (hold E) and the prompt keys for this chapter, read
+//     straight from the main task's jugglePrompts, so it always matches
+// Enter or the Start button begins the chapter.
 //
-// Builds its own UI at runtime (its own overlay canvas), so nothing needs
-// to be set up in the scene. GameManager creates one automatically and
-// shows it when the chapter's ChapterData.showMeterIntro is ticked.
+// Builds its own UI at runtime (its own overlay canvas). GameManager
+// creates one automatically and shows it when ChapterData.showMeterIntro
+// is ticked. (ChapterData.meterIntroNote is no longer shown.)
 public class MeterIntroUI : MonoBehaviour
 {
-    // Meter colours match the HUD (see PixelArtSkin).
-    static readonly Color BodyColor = new Color32(216, 90, 48, 255);
-    static readonly Color MindColor = new Color32(239, 159, 39, 255);
-    static readonly Color PersonColor = new Color32(29, 158, 117, 255);
-    static readonly Color MaskColor = new Color32(127, 119, 221, 255);
-
-    static readonly Color Backdrop = new Color32(26, 21, 31, 255);
-    static readonly Color PanelFallback = new Color32(43, 34, 51, 255);
-    static readonly Color TitleColor = new Color32(248, 246, 240, 255);
-    static readonly Color BodyText = new Color32(232, 226, 236, 255);
-    static readonly Color HintText = new Color32(190, 180, 200, 255);
-    static readonly Color ButtonText = new Color32(43, 34, 51, 255);
-
-    static readonly (string name, Color color, string meaning)[] Meters =
-    {
-        ("Body", BodyColor, "Her physical energy. Nausea, tiredness and chores wear it down."),
-        ("Mind", MindColor, "Her focus. Juggling the call, the chores and the worry drains it."),
-        ("Feeling like a person", PersonColor, "Whether she still feels like herself. It drops when she can't eat, rest or do anything for herself."),
-        ("The Mask", MaskColor, "How well she can keep looking fine to everyone else. Every time she hides how she feels, it slips."),
-    };
-
     GameObject root;
-    TMP_Text title;
-    TMP_Text note;
-    TMP_Text buttonLabel;
+    RectTransform content;
     Action onStart;
     float shownAt;
 
@@ -44,20 +26,14 @@ public class MeterIntroUI : MonoBehaviour
 
     void Awake()
     {
-        Build();
+        BuildFrame();
         root.SetActive(false);
     }
 
-    // chapterNote: an optional chapter-specific line (controls, the main task).
-    public void Show(int chapterNumber, string chapterNote, Action start)
+    public void Show(ChapterData data, Action start)
     {
         onStart = start;
-        title.text = "Before you start: her four meters";
-        // The main-task-first rule applies in every chapter, so it's always listed.
-        const string MainTaskFirst = "Start with the main task: hold E until it's finished. The other chores open up after that.";
-        note.text = string.IsNullOrWhiteSpace(chapterNote) ? MainTaskFirst : chapterNote.Trim() + " " + MainTaskFirst;
-        note.gameObject.SetActive(true);
-        buttonLabel.text = $"Start Chapter {chapterNumber}  (Enter)";
+        Fill(data);
         root.SetActive(true);
         shownAt = Time.unscaledTime;
     }
@@ -68,7 +44,7 @@ public class MeterIntroUI : MonoBehaviour
         // Ignore the first moment so the Enter or click that left the
         // content warning can't also skip this screen.
         if (Time.unscaledTime - shownAt < 0.4f) return;
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             Begin();
         }
@@ -83,9 +59,9 @@ public class MeterIntroUI : MonoBehaviour
         cb?.Invoke();
     }
 
-    // ---------- UI construction ----------
+    // ---------- UI ----------
 
-    void Build()
+    void BuildFrame()
     {
         root = new GameObject("MeterIntroCanvas");
         root.transform.SetParent(transform, false);
@@ -98,154 +74,85 @@ public class MeterIntroUI : MonoBehaviour
         scaler.matchWidthOrHeight = 0.5f;
         root.AddComponent<GraphicRaycaster>();
 
-        var backdrop = NewRect("Backdrop", root.transform);
-        Stretch(backdrop);
-        backdrop.gameObject.AddComponent<Image>().color = Backdrop;
+        var backdrop = UIArt.Rect("Backdrop", root.transform);
+        UIArt.Stretch(backdrop);
+        backdrop.gameObject.AddComponent<Image>().color = UIArt.Backdrop;
 
-        var card = NewRect("Card", root.transform);
-        card.anchorMin = card.anchorMax = card.pivot = new Vector2(0.5f, 0.5f);
-        card.sizeDelta = new Vector2(1400, 0);
-        var cardImg = card.gameObject.AddComponent<Image>();
-        var panelSprite = Resources.Load<Sprite>("PixelArt/ui_panel");
-        if (panelSprite != null)
-        {
-            cardImg.sprite = panelSprite;
-            cardImg.type = Image.Type.Sliced;
-            cardImg.pixelsPerUnitMultiplier = 0.5f;
-        }
-        else
-        {
-            cardImg.color = PanelFallback;
-        }
-
+        var card = UIArt.Panel(root.transform, "Card");
+        var crt = card.rectTransform;
+        crt.anchorMin = crt.anchorMax = crt.pivot = new Vector2(0.5f, 0.5f);
+        crt.sizeDelta = new Vector2(1300, 0);
         var layout = card.gameObject.AddComponent<VerticalLayoutGroup>();
-        layout.padding = new RectOffset(64, 64, 52, 48);
-        layout.spacing = 14;
-        layout.childAlignment = TextAnchor.UpperLeft;
-        layout.childControlWidth = true;
-        layout.childControlHeight = true;
+        layout.padding = new RectOffset(70, 70, 50, 50);
+        layout.spacing = 26;
+        layout.childAlignment = TextAnchor.UpperCenter;
+        layout.childControlWidth = layout.childControlHeight = true;
         layout.childForceExpandWidth = true;
         layout.childForceExpandHeight = false;
         card.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-
-        title = NewText("Title", card, 46, TitleColor);
-        var intro = NewText("Intro", card, 30, BodyText);
-        intro.text = "In the Partner Hour you play as her. These meters show how she's coping. " +
-                     "You can't keep them all full: when any one runs out, the hour ends.";
-        Spacer(card, 8);
-
-        foreach (var m in Meters) MeterRow(card, m.name, m.color, m.meaning);
-
-        Spacer(card, 6);
-        note = NewText("ChapterNote", card, 28, HintText);
-        Spacer(card, 6);
-
-        var button = NewButton(card, out buttonLabel);
-        button.onClick.AddListener(Begin);
+        content = crt;
     }
 
-    void MeterRow(RectTransform parent, string name, Color color, string meaning)
+    void Fill(ChapterData data)
     {
-        // [ name over a coloured bar ] [ what it means ]
-        var row = NewRect("Meter_" + name, parent);
-        var h = row.gameObject.AddComponent<HorizontalLayoutGroup>();
-        h.spacing = 32;
-        h.childAlignment = TextAnchor.MiddleLeft;
-        h.childControlWidth = true;
-        h.childControlHeight = true;
-        h.childForceExpandWidth = false;
-        h.childForceExpandHeight = false;
+        for (int i = content.childCount - 1; i >= 0; i--) Destroy(content.GetChild(i).gameObject);
 
-        var left = NewRect("Label", row);
-        var leftLe = left.gameObject.AddComponent<LayoutElement>();
-        leftLe.preferredWidth = 380;
-        leftLe.minWidth = 380;
-        var v = left.gameObject.AddComponent<VerticalLayoutGroup>();
-        v.spacing = 6;
-        v.childControlWidth = true;
-        v.childControlHeight = true;
-        v.childForceExpandWidth = true;
-        v.childForceExpandHeight = false;
+        // Chapter N / Title
+        UIArt.Text(content, $"Chapter {data.chapterNumber}", 30, UIArt.HintColor);
+        UIArt.Text(content, string.IsNullOrWhiteSpace(data.chapterTitle) ? "" : data.chapterTitle, 54, UIArt.TitleColor,
+                   TextAlignmentOptions.Center, true);
 
-        var label = NewText("Name", left, 32, color);
-        label.text = name;
-
-        var bar = NewRect("Bar", left);
-        var barLe = bar.gameObject.AddComponent<LayoutElement>();
-        barLe.preferredHeight = 14;
-        barLe.minHeight = 14;
-        bar.gameObject.AddComponent<Image>().color = color;
-
-        var desc = NewText("Meaning", row, 29, BodyText);
-        desc.text = meaning;
-        var descLe = desc.gameObject.AddComponent<LayoutElement>();
-        descLe.flexibleWidth = 1;
-    }
-
-    static RectTransform NewRect(string name, Transform parent)
-    {
-        var go = new GameObject(name, typeof(RectTransform));
-        var rt = (RectTransform)go.transform;
-        rt.SetParent(parent, false);
-        return rt;
-    }
-
-    static void Stretch(RectTransform rt)
-    {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
-    }
-
-    static TMP_Text NewText(string name, RectTransform parent, float size, Color color)
-    {
-        var rt = NewRect(name, parent);
-        var t = rt.gameObject.AddComponent<TextMeshProUGUI>();
-        t.fontSize = size;
-        t.color = color;
-        t.enableWordWrapping = true;
-        t.alignment = TextAlignmentOptions.TopLeft;
-        t.lineSpacing = 6;
-        t.raycastTarget = false;
-        return t;
-    }
-
-    static void Spacer(RectTransform parent, float height)
-    {
-        var le = NewRect("Spacer", parent).gameObject.AddComponent<LayoutElement>();
-        le.minHeight = height;
-        le.preferredHeight = height;
-    }
-
-    static Button NewButton(RectTransform parent, out TMP_Text label)
-    {
-        var row = NewRect("ButtonRow", parent);
-        var rowLayout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
-        rowLayout.childAlignment = TextAnchor.MiddleRight;
-        rowLayout.childControlWidth = false;
-        rowLayout.childControlHeight = false;
-        rowLayout.childForceExpandWidth = false;
-        row.gameObject.AddComponent<LayoutElement>().preferredHeight = 76;
-
-        var rt = NewRect("StartButton", row);
-        rt.sizeDelta = new Vector2(440, 76);
-        var img = rt.gameObject.AddComponent<Image>();
-        var buttonSprite = Resources.Load<Sprite>("PixelArt/ui_button");
-        if (buttonSprite != null)
+        // Her four meters, as icons
+        var meters = UIArt.Row(content, "Meters", 44);
+        foreach (var m in UIArt.Meters)
         {
-            img.sprite = buttonSprite;
-            img.type = Image.Type.Sliced;
+            var chip = UIArt.Row(meters.transform, m.name, 12);
+            UIArt.Icon(chip.transform, m.icon, 48);
+            UIArt.Text(chip.transform, m.name, 28, m.color, TextAlignmentOptions.Left, true).enableWordWrapping = false;
         }
-        else
-        {
-            img.color = new Color32(240, 228, 206, 255);
-        }
-        var button = rt.gameObject.AddComponent<Button>();
 
-        label = NewText("Label", rt, 32, ButtonText);
-        Stretch((RectTransform)label.transform);
-        label.alignment = TextAlignmentOptions.Center;
-        return button;
+        Divider();
+
+        // Main task
+        var main = InteractableTask.Find(data.choiceTriggerTaskId);
+        string mainName = main == null ? data.mainTaskText
+            : (string.IsNullOrEmpty(main.displayName) ? main.gameObject.name : main.displayName);
+        var mainRow = UIArt.Row(content, "MainTask", 24);
+        UIArt.Key(mainRow.transform, "E", 84, -1, -1, KeyCode.E);
+        var mainText = UIArt.Column(mainRow.transform, "Text", 4, TextAnchor.MiddleLeft);
+        UIArt.Size(UIArt.Text(mainText.transform, "Hold first", 26, UIArt.HintColor, TextAlignmentOptions.Left), 560, -1);
+        UIArt.Size(UIArt.Text(mainText.transform, mainName, 38, UIArt.TitleColor, TextAlignmentOptions.Left, true), 560, -1);
+
+        // This chapter's prompt keys, from the main task itself
+        if (main != null && main.jugglePrompts != null && main.jugglePrompts.Length > 0)
+        {
+            UIArt.Text(content, "While you hold E, keep up with:", 28, UIArt.HintColor);
+            var lanes = UIArt.Column(content, "Prompts", 14, TextAnchor.UpperCenter);
+            foreach (var p in main.jugglePrompts)
+            {
+                var row = UIArt.Row(lanes.transform, p.label, 22);
+                string key = UIArt.KeyLabel(p.key);
+                UIArt.Key(row.transform, key, 64, key.Length > 1 ? 180 : -1, -1, p.key);
+                UIArt.Size(UIArt.Text(row.transform, p.holdSeconds > 0f ? "hold" : "tap", 28, UIArt.HintColor,
+                                      TextAlignmentOptions.Left), 80, -1);
+                UIArt.Size(UIArt.Text(row.transform, p.label.Trim('"'), 32, UIArt.TextColor, TextAlignmentOptions.Left), 560, -1);
+            }
+        }
+
+        // Start button
+        var buttonRow = UIArt.Row(content, "ButtonRow", 0, TextAnchor.MiddleRight);
+        UIArt.Size(buttonRow, -1, 84);
+        var img = UIArt.Panel(buttonRow.transform, "StartButton", "ui_button", 1f);
+        UIArt.Size(img, 460, 80);
+        img.gameObject.AddComponent<Button>().onClick.AddListener(Begin);
+        var label = UIArt.Text(img.transform, $"Start Chapter {data.chapterNumber}  (Enter)", 32, UIArt.KeyText);
+        UIArt.Stretch((RectTransform)label.transform);
+    }
+
+    void Divider()
+    {
+        var line = UIArt.Rect("Divider", content);
+        UIArt.Size(line, -1, 3);
+        line.gameObject.AddComponent<Image>().color = new Color(1f, 1f, 1f, 0.12f);
     }
 }

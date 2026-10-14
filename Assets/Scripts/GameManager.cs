@@ -219,7 +219,7 @@ public class GameManager : MonoBehaviour
 
         if (chapterData.showMeterIntro && meterIntro != null)
         {
-            meterIntro.Show(chapterData.chapterNumber, chapterData.meterIntroNote, StartPartnerHour);
+            meterIntro.Show(chapterData, StartPartnerHour);
             return;
         }
         StartPartnerHour();

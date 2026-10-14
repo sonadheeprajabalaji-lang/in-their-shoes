@@ -9,3 +9,9 @@ Each chapter's room is drawn at runtime by `Assets/Scripts/PixelArtSkin.cs`. It 
 - To add a chapter: draw its room and task sprites, then add an entry to `ArtByChapter` with its task ids, hold-task art and furniture cells.
 - Font: Merriweather, regular and bold (SIL Open Font License, see `Assets/Resources/PixelArt/Fonts`).
 - To turn the skin off, set `PixelArtSkin.AutoInstall = false`.
+
+## Tutorial and chapter start screens
+
+- `Assets/Scenes/Tutorial.unity` is the first scene in the build. `TutorialUI` builds three picture pages at runtime (how to play, her four meters, every chapter) and then loads Chapter 1. Keycaps light up when pressed, so players can try the keys. Enter moves on, Backspace goes back.
+- Each chapter's start screen (`MeterIntroUI`) shows the chapter title, the four meter icons, the main task and that chapter's prompt keys, read from the main task's `jugglePrompts`, so it always matches the scene.
+- Keycaps and meter icons come from `Tools/pixel_art/generate_sprites_tutorial.py` (copy `out_tutorial/*.png` into `Assets/Resources/PixelArt`). Shared UI helpers are in `UIArt.cs`.
