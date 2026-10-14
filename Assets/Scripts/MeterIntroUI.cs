@@ -118,9 +118,10 @@ public class MeterIntroUI : MonoBehaviour
         string mainName = main == null ? data.mainTaskText
             : (string.IsNullOrEmpty(main.displayName) ? main.gameObject.name : main.displayName);
         var mainRow = UIArt.Row(content, "MainTask", 24);
+        UIArt.Size(UIArt.Text(mainRow.transform, "Hold", 34, UIArt.TextColor, TextAlignmentOptions.Right), 90, -1);
         UIArt.Key(mainRow.transform, "E", 84, -1, -1, KeyCode.E);
         var mainText = UIArt.Column(mainRow.transform, "Text", 4, TextAnchor.MiddleLeft);
-        UIArt.Size(UIArt.Text(mainText.transform, "Hold first", 26, UIArt.HintColor, TextAlignmentOptions.Left), 560, -1);
+        UIArt.Size(UIArt.Text(mainText.transform, "first, for the main task:", 26, UIArt.HintColor, TextAlignmentOptions.Left), 560, -1);
         UIArt.Size(UIArt.Text(mainText.transform, mainName, 38, UIArt.TitleColor, TextAlignmentOptions.Left, true), 560, -1);
 
         // This chapter's prompt keys, from the main task itself
@@ -130,11 +131,14 @@ public class MeterIntroUI : MonoBehaviour
             var lanes = UIArt.Column(content, "Prompts", 14, TextAnchor.UpperCenter);
             foreach (var p in main.jugglePrompts)
             {
+                // "Hold [SPACE]  Breathe through the nausea": the word comes first.
                 var row = UIArt.Row(lanes.transform, p.label, 22);
+                UIArt.Size(UIArt.Text(row.transform, p.holdSeconds > 0f ? "Hold" : "Tap", 30, UIArt.TextColor,
+                                      TextAlignmentOptions.Right), 80, -1);
                 string key = UIArt.KeyLabel(p.key);
-                UIArt.Key(row.transform, key, 64, key.Length > 1 ? 180 : -1, -1, p.key);
-                UIArt.Size(UIArt.Text(row.transform, p.holdSeconds > 0f ? "hold" : "tap", 28, UIArt.HintColor,
-                                      TextAlignmentOptions.Left), 80, -1);
+                var keyBox = UIArt.Row(row.transform, "KeyBox", 0, TextAnchor.MiddleLeft);
+                UIArt.Size(keyBox, 180, 64);   // same width for SPACE and letters, so the labels line up
+                UIArt.Key(keyBox.transform, key, 64, key.Length > 1 ? 180 : -1, -1, p.key);
                 UIArt.Size(UIArt.Text(row.transform, p.label.Trim('"'), 32, UIArt.TextColor, TextAlignmentOptions.Left), 560, -1);
             }
         }

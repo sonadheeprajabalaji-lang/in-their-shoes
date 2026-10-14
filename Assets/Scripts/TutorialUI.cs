@@ -158,26 +158,27 @@ public class TutorialUI : MonoBehaviour
 
         // Use things
         var use = Column(cols.transform, "Use things");
+        // "Press [E] *"  /  "Hold [E] for the main task": the word comes first.
         var tapRow = UIArt.Row(use.transform, "Tap", 20, TextAnchor.MiddleLeft);
+        Word(tapRow.transform, "Press");
         UIArt.Key(tapRow.transform, "E", 76, -1, -1, KeyCode.E);
-        UIArt.Size(UIArt.Text(tapRow.transform, "press", 30, UIArt.TextColor, TextAlignmentOptions.Left), 90, -1);
         UIArt.Icon(tapRow.transform, "trace_marker", 44);
-        UIArt.Size(UIArt.Text(tapRow.transform, "= you can use it", 26, UIArt.HintColor, TextAlignmentOptions.Left), 200, -1);
         var holdRow = UIArt.Row(use.transform, "Hold", 20, TextAnchor.MiddleLeft);
+        Word(holdRow.transform, "Hold");
         holdKey = UIArt.Key(holdRow.transform, "E", 76, -1, -1, KeyCode.E);
         var holdCol = UIArt.Column(holdRow.transform, "HoldBar", 8, TextAnchor.MiddleLeft);
-        UIArt.Size(UIArt.Text(holdCol.transform, "hold for the main task", 30, UIArt.TextColor, TextAlignmentOptions.Left), 330, -1);
-        holdFill = Bar(holdCol.transform, 330, 20, UIArt.TitleColor);
+        UIArt.Size(UIArt.Text(holdCol.transform, "for the main task", 30, UIArt.TextColor, TextAlignmentOptions.Left), 260, -1);
+        holdFill = Bar(holdCol.transform, 260, 20, UIArt.TitleColor);
 
         // Respond to prompts
         var respond = Column(cols.transform, "Respond to prompts");
         var spaceRow = UIArt.Row(respond.transform, "Space", 20, TextAnchor.MiddleLeft);
+        Word(spaceRow.transform, "Hold");
         UIArt.Key(spaceRow.transform, "SPACE", 76, 220, -1, KeyCode.Space);
-        UIArt.Size(UIArt.Text(spaceRow.transform, "hold", 30, UIArt.TextColor, TextAlignmentOptions.Left), 80, -1);
         var tapKeys = UIArt.Row(respond.transform, "QF", 20, TextAnchor.MiddleLeft);
+        Word(tapKeys.transform, "Tap");
         UIArt.Key(tapKeys.transform, "Q", 76, -1, -1, KeyCode.Q);
         UIArt.Key(tapKeys.transform, "F", 76, -1, -1, KeyCode.F);
-        UIArt.Size(UIArt.Text(tapKeys.transform, "tap", 30, UIArt.TextColor, TextAlignmentOptions.Left), 80, -1);
         UIArt.Size(UIArt.Text(respond.transform, "Keys change each chapter.", 24, UIArt.HintColor, TextAlignmentOptions.Left), 360, -1);
     }
 
@@ -205,7 +206,6 @@ public class TutorialUI : MonoBehaviour
         SectionTitle(parent, "Her four meters");
 
         // Two columns of two meters each.
-        string[] words = { "her energy", "her focus", "feeling like herself", "looking fine to others" };
         var grid = UIArt.Row(parent, "Meters", 90, TextAnchor.UpperCenter);
         for (int c = 0; c < 2; c++)
         {
@@ -217,9 +217,7 @@ public class TutorialUI : MonoBehaviour
                 var row = UIArt.Row(col.transform, m.name, 22, TextAnchor.MiddleLeft);
                 UIArt.Icon(row.transform, m.icon, 68);
                 var text = UIArt.Column(row.transform, "Text", 6, TextAnchor.MiddleLeft);
-                var nameRow = UIArt.Row(text.transform, "Name", 16, TextAnchor.LowerLeft);
-                UIArt.Text(nameRow.transform, m.name, 36, m.color, TextAlignmentOptions.Left, true).enableWordWrapping = false;
-                UIArt.Text(nameRow.transform, words[i], 28, UIArt.HintColor, TextAlignmentOptions.Left).enableWordWrapping = false;
+                UIArt.Text(text.transform, m.name, 36, m.color, TextAlignmentOptions.Left, true).enableWordWrapping = false;
                 meterFills.Add(Bar(text.transform, 600, 24, m.color));
             }
         }
@@ -249,6 +247,11 @@ public class TutorialUI : MonoBehaviour
         var label = UIArt.Text(img.transform, "Start Chapter 1  (Enter)", 32, UIArt.KeyText);
         UIArt.Stretch((RectTransform)label.transform);
     }
+
+    // A word before a key ("Press", "Hold", "Tap"), same width in every row
+    // so the keys line up.
+    static void Word(Transform parent, string word) =>
+        UIArt.Size(UIArt.Text(parent, word, 30, UIArt.TextColor, TextAlignmentOptions.Left), 90, -1);
 
     static void Divider(Transform parent)
     {
