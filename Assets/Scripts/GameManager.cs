@@ -95,6 +95,21 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // Play again only on the last chapter. Replaying a middle chapter
+        // would spend the Self Hour carry-over meant for the next one, so
+        // chapters with a next chapter offer only Next Chapter, centred
+        // where the two buttons sat.
+        if (!string.IsNullOrEmpty(nextSceneName) && restartButton != null)
+        {
+            if (nextChapterButton != null)
+            {
+                var nextRt = (RectTransform)nextChapterButton.transform;
+                var restartRt = (RectTransform)restartButton.transform;
+                nextRt.anchoredPosition = (nextRt.anchoredPosition + restartRt.anchoredPosition) * 0.5f;
+            }
+            restartButton.gameObject.SetActive(false);
+        }
+
         partnerHourController.ChoiceMade += OnChoiceMade;
         selfHourController.CueInteracted += OnCueInteracted;
         selfHourController.AllCuesResolved += OnAllCuesResolved;

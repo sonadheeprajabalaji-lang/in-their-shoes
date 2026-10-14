@@ -19,6 +19,7 @@ public class Interactor : MonoBehaviour
     public Color promptColor = Color.white;
     public Color holdingColor = new Color(1f, 0.7f, 0.3f);
     public Color graceColor = new Color(1f, 0.45f, 0.35f);
+    public Color waitingColor = new Color(0.75f, 0.72f, 0.8f);
 
     [Header("Hold forgiveness")]
     [Tooltip("If E is released mid-hold, this is how long the player has to press it again before the hold actually cancels. Protects against an accidental quick tap breaking the hold.")]
@@ -46,7 +47,7 @@ public class Interactor : MonoBehaviour
         InteractableTask target = FindFacingTask();
         UpdatePrompt(target, null);
 
-        if (target == null) return;
+        if (target == null || target.waitingForMainTask) return;
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -172,6 +173,11 @@ public class Interactor : MonoBehaviour
             float remaining = target.holdDuration * (1f - holdProgress.Value);
             prompt.text = $"{target.holdingLabel} \u2014 let go to stop ({remaining:0.0}s)";
             prompt.color = holdingColor;
+        }
+        else if (target.waitingForMainTask)
+        {
+            prompt.text = string.IsNullOrEmpty(target.waitingMessage) ? "Do the main task first" : target.waitingMessage;
+            prompt.color = waitingColor;
         }
         else
         {

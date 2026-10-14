@@ -24,9 +24,14 @@ public class TaskChecklistUI : MonoBehaviour
     public float rowWidth = 460f;
     public Color pendingColor = Color.white;
     public Color doneColor = new Color(0.6f, 0.6f, 0.6f);
+    [Tooltip("Rows for chores that are waiting until the main task is done.")]
+    public Color waitingColor = new Color(1f, 1f, 1f, 0.35f);
+    [Tooltip("Heading while chores are waiting for the main task. Leave blank to keep the normal heading.")]
+    public string waitingHeading = "Tasks (after the main task)";
 
     readonly Dictionary<InteractableTask, TMP_Text> rows = new Dictionary<InteractableTask, TMP_Text>();
     GameObject heading;
+    readonly HashSet<InteractableTask> done = new HashSet<InteractableTask>();
 
     void Awake()
     {
@@ -86,6 +91,7 @@ public class TaskChecklistUI : MonoBehaviour
             if (kvp.Value != null) Destroy(kvp.Value.gameObject);
         }
         rows.Clear();
+        done.Clear();
 
         if (heading != null)
         {
@@ -135,10 +141,30 @@ public class TaskChecklistUI : MonoBehaviour
         return text;
     }
 
+    // Chores waiting for the main task are dimmed, and the heading says so.
+    void Update()
+    {
+        bool anyWaiting = false;
+        foreach (var kvp in rows)
+        {
+            if (kvp.Value == null || done.Contains(kvp.Key)) continue;
+            bool waiting = kvp.Key.waitingForMainTask;
+            anyWaiting |= waiting;
+            kvp.Value.color = waiting ? waitingColor : pendingColor;
+        }
+
+        if (heading != null && !string.IsNullOrEmpty(waitingHeading))
+        {
+            var label = heading.GetComponent<TMP_Text>();
+            if (label != null) label.text = anyWaiting ? waitingHeading : sectionHeading;
+        }
+    }
+
     void OnTaskDone(InteractableTask task)
     {
         if (!rows.TryGetValue(task, out var row)) return;
 
+        done.Add(task);
         row.text = Label(task, true);
         row.color = doneColor;
         row.fontStyle |= FontStyles.Strikethrough;

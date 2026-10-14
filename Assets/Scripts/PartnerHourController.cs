@@ -9,6 +9,10 @@ using UnityEngine;
 // depending on whether it's held to completion (push through) or let go
 // early (step away).
 //
+// The main task always comes first: until it has been held through or let
+// go, every chore is waiting (InteractableTask.waitingForMainTask), shows
+// no "!" marker, and says "First: <main task>" when the player faces it.
+//
 // Partner Hour is not expected to be finishable: meters keep draining
 // underneath everything, so the player will run out before every task is
 // done. GameManager ends the hour the moment any meter hits zero.
@@ -45,6 +49,11 @@ public class PartnerHourController : MonoBehaviour
         {
             choiceTask.HoldCompleted += OnHoldCompleted;
             choiceTask.HoldCancelled += OnHoldCancelled;
+
+            // The main task always comes first: every chore waits until it
+            // has been held through or let go.
+            string main = string.IsNullOrEmpty(choiceTask.displayName) ? choiceTask.gameObject.name : choiceTask.displayName;
+            SetChoresWaiting(true, $"First: {main}");
         }
         else
         {
@@ -58,6 +67,9 @@ public class PartnerHourController : MonoBehaviour
         // zero, most likely), resolve that hold as a cancel rather than
         // leaving it dangling.
         interactor.ForceCancelHold();
+
+        // Chores never reached stay unfinished for Self Hour (not locked).
+        SetChoresWaiting(false, null);
 
         foreach (var task in InteractableTask.All)
         {
@@ -84,6 +96,7 @@ public class PartnerHourController : MonoBehaviour
         if (choiceMade) return;
         choiceMade = true;
         choiceTask.locked = true;
+        SetChoresWaiting(false, null);
         ChoiceMade?.Invoke(1);
     }
 
@@ -92,6 +105,21 @@ public class PartnerHourController : MonoBehaviour
         if (choiceMade) return;
         choiceMade = true;
         choiceTask.locked = true;
+        SetChoresWaiting(false, null);
         ChoiceMade?.Invoke(0);
+    }
+
+    // True while the main task hasn't been dealt with yet.
+    public bool ChoresWaiting { get; private set; }
+
+    void SetChoresWaiting(bool waiting, string message)
+    {
+        ChoresWaiting = waiting;
+        foreach (var task in InteractableTask.All)
+        {
+            if (task.RequiresHold) continue;
+            task.waitingForMainTask = waiting;
+            task.waitingMessage = message;
+        }
     }
 }

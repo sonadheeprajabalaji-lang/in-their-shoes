@@ -30,6 +30,12 @@ public class InteractableTask : MonoBehaviour
     [Tooltip("While locked, interacting does nothing. Self Hour locks every task except the seeded cue.")]
     public bool locked;
 
+    // Set by PartnerHourController: a chore that can't be done until the
+    // chapter's main task has been dealt with. Separate from locked, which
+    // means "done" (Self Hour and the art read it that way).
+    [NonSerialized] public bool waitingForMainTask;
+    [NonSerialized] public string waitingMessage;
+
     [Header("Always-visible indicator")]
     [Tooltip("A small marker shown above this object whenever it's unlocked, so the player can tell from a distance it's interactable -- separate from the detailed \"Press E\" prompt, which only shows up close. Hides automatically once locked.")]
     public bool showIndicator = true;
@@ -98,7 +104,7 @@ public class InteractableTask : MonoBehaviour
     {
         if (indicator == null) return;
 
-        bool shouldShow = showIndicator && !locked;
+        bool shouldShow = showIndicator && !locked && !waitingForMainTask;
         if (indicator.gameObject.activeSelf != shouldShow)
         {
             indicator.gameObject.SetActive(shouldShow);
@@ -144,7 +150,7 @@ public class InteractableTask : MonoBehaviour
 
     public void Interact()
     {
-        if (locked) return;
+        if (locked || waitingForMainTask) return;
         AudioManager.Get().PlaySFX(completeClip);
         Interacted?.Invoke(this);
     }
