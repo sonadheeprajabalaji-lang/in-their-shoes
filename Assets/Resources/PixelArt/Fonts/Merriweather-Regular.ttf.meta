@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4c042d3b588a4329b44f01dcc8adf96f
+guid: 0fbf3ca80b1c405e945522ef54894ad6
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Pixelify Sans
+  - Merriweather
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

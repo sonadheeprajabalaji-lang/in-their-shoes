@@ -23,7 +23,7 @@ using UnityEngine.UI;
 //     one meter drops (e.g. green nausea on Body in Chapter 1, grey worry on
 //     Mind in Chapter 2), optional thought bubbles over her, and an evening
 //     tint in Self Hour
-//   - restyles the meters, panels, buttons and text (Pixelify Sans font),
+//   - restyles the meters, panels, buttons and text (Merriweather font),
 //     and puts a dark panel behind the "Press E" prompt
 //
 // To turn it off, set AutoInstall to false.
@@ -609,14 +609,28 @@ public class PixelArtSkin : MonoBehaviour
 
     void LoadFont()
     {
-        var font = Resources.Load<Font>(Root + "Fonts/PixelifySans-Regular");
-        if (font == null) return;
+        // Merriweather: a readable serif for all in-game text. The pixel
+        // font it replaced was hard to read at small sizes.
+        var regular = Resources.Load<Font>(Root + "Fonts/Merriweather-Regular");
+        if (regular == null) return;
 
-        pixelFont = TMP_FontAsset.CreateFontAsset(font);
+        pixelFont = TMP_FontAsset.CreateFontAsset(regular);
         if (pixelFont == null) return;
-        pixelFont.name = "PixelifySans (runtime)";
+        pixelFont.name = "Merriweather (runtime)";
 
-        // Fall back to the project's default font for symbols Pixelify
+        // Real bold for headings and <b>, instead of a thickened regular.
+        var bold = Resources.Load<Font>(Root + "Fonts/Merriweather-Bold");
+        if (bold != null && pixelFont.fontWeightTable != null && pixelFont.fontWeightTable.Length > 7)
+        {
+            var boldAsset = TMP_FontAsset.CreateFontAsset(bold);
+            if (boldAsset != null)
+            {
+                boldAsset.name = "Merriweather Bold (runtime)";
+                pixelFont.fontWeightTable[7].regularTypeface = boldAsset;   // index 7 = weight 700
+            }
+        }
+
+        // Fall back to the project's default font for symbols Merriweather
         // doesn't have (the checklist's tick boxes, for example).
         var fallback = TMP_Settings.defaultFontAsset;
         if (fallback != null)
