@@ -19,6 +19,11 @@ using UnityEngine.UI;
 // above her ("Her body is slowing her down") in that meter's colour, so the
 // player learns which meter it belongs to.
 //
+// The meter bars themselves also call for attention:
+//   - for the first few seconds of each Partner Hour, all four bars blink
+//     (they're already draining while they blink), and
+//   - a bar that's nearly empty flashes, faster the closer it is to zero.
+//
 // PixelArtSkin adds and sets this up; nothing is needed in the scene.
 public class MeterEffects : MonoBehaviour
 {
@@ -47,6 +52,16 @@ public class MeterEffects : MonoBehaviour
     public string personCaption = "The colour is going out of her day.";
     public float captionSeconds = 2.8f;
 
+    [Header("Meter bars")]
+    [Tooltip("Seconds the bars blink at the start of each Partner Hour.")]
+    public float introBlinkSeconds = 3f;
+    [Tooltip("Blinks per second at the start of the hour.")]
+    public float introBlinkRate = 2.5f;
+    [Tooltip("A bar starts flashing below this (0..1).")]
+    public float lowFlashAt = 0.25f;
+    [Tooltip("Flashes per second when a bar has just gone low, and when it's almost empty.")]
+    public float lowFlashSlow = 1.5f, lowFlashFast = 4.5f;
+
     static readonly Color BodyColor = new Color32(240, 140, 100, 255);
     static readonly Color MindColor = new Color32(245, 185, 80, 255);
     static readonly Color PersonColor = new Color32(93, 202, 165, 255);
@@ -63,6 +78,11 @@ public class MeterEffects : MonoBehaviour
 
     class Ghost { public SpriteRenderer source; public SpriteRenderer copy; }
     readonly List<Ghost> ghosts = new List<Ghost>();
+
+    class Bar { public Slider slider; public Image fill; public Color baseColor; public CanvasGroup group; }
+    readonly List<Bar> bars = new List<Bar>();
+    bool barColoursKnown;
+    float partnerStartedAt;
 
     TextMeshPro caption;
     float captionUntil;
@@ -93,6 +113,24 @@ public class MeterEffects : MonoBehaviour
         foreach (var sr in doubled) AddGhost(sr);
 
         caption = MakeCaption();
+
+        if (gm != null && gm.meters != null)
+        {
+            AddBar(gm.meters.body);
+            AddBar(gm.meters.mind);
+            AddBar(gm.meters.feelingLikeAPerson);
+            AddBar(gm.meters.mask);
+        }
+    }
+
+    void AddBar(Slider slider)
+    {
+        if (slider == null) return;
+        var bar = new Bar { slider = slider };
+        if (slider.fillRect != null) bar.fill = slider.fillRect.GetComponent<Image>();
+        bar.group = slider.GetComponent<CanvasGroup>();
+        if (bar.group == null) bar.group = slider.gameObject.AddComponent<CanvasGroup>();
+        bars.Add(bar);
     }
 
     // The interaction prompt and the juggle box are found lazily, because
@@ -125,7 +163,11 @@ public class MeterEffects : MonoBehaviour
     void LateUpdate()
     {
         bool partner = isPartnerHour != null && isPartnerHour();
-        if (partner && !wasPartner) { shownBody = shownMind = shownPerson = false; }   // new hour, new captions
+        if (partner && !wasPartner)
+        {
+            shownBody = shownMind = shownPerson = false;   // new hour, new captions
+            partnerStartedAt = Time.time;                  // and the bars blink again
+        }
         wasPartner = partner;
 
         float body = 1f, mind = 1f, person = 1f;
@@ -151,6 +193,46 @@ public class MeterEffects : MonoBehaviour
             else if (!shownPerson && p > 0.3f) { shownPerson = true; ShowCaption(personCaption, PersonColor); }
         }
         UpdateCaption(partner);
+        UpdateBars(partner);
+    }
+
+    // ---------- Meter bars: blink at the start, flash when nearly empty ----------
+
+    void UpdateBars(bool partner)
+    {
+        // The skin colours the bars before this runs; remember those colours
+        // so flashing can always return to them.
+        if (!barColoursKnown && partner)
+        {
+            foreach (var bar in bars) if (bar.fill != null) bar.baseColor = bar.fill.color;
+            barColoursKnown = true;
+        }
+
+        float since = Time.time - partnerStartedAt;
+        bool introBlink = partner && since < introBlinkSeconds;
+        // Square on/off blink so it reads as an alert, not a fade.
+        float introAlpha = introBlink && Mathf.Repeat(since * introBlinkRate, 1f) >= 0.5f ? 0.2f : 1f;
+
+        foreach (var bar in bars)
+        {
+            if (bar.group != null) bar.group.alpha = introAlpha;
+            if (bar.fill == null || !barColoursKnown) continue;
+
+            float v = bar.slider.value;
+            if (partner && v > 0f && v < lowFlashAt)
+            {
+                float urgency = 1f - v / lowFlashAt;                       // 0 just gone low, 1 almost empty
+                float rate = Mathf.Lerp(lowFlashSlow, lowFlashFast, urgency);
+                // Time.time * rate keeps a steady rhythm; the per-bar speed
+                // still rises as the bar drains.
+                float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * rate * Mathf.PI * 2f);
+                bar.fill.color = Color.Lerp(bar.baseColor, Color.white, pulse * 0.85f);
+            }
+            else
+            {
+                bar.fill.color = bar.baseColor;
+            }
+        }
     }
 
     // ---------- Body: slower steps ----------

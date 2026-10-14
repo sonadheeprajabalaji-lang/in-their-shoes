@@ -18,7 +18,8 @@ using UnityEngine.UI;
 //     and cold versions that stay behind as traces in Self Hour
 //   - draws her in Partner Hour and the partner in Self Hour, with 4-way
 //     facing and a 2-frame walk
-//   - marks the traces still left in Self Hour with a small sparkle
+//   - marks what can be done with a small star: in Partner Hour, every task
+//     she can do right now (replacing the "!"); in Self Hour, the traces left
 //   - adds the chapter's mood overlay: a coloured vignette that deepens as
 //     one meter drops (e.g. green nausea on Body in Chapter 1, grey worry on
 //     Mind in Chapter 2), optional thought bubbles over her, and an evening
@@ -801,7 +802,9 @@ public class PixelArtSkin : MonoBehaviour
         {
             case HoldState.Active: return S(h.active[Mathf.FloorToInt(Time.time * h.activeFps) % h.active.Length]);
             case HoldState.Completed: return S(h.completed);
-            case HoldState.Cancelled: return S(h.cancelled);
+            // A let-go that isn't final (the main task has to be finished,
+            // so she can try again) goes back to the waiting picture.
+            case HoldState.Cancelled: return S(phase == Phase.Partner && holdTask != null && !holdTask.locked ? h.idle : h.cancelled);
             default:
                 // Never started: in Self Hour that reads the same as letting go early.
                 return S(phase == Phase.Self ? h.cancelled : h.idle);
@@ -835,7 +838,13 @@ public class PixelArtSkin : MonoBehaviour
         float bob = Mathf.Round(Mathf.Sin(Time.time * 4f) * 2f) / 32f; // whole pixels
         foreach (var task in InteractableTask.All)
         {
-            bool show = phase == Phase.Self && !task.RequiresHold && !task.locked;
+            // One marker everywhere: the star replaces InteractableTask's own
+            // "!" so players only have one sign to learn.
+            task.showIndicator = false;
+
+            bool show = phase == Phase.Partner
+                ? !task.locked && !task.waitingForMainTask          // anything she can do right now
+                : phase == Phase.Self && !task.RequiresHold && !task.locked;   // traces left behind
 
             if (!markers.TryGetValue(task, out var marker))
             {

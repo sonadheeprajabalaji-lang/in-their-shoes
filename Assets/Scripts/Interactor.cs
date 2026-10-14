@@ -7,6 +7,8 @@ using UnityEngine;
 // facing. Tapping E interacts with a normal task (dishes, stove, etc).
 // Holding E on a task with holdDuration > 0 starts a hold: releasing
 // early counts as HoldCancelled, holding it out counts as HoldCompleted.
+// In Partner Hour a let-go isn't final (the main task has to be finished),
+// so after one the prompt briefly says to hold E until it's done.
 // Movement locks for the duration of a hold, so the player can't roam
 // and hold at the same time.
 public class Interactor : MonoBehaviour
@@ -30,6 +32,12 @@ public class Interactor : MonoBehaviour
     InteractableTask holding;
     float holdElapsed;
     float graceUntil = -1f;   // -1 = not currently in a release grace window
+
+    [Header("After letting go too soon")]
+    public string tooSoonMessage = "Too soon \u2014 hold E until it's done";
+    public float tooSoonSeconds = 2.5f;
+    InteractableTask tooSoonTask;
+    float tooSoonUntil = -1f;
 
     void Awake()
     {
@@ -85,6 +93,8 @@ public class Interactor : MonoBehaviour
                 var cancelled = holding;
                 EndHold();
                 cancelled.CancelHold();
+                tooSoonTask = cancelled;
+                tooSoonUntil = Time.time + tooSoonSeconds;
                 return;
             }
 
@@ -155,7 +165,7 @@ public class Interactor : MonoBehaviour
         prompt.outlineWidth = 0.25f;
         prompt.outlineColor = Color.black;
         prompt.rectTransform.sizeDelta = new Vector2(20f, 1.5f);
-        prompt.enableWordWrapping = false;   // keep "Hold E: ... let go to stop" on one line
+        prompt.enableWordWrapping = false;   // keep "Hold E: ..." on one line
         go.GetComponent<MeshRenderer>().sortingOrder = 100;
         go.SetActive(false);
     }
@@ -171,8 +181,13 @@ public class Interactor : MonoBehaviour
         if (holdProgress.HasValue)
         {
             float remaining = target.holdDuration * (1f - holdProgress.Value);
-            prompt.text = $"{target.holdingLabel} \u2014 let go to stop ({remaining:0.0}s)";
+            prompt.text = $"{target.holdingLabel} \u2014 keep holding E ({remaining:0.0}s)";
             prompt.color = holdingColor;
+        }
+        else if (target == tooSoonTask && Time.time < tooSoonUntil)
+        {
+            prompt.text = tooSoonMessage;
+            prompt.color = graceColor;
         }
         else if (target.waitingForMainTask)
         {

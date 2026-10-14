@@ -5,13 +5,14 @@ using UnityEngine;
 // doing BAU tasks (dishes, stove, coffee) and the one main task (the
 // meeting). Each BAU task, on completion, costs a one-off chunk of the
 // meters (InteractableTask.cost) and then locks itself. The main task
-// instead changes the continuous drain SPEED for the rest of the hour,
-// depending on whether it's held to completion (push through) or let go
-// early (step away).
+// instead changes the continuous drain SPEED for the rest of the hour:
+// finishing it is "push through" (choice 1). It only counts as "step away"
+// (choice 0) if the hour ends before she finishes it.
 //
-// The main task always comes first: until it has been held through or let
-// go, every chore is waiting (InteractableTask.waitingForMainTask), shows
-// no "!" marker, and says "First: <main task>" when the player faces it.
+// The main task always comes first and has to be held all the way through:
+// letting go early just resets it, so she can try again. Until it's done,
+// every chore is waiting (InteractableTask.waitingForMainTask), shows no
+// marker, and says "First: <main task>" when the player faces it.
 //
 // Partner Hour is not expected to be finishable: meters keep draining
 // underneath everything, so the player will run out before every task is
@@ -28,11 +29,13 @@ public class PartnerHourController : MonoBehaviour
     ChapterData chapterData;
     InteractableTask choiceTask;
     bool choiceMade;
+    bool ending;   // true while EndRoaming runs: a let-go then is final
 
     public void BeginRoaming(ChapterData data)
     {
         chapterData = data;
         choiceMade = false;
+        ending = false;
         player.InputLocked = false;
 
         foreach (var task in InteractableTask.All)
@@ -51,7 +54,7 @@ public class PartnerHourController : MonoBehaviour
             choiceTask.HoldCancelled += OnHoldCancelled;
 
             // The main task always comes first: every chore waits until it
-            // has been held through or let go.
+            // has been held all the way through.
             string main = string.IsNullOrEmpty(choiceTask.displayName) ? choiceTask.gameObject.name : choiceTask.displayName;
             SetChoresWaiting(true, $"First: {main}");
         }
@@ -63,6 +66,7 @@ public class PartnerHourController : MonoBehaviour
 
     public void EndRoaming()
     {
+        ending = true;
         // If the player was mid-hold when the hour ended (a meter hit
         // zero, most likely), resolve that hold as a cancel rather than
         // leaving it dangling.
@@ -103,6 +107,10 @@ public class PartnerHourController : MonoBehaviour
     void OnHoldCancelled(InteractableTask t)
     {
         if (choiceMade) return;
+        // Let go early mid-hour: nothing is decided. The main task stays
+        // open (no reset of the meters, no chores unlocked), so she has to
+        // come back and finish it. Interactor tells the player why.
+        if (!ending) return;
         choiceMade = true;
         choiceTask.locked = true;
         SetChoresWaiting(false, null);

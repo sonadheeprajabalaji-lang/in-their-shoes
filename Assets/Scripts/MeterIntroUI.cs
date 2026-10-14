@@ -54,7 +54,7 @@ public class MeterIntroUI : MonoBehaviour
         onStart = start;
         title.text = "Before you start: her four meters";
         // The main-task-first rule applies in every chapter, so it's always listed.
-        const string MainTaskFirst = "Start with the main task: the other chores open up once you've done it or let it go.";
+        const string MainTaskFirst = "Start with the main task: hold E until it's finished. The other chores open up after that.";
         note.text = string.IsNullOrWhiteSpace(chapterNote) ? MainTaskFirst : chapterNote.Trim() + " " + MainTaskFirst;
         note.gameObject.SetActive(true);
         buttonLabel.text = $"Start Chapter {chapterNumber}  (Enter)";
