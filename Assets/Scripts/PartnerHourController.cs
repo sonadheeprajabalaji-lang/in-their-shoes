@@ -23,6 +23,9 @@ public class PartnerHourController : MonoBehaviour
     public Interactor interactor;
     public MeterController meters;
 
+    [Tooltip("Chores that always stay undone, so the Self Hour has traces to find. Finishing the chore that would leave fewer than this ends her hour: she's hit her limit.")]
+    public int minChoresLeft = 1;
+
     // 0 = step away (hold cancelled), 1 = push through (hold completed)
     public event Action<int> ChoiceMade;
 
@@ -93,6 +96,19 @@ public class PartnerHourController : MonoBehaviour
     {
         meters.ApplyCost(task.cost, meters.choreCostScale);
         task.locked = true; // done is done; no repeat cost, no lingering prompt
+
+        // Never let every chore get done: the Self Hour needs something
+        // left behind. When only the last few remain, she's hit her limit.
+        int left = 0;
+        foreach (var t in InteractableTask.All)
+        {
+            if (!t.RequiresHold && !t.locked) left++;
+        }
+        if (left <= minChoresLeft)
+        {
+            player.InputLocked = true;
+            meters.CollapseLowest();
+        }
     }
 
     void OnHoldCompleted(InteractableTask t)

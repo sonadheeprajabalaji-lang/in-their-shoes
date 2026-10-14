@@ -64,6 +64,7 @@ public class MeterEffects : MonoBehaviour
     [Tooltip("How long a bar flashes red and shakes after a big hit (the main task).")]
     public float hitFlashSeconds = 1.2f;
     public string hitCaption = "That took a lot out of her.";
+    public string limitCaption = "She has nothing left for the rest.";
 
     static readonly Color BodyColor = new Color32(240, 140, 100, 255);
     static readonly Color MindColor = new Color32(245, 185, 80, 255);
@@ -125,6 +126,7 @@ public class MeterEffects : MonoBehaviour
             AddBar(gm.meters.feelingLikeAPerson);
             AddBar(gm.meters.mask);
             gm.meters.HitTaken += OnHit;
+            gm.meters.Collapsing += OnCollapsing;
         }
     }
 
@@ -217,9 +219,20 @@ public class MeterEffects : MonoBehaviour
         if (any) ShowCaption(hitCaption, new Color32(255, 150, 140, 255));
     }
 
+    void OnCollapsing(HerMeter meter)
+    {
+        int i = (int)meter;
+        if (i < bars.Count) bars[i].hitUntil = Time.time + hitFlashSeconds + 0.5f;
+        ShowCaption(limitCaption, new Color32(255, 150, 140, 255));
+    }
+
     void OnDestroy()
     {
-        if (gm != null && gm.meters != null) gm.meters.HitTaken -= OnHit;
+        if (gm != null && gm.meters != null)
+        {
+            gm.meters.HitTaken -= OnHit;
+            gm.meters.Collapsing -= OnCollapsing;
+        }
     }
 
     void UpdateBars(bool partner)

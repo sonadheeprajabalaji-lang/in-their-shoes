@@ -46,6 +46,7 @@ public class MeterController : MonoBehaviour
     {
         ResetMeters();
         currentMultiplier = new MeterRates(1f, 1f, 1f, 1f);
+        collapsing = null;
         drainingFor = 0f;
         activeRamp = rampUpSeconds;
         draining = true;
@@ -55,6 +56,7 @@ public class MeterController : MonoBehaviour
     public void StopDraining()
     {
         draining = false;
+        collapsing = null;
     }
 
     public void ResetMeters()
@@ -72,6 +74,35 @@ public class MeterController : MonoBehaviour
     {
         currentMultiplier = choice.multipliers;
     }
+
+    // ---------- Hitting her limit ----------
+
+    // Raised when the lowest meter starts running out because she can't
+    // take on any more (see CollapseLowest).
+    public event System.Action<HerMeter> Collapsing;
+
+    Slider collapsing;
+    [Tooltip("Seconds the lowest meter takes to run out once she hits her limit.")]
+    public float collapseSeconds = 1.2f;
+    float collapseRate;
+
+    // Runs her lowest meter down to empty over collapseSeconds, which ends
+    // the Partner Hour the normal way. Used so the last chores always stay
+    // undone for the Self Hour.
+    public void CollapseLowest()
+    {
+        if (collapsing != null) return;
+        HerMeter lowest = HerMeter.Body;
+        foreach (HerMeter m in System.Enum.GetValues(typeof(HerMeter)))
+        {
+            if (Get(m) != null && Get(m).value < Get(lowest).value) lowest = m;
+        }
+        collapsing = Get(lowest);
+        collapseRate = collapsing.value / Mathf.Max(0.1f, collapseSeconds);
+        Collapsing?.Invoke(lowest);
+    }
+
+    public bool IsCollapsing => collapsing != null;
 
     // Raised when a big one-off hit lands (the main task), with how much
     // each meter actually dropped, so MeterEffects can make it visible.
@@ -141,6 +172,13 @@ public class MeterController : MonoBehaviour
     void Update()
     {
         if (!draining) return;
+
+        if (collapsing != null)
+        {
+            collapsing.value = Mathf.Max(0f, collapsing.value - collapseRate * Time.deltaTime);
+            RecomputeDepleted();
+            return;
+        }
 
         drainingFor += Time.deltaTime;
         float ramp = activeRamp > 0f ? Mathf.Clamp01(drainingFor / activeRamp) : 1f;
