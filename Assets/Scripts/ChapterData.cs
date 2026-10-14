@@ -32,6 +32,8 @@ public class ChapterData : ScriptableObject
     [Header("Meter explainer")]
     [Tooltip("Show the screen that explains her four meters between the content warning and the Partner Hour.")]
     public bool showMeterIntro = false;
+    [Tooltip("Show the content warning panel before the chapter starts. Off: the chapter starts straight away.")]
+    public bool showContentWarning = true;
 
     [Tooltip("Optional chapter-specific line on that screen, e.g. the controls and the main task.")]
     [TextArea(2, 4)]

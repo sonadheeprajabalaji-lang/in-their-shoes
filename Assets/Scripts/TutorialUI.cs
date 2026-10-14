@@ -79,7 +79,8 @@ public class TutorialUI : MonoBehaviour
 
         BuildControls(prt);
         Divider(prt);
-        BuildMeters(prt);   // ends with the Start button
+        BuildMeters(prt);
+        BuildStart(card);   // pinned to the card's bottom-right corner
     }
 
     void SectionTitle(Transform parent, string text) =>
@@ -175,7 +176,6 @@ public class TutorialUI : MonoBehaviour
         inner.offsetMax = new Vector2(-4, -4);
         inner.gameObject.AddComponent<Image>().color = new Color32(30, 24, 36, 255);
         UIArt.Text(end.transform, "One runs out: her hour ends.", 34, UIArt.TitleColor, TextAlignmentOptions.Left, true).enableWordWrapping = false;
-        BuildStart(bottom.transform);
     }
 
     // Start button ------------------------------------------------------------
@@ -183,7 +183,10 @@ public class TutorialUI : MonoBehaviour
     void BuildStart(Transform parent)
     {
         var img = UIArt.Panel(parent, "StartButton", "ui_button", 1f);
-        UIArt.Size(img, 480, 80);
+        var rt = img.rectTransform;
+        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(1f, 0f);
+        rt.sizeDelta = new Vector2(480, 80);
+        rt.anchoredPosition = new Vector2(-70, 50);   // same inset as the page's left and right edges
         img.gameObject.AddComponent<Button>().onClick.AddListener(Begin);
         var label = UIArt.Text(img.transform, "Start Chapter 1  (Enter)", 32, UIArt.KeyText);
         UIArt.Stretch((RectTransform)label.transform);

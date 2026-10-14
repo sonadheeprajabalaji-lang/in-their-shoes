@@ -19,7 +19,8 @@ MonoBehaviour:
   mainTaskText: "Feeding the baby (cluster feeding)"
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
-  showMeterIntro: 1
+  showMeterIntro: 0
+  showContentWarning: 0
   meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While feeding the baby, hold E and respond to the prompts: hold SPACE to read the baby's cues, tap Q to keep track of the clock, and tap F to smile for the visitors."
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}

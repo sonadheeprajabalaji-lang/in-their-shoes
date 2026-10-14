@@ -19,7 +19,8 @@ MonoBehaviour:
   mainTaskText: "Getting ready for work"
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
-  showMeterIntro: 1
+  showMeterIntro: 0
+  showContentWarning: 0
   meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While getting ready for work, hold E and respond to the prompts: hold SPACE to get herself ready, tap Q to push past the clothes that don't fit, and tap F to quiet the worry loop."
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}

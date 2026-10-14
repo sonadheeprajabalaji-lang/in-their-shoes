@@ -198,6 +198,14 @@ public class GameManager : MonoBehaviour
     void ShowContentWarning()
     {
         currentCue = null;
+        if (!chapterData.showContentWarning)
+        {
+            // No warning screen: go straight on to the start screen (if
+            // any) and the Partner Hour.
+            responsePanel.SetActive(false);
+            LeaveContentWarning();
+            return;
+        }
         ShowOnly(contentWarningPanel);
         responsePanel.SetActive(false);
     }
