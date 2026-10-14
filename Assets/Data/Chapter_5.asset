@@ -62,9 +62,9 @@ MonoBehaviour:
       feelingLikeAPerson: 0.85
       mask: 1
     impactText: "You mention the nurse's number on the fridge and ask if she told the nurse she was fine. She says she's not sure she is.\nNext chapter: Feeling like a person drains more slowly."
-    learnText: "Postnatal depression and anxiety affect up to 1 in 5 new mums and up to 1 in 10 new dads. Symptoms can start suddenly after birth, or build gradually over weeks and months."
+    learnText: "About 17% of mothers worldwide have depression after giving birth, across 565 studies from 80 countries. Around 10% of fathers are affected too, and one parent's depression is linked with the other's."
     helpText: "Name what you've noticed, listen without fixing, and offer to go with her to the GP or child and family health nurse. PANDA's helpline is 1300 726 306. If she talks about harming herself, call Lifeline on 13 11 14 or 000."
-    sourceText: "PANDA, \"Postnatal depression: signs and symptoms\" (panda.org.au)"
+    sourceText: "Wang et al. (2021), Transl Psychiatry 11:543; Thiel et al. (2020), Front Psychiatry 11:563287. Support services: PANDA 1300 726 306, Lifeline 13 11 14"
   - label: "Take jobs off her plate"
     nextChapterEase:
       body: 0.85
@@ -72,9 +72,9 @@ MonoBehaviour:
       feelingLikeAPerson: 1
       mask: 1
     impactText: "Sterilising the bottles and the baby laundry become your jobs, not favours. Two fewer things are waiting for her at 11 pm.\nNext chapter: her Body drains more slowly."
-    learnText: "Health services advise new parents who are struggling to ask for practical help with shopping, chores and childcare, and to rest as much as they can."
+    learnText: "A review of 120 published studies found that practical support from a partner, along with emotional support, was linked with less depression after birth."
     helpText: "Take over whole jobs rather than single tasks, so she doesn't have to remember or ask. Owning the bottles, the laundry or the shopping takes away the planning as well as the work."
-    sourceText: "NHS, \"Postnatal depression\""
+    sourceText: "Pilkington et al. (2015), J Affect Disord 178:165-80"
   - label: "Carry on as normal"
     nextChapterEase:
       body: 3
@@ -82,8 +82,8 @@ MonoBehaviour:
       feelingLikeAPerson: 3
       mask: 3
     impactText: "Everyone's tired, she says. She reheats the same cup of tea for the third time.\nNext chapter: all of her meters drain much faster."
-    learnText: "Exhaustion is normal at six weeks, but it can also hide postnatal depression. Struggling to sleep even when there's time to rest is one of its signs."
+    learnText: "Exhaustion is expected at six weeks, but it isn't harmless. Poor sleep reported at 6 weeks after birth has been strongly linked with depressive symptoms at 6 to 12 weeks."
     helpText: "Don't take \"everyone's tired\" as the end of the conversation. Look at the traces, like cold tea and jobs piling up, then ask, and offer one specific thing you'll take over."
-    sourceText: "NHS, \"Postnatal depression\"; PANDA, \"Postnatal depression: signs and symptoms\" (panda.org.au)"
+    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
   learnHeading: "Around six weeks after birth"
   selfHourNotice: "She says: \"Everyone's tired.\""

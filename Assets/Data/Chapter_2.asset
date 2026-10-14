@@ -56,9 +56,9 @@ MonoBehaviour:
       feelingLikeAPerson: 1
       mask: 1
     impactText: "She admits the what-ifs keep her up at night, and that she didn't want to sound ungrateful. Saying them out loud makes them smaller.\nNext chapter: her Mind drains more slowly."
-    learnText: "Anxiety and depression around pregnancy and the first year affect around 1 in 5 mothers and 1 in 10 fathers. Symptoms often start during pregnancy, and getting help then lowers the risk of anxiety and depression after the birth."
+    learnText: "Depression after birth affects about 17% of mothers worldwide, and around 10% of fathers have depression around pregnancy and birth. One parent's depression is linked with the other's."
     helpText: "Start with what you noticed (\"I saw you were reading about labour. What's on your mind?\") and share your own worries too. If the worry is constant or stops her enjoying things, encourage her to talk to her midwife or GP, or call PANDA on 1300 726 306."
-    sourceText: "Gidget Foundation Australia, \"Perinatal depression and anxiety explained\"; PANDA, \"Perinatal anxiety and depression: signs and symptoms\" (panda.org.au)"
+    sourceText: "Wang et al. (2021), Transl Psychiatry 11:543; Thiel et al. (2020), Front Psychiatry 11:563287. Support services: PANDA 1300 726 306, Lifeline 13 11 14"
   - label: "Help with the nursery"
     nextChapterEase:
       body: 0.85
@@ -86,8 +86,8 @@ MonoBehaviour:
       feelingLikeAPerson: 3
       mask: 3
     impactText: "She keeps saying she's just excited, and keeps the worries to herself.\nNext chapter: all of her meters drain much faster."
-    learnText: "The second trimester is often called the easy one, but anxiety doesn't follow the calendar. Perinatal anxiety and depression often begin during pregnancy, even when everything looks fine from the outside."
-    helpText: "Watch for worry that won't switch off, trouble sleeping, or pulling away from people. Treating anxiety and depression during pregnancy lowers the risk after the birth, so it's worth raising early."
-    sourceText: "Gidget Foundation Australia, \"Perinatal depression and anxiety explained\"; PANDA, \"Perinatal anxiety and depression: signs and symptoms\" (panda.org.au)"
+    learnText: "The second trimester is often called the easy one, but in one study, depression during pregnancy was the strongest predictor of depression after the birth."
+    helpText: "Watch for worry that won't switch off, trouble sleeping, or pulling away from people, and raise it early with her midwife or GP rather than waiting until after the birth."
+    sourceText: "Leigh & Milgrom (2008), BMC Psychiatry 8:24"
   learnHeading: "In the second trimester"
   selfHourNotice: "She says: \"I'm just excited.\""
