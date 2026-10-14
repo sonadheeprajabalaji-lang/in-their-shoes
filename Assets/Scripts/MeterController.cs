@@ -19,6 +19,13 @@ public class MeterController : MonoBehaviour
     // when Partner Hour is over.
     public bool IsDepleted { get; private set; }
 
+    [Header("Pacing (playtest: the meters ran out before players learned the chapter)")]
+    [Tooltip("Scales every chapter's drain. 1 = the speeds in ChapterData; 0.6 = 40% slower.")]
+    public float drainScale = 0.6f;
+    [Tooltip("The drain starts at zero and builds up to full speed over this many seconds, so players can read the scene and find the main task first.")]
+    public float rampUpSeconds = 15f;
+    float drainingFor;
+
     MeterRates baseDrain;
     MeterRates currentMultiplier = new MeterRates(1f, 1f, 1f, 1f);
     bool draining = false;
@@ -34,6 +41,7 @@ public class MeterController : MonoBehaviour
     {
         ResetMeters();
         currentMultiplier = new MeterRates(1f, 1f, 1f, 1f);
+        drainingFor = 0f;
         draining = true;
     }
 
@@ -74,7 +82,9 @@ public class MeterController : MonoBehaviour
     {
         if (!draining) return;
 
-        float dt = Time.deltaTime;
+        drainingFor += Time.deltaTime;
+        float ramp = rampUpSeconds > 0f ? Mathf.Clamp01(drainingFor / rampUpSeconds) : 1f;
+        float dt = Time.deltaTime * drainScale * ramp;
         body.value -= baseDrain.body * currentMultiplier.body * dt;
         mind.value -= baseDrain.mind * currentMultiplier.mind * dt;
         feelingLikeAPerson.value -= baseDrain.feelingLikeAPerson * currentMultiplier.feelingLikeAPerson * dt;

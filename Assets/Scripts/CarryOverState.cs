@@ -1,3 +1,5 @@
+using UnityEngine;
+
 // Holds meter eases earned from one chapter's Self Hour responses, to be
 // applied at the very start of the NEXT chapter's Partner Hour, then
 // cleared. Deliberately does not accumulate beyond one chapter: call
@@ -10,6 +12,12 @@
 public static class CarryoverState
 {
     static MeterRates pending = new MeterRates(1f, 1f, 1f, 1f);
+
+    // Answers compound (three "carry on as normal" answers at x3 each made
+    // the next chapter drain 27 times faster, so it ended in seconds). The
+    // total is kept inside these bounds per meter.
+    public const float MaxCarry = 1.5f;
+    public const float MinCarry = 0.5f;
 
     // Called by GameManager once per Self Hour response.
     // Combines multiplicatively, so several responses in one chapter
@@ -24,7 +32,11 @@ public static class CarryoverState
     // reaches past the very next chapter.
     public static MeterRates ConsumeForNextChapter()
     {
-        MeterRates result = pending;
+        MeterRates result = new MeterRates(
+            Mathf.Clamp(pending.body, MinCarry, MaxCarry),
+            Mathf.Clamp(pending.mind, MinCarry, MaxCarry),
+            Mathf.Clamp(pending.feelingLikeAPerson, MinCarry, MaxCarry),
+            Mathf.Clamp(pending.mask, MinCarry, MaxCarry));
         pending = new MeterRates(1f, 1f, 1f, 1f);
         return result;
     }

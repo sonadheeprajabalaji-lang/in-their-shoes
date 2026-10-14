@@ -358,6 +358,8 @@ public class PixelArtSkin : MonoBehaviour
     Image eveningTint;
     Image eveningVignette;
     TMP_FontAsset pixelFont;
+    // The game's font, for UI built after the skin has swept (e.g. PartnerHourRecapUI).
+    public static TMP_FontAsset CurrentFont { get; private set; }
     float nextFontSweep;
     Phase phase = Phase.Other;
 
@@ -644,6 +646,7 @@ public class PixelArtSkin : MonoBehaviour
         pixelFont = TMP_FontAsset.CreateFontAsset(regular);
         if (pixelFont == null) return;
         pixelFont.name = "Merriweather (runtime)";
+        CurrentFont = pixelFont;
 
         // Real bold for headings and <b>, instead of a thickened regular.
         var bold = Resources.Load<Font>(Root + "Fonts/Merriweather-Bold");

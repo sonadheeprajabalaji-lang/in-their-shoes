@@ -24,6 +24,10 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: "The baby's asleep at last. So is she, sitting up."
+  bodyDrainStory: "She's still healing from the birth (stitches or a wound, bleeding, milk coming in) and was feeding for hours on top of it."
+  mindDrainStory: "Hours of cluster feeding, the door and the pain meant her mind never got to settle."
+  personDrainStory: "She hadn't eaten, had a drink or taken her pain relief. Her own needs kept going behind the baby's."
+  maskDrainStory: "With visitors at the door she put on a happy new-mum face over the pain and exhaustion."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.04
@@ -81,7 +85,7 @@ MonoBehaviour:
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "She's crying again and says it's just hormones. You leave it there.\nNext chapter: all of her meters drain much faster."
+    impactText: "She's crying again and says it's just hormones. You leave it there.\nNext chapter: all of her meters drain faster."
     learnText: "About 39% of new mothers get the baby blues (studies range from 14% to 76%). It usually passes within about 10 days, but it is a known risk factor for postnatal depression."
     helpText: "Reassurance and support make a difference. If her low mood hasn't lifted after the first week or two, help her talk to the midwife, GP or child and family health nurse."
     sourceText: "Tosto et al. (2023), J Pers Med 13:154"

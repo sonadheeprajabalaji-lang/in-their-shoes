@@ -28,6 +28,10 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: The what-ifs win, for tonight. She needs to stop.
+  bodyDrainStory: "Lifting boxes and building furniture with a pregnant body tired her out faster than she expected."
+  mindDrainStory: "Every tiny baby thing set off another 'what if' about the birth and being a parent, until she couldn't think straight."
+  personDrainStory: "The whole evening was about the baby. There was no room left for her as herself."
+  maskDrainStory: "On the phone to Mum she had to sound excited, so the worries stayed hidden behind it."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.02
@@ -85,7 +89,7 @@ MonoBehaviour:
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "She keeps saying she's just excited, and keeps the worries to herself.\nNext chapter: all of her meters drain much faster."
+    impactText: "She keeps saying she's just excited, and keeps the worries to herself.\nNext chapter: all of her meters drain faster."
     learnText: "The second trimester is often called the easy one, but in one study, depression during pregnancy was the strongest predictor of depression after the birth."
     helpText: "Watch for worry that won't switch off, trouble sleeping, or pulling away from people, and raise it early with her midwife or GP rather than waiting until after the birth."
     sourceText: "Leigh & Milgrom (2008), BMC Psychiatry 8:24"

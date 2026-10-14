@@ -48,6 +48,13 @@ public class ChapterData : ScriptableObject
     [TextArea(1, 3)]
     public string hourTransitionText = "She's become too tired to continue.";
 
+    [Header("Partner Hour recap (shown when her hour ends)")]
+    [Tooltip("Why Body ran out this chapter, in a sentence or two. Shown to the player (as the non-birthing partner) when the Partner Hour ends with Body empty.")]
+    [TextArea(2, 4)] public string bodyDrainStory;
+    [TextArea(2, 4)] public string mindDrainStory;
+    [TextArea(2, 4)] public string personDrainStory;
+    [TextArea(2, 4)] public string maskDrainStory;
+
     [Header("Partner Hour")]
     [Tooltip("How long Partner Hour runs before Self Hour begins")]
     public float partnerHourSeconds = 20f;

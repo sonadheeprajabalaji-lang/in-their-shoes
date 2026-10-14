@@ -26,6 +26,10 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: Your partner's become too tired to continue.
+  bodyDrainStory: "Waves of nausea and first-trimester tiredness wore her body down while she kept on her feet around the kitchen."
+  mindDrainStory: "She tried to follow the call, breathe through the nausea and answer questions all at once, and her focus gave out."
+  personDrainStory: "She couldn't eat, rest or step away for a minute. The whole day was work and nausea, with nothing in it for her."
+  maskDrainStory: "No one at work knows she's pregnant yet. Smiling on camera while hiding the nausea wore the mask through."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.03
@@ -83,7 +87,7 @@ MonoBehaviour:
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "Nothing changes for her. She keeps pushing through the nausea and tiredness on her own.\nNext chapter: all of her meters drain much faster."
+    impactText: "Nothing changes for her. She keeps pushing through the nausea and tiredness on her own.\nNext chapter: all of her meters drain faster."
     learnText: "Severe vomiting in pregnancy (hyperemesis gravidarum) affects between 0.3% and 10.8% of pregnant women. Many women with nausea need more than diet changes, such as fluids, vitamins or anti-nausea medicine."
     helpText: "Notice it and share the load. If she can't keep food or fluids down, help her see a GP or midwife. Treatment is available, and a common anti-nausea combination (doxylamine with vitamin B6) hasn't been found to harm the baby."
     sourceText: "Fejzo et al. (2019), Nat Rev Dis Primers 5:62; Liu et al. (2022), Front Med 8:809270"

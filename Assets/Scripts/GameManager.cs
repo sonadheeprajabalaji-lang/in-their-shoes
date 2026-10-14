@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -49,6 +50,9 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Optional. The brief message shown between Partner Hour ending and Self Hour starting (see ChapterData.hourTransitionText). Created automatically if left empty.")]
     public HourTransitionUI hourTransition;
+
+    [Tooltip("Optional. The end-of-hour recap: her meters, what she tried to do and why a meter ran out. Created automatically if left empty.")]
+    public PartnerHourRecapUI partnerRecap;
 
     [Header("End")]
     public ResponseLogger logger;
@@ -129,6 +133,11 @@ public class GameManager : MonoBehaviour
         if (hourTransition == null)
         {
             hourTransition = new GameObject("HourTransition").AddComponent<HourTransitionUI>();
+        }
+
+        if (partnerRecap == null)
+        {
+            partnerRecap = new GameObject("PartnerHourRecap").AddComponent<PartnerHourRecapUI>();
         }
 
         AudioManager.Get().PlayMusic(chapterData.musicClip);
@@ -249,7 +258,34 @@ public class GameManager : MonoBehaviour
         checklist.Clear();
         juggle.EndRoaming();
 
-        hourTransition.Show(chapterData.hourTransitionText, minShowSeconds: 1.5f, autoDismissAfter: 3.5f, done: StartSelfHour);
+        ShowPartnerRecap();
+    }
+
+    // What the non-birthing partner didn't see: her meters as the hour
+    // ended, what she was trying to do, and why a meter ran out.
+    void ShowPartnerRecap()
+    {
+        if (partnerRecap == null)
+        {
+            hourTransition.Show(chapterData.hourTransitionText, minShowSeconds: 1.5f, autoDismissAfter: 3.5f, done: StartSelfHour);
+            return;
+        }
+
+        float[] values =
+        {
+            meters.body.value, meters.mind.value, meters.feelingLikeAPerson.value, meters.mask.value,
+        };
+
+        string mainTask = null;
+        var chores = new List<string>();
+        foreach (var task in InteractableTask.All)
+        {
+            string name = string.IsNullOrEmpty(task.displayName) ? task.gameObject.name : task.displayName;
+            if (task.taskId == chapterData.choiceTriggerTaskId) mainTask = name;
+            else if (!task.RequiresHold && task.locked) chores.Add(name);   // done chores lock themselves
+        }
+
+        partnerRecap.Show(chapterData, values, mainTask, partnerChoice == 1, chores, StartSelfHour);
     }
 
     void StartSelfHour()

@@ -24,6 +24,10 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: "She's out the door. Part of her isn't."
+  bodyDrainStory: "She'd been up feeding and expressing before the day began, then rushing to get out the door."
+  mindDrainStory: "The handover list, the carer, the nappy bag and work all pulled at her at once."
+  personDrainStory: "Between being a mum and going back to work, there wasn't a moment where she was just herself."
+  maskDrainStory: "She had to look calm and ready for work while the guilt about leaving the baby sat just underneath."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.02

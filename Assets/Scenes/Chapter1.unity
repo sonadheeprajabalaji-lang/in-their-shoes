@@ -1919,7 +1919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: stove
-  displayName: 
+  displayName: "Turn off the stove"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -2940,7 +2940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: dishes
-  displayName: 
+  displayName: "Wash the dishes"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -4889,7 +4889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: laptop
-  displayName: 
+  displayName: "Join the work call"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -6528,7 +6528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: coffee
-  displayName: 
+  displayName: "Drink the coffee"
   promptText: Press E
   locked: 0
   showIndicator: 1

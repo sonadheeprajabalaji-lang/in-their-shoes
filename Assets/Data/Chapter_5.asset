@@ -24,6 +24,10 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: "The baby's finally asleep. She can't remember the last time she was."
+  bodyDrainStory: "Weeks of broken nights caught up with her, and rocking the baby at 3 a.m. took what little was left."
+  mindDrainStory: "With so little sleep everything blurred: the crying, the bottles and the nurse's questions ran together."
+  personDrainStory: "Up alone in the dark, she couldn't remember the last time she did something just for herself."
+  maskDrainStory: "When the nurse called she said she was coping, because saying otherwise felt like failing."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.03
@@ -81,7 +85,7 @@ MonoBehaviour:
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "Everyone's tired, she says. She reheats the same cup of tea for the third time.\nNext chapter: all of her meters drain much faster."
+    impactText: "Everyone's tired, she says. She reheats the same cup of tea for the third time.\nNext chapter: all of her meters drain faster."
     learnText: "Exhaustion is expected at six weeks, but it isn't harmless. Poor sleep reported at 6 weeks after birth has been strongly linked with depressive symptoms at 6 to 12 weeks."
     helpText: "Don't take \"everyone's tired\" as the end of the conversation. Look at the traces, like cold tea and jobs piling up, then ask, and offer one specific thing you'll take over."
     sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"

@@ -1662,7 +1662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: dinner
-  displayName: 
+  displayName: "Cook dinner"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -2683,7 +2683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: mum_call
-  displayName: 
+  displayName: "Answer Mum's call"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -4631,7 +4631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: nursery
-  displayName: 
+  displayName: "Set up the nursery"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -5248,7 +5248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: searches
-  displayName: 
+  displayName: "Close the 'what if' searches"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -6443,7 +6443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
   taskId: washing
-  displayName: 
+  displayName: "Do the washing"
   promptText: Press E
   locked: 0
   showIndicator: 1

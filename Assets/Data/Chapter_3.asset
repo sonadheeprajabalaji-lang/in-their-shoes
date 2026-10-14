@@ -24,6 +24,10 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: "She has to lie down. The bag can wait."
+  bodyDrainStory: "Broken sleep, heartburn and breathlessness meant every bend and lift to pack the bag cost her something."
+  mindDrainStory: "Lists, hospital numbers and 'any baby yet?' messages piled up on a mind running on broken sleep."
+  personDrainStory: "She was getting everything ready for the baby, with nothing left over for herself."
+  maskDrainStory: "She kept replying 'all good, no baby yet!' and hid how uncomfortable and anxious she really was."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.035
@@ -81,7 +85,7 @@ MonoBehaviour:
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "She's up at 3 am with heartburn again, on her own, packing the hospital bag in her head.\nNext chapter: all of her meters drain much faster."
+    impactText: "She's up at 3 am with heartburn again, on her own, packing the hospital bag in her head.\nNext chapter: all of her meters drain faster."
     learnText: "Sleep problems affect around 70% of pregnant women and get worse in the third trimester. Poor sleep after birth is linked with more postnatal depression and anxiety."
     helpText: "Notice the signs, like pillows piled on the couch or antacids on the bench. Ask what kept her up, and take one thing off her list today."
     sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
