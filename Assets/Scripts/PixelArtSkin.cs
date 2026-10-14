@@ -23,6 +23,7 @@ using UnityEngine.UI;
 //     one meter drops (e.g. green nausea on Body in Chapter 1, grey worry on
 //     Mind in Chapter 2), optional thought bubbles over her, and an evening
 //     tint in Self Hour
+//   - shows her state in the room as meters drop (see MeterEffects)
 //   - restyles the meters, panels, buttons and text (Merriweather font),
 //     and puts a dark panel behind the "Press E" prompt
 //
@@ -346,6 +347,9 @@ public class PixelArtSkin : MonoBehaviour
 
     // Dark backing panels so text stays readable over the busy room.
     TextMeshPro worldPrompt;
+    SpriteRenderer roomRenderer;
+    Transform overlayCanvas;
+    MeterEffects effects;
     SpriteRenderer worldPromptBacking;
     Image juggleBacking;
 
@@ -376,7 +380,27 @@ public class PixelArtSkin : MonoBehaviour
         RestyleUi();
         LoadFont();
         SetUpWorldPrompt();
+        SetUpMeterEffects();
         SweepFonts();
+    }
+
+    // Her state shown in the room itself (see MeterEffects): slower steps,
+    // double vision and flickering prompts, colour draining away.
+    void SetUpMeterEffects()
+    {
+        var doubled = new List<SpriteRenderer>();
+        if (roomRenderer != null) doubled.Add(roomRenderer);
+        foreach (var task in InteractableTask.All)
+        {
+            var sr = task.GetComponent<SpriteRenderer>();
+            if (sr != null) doubled.Add(sr);
+        }
+        if (playerRenderer != null) doubled.Add(playerRenderer);
+
+        effects = gameObject.AddComponent<MeterEffects>();
+        effects.Init(gm, player, () => phase == Phase.Partner, overlayCanvas, doubled);
+        effects.SetWorldPrompt(worldPrompt);
+        if (gm.juggle != null) effects.SetJuggleBox(gm.juggle.container);
     }
 
     void LateUpdate()
@@ -438,6 +462,7 @@ public class PixelArtSkin : MonoBehaviour
         var baseSr = baseGo.AddComponent<SpriteRenderer>();
         baseSr.sprite = S(art.room);
         baseSr.sortingOrder = -10;
+        roomRenderer = baseSr;
 
         int solidLayer = FirstLayerIn(player != null ? player.solidLayer : (LayerMask)0);
         foreach (var c in art.furniture)
@@ -489,6 +514,7 @@ public class PixelArtSkin : MonoBehaviour
         var canvas = canvasGo.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = -100; // under the game's own UI, over the room
+        overlayCanvas = canvasGo.transform;
 
         eveningTint = MakeFullScreen(canvasGo.transform, "EveningTint", null, new Color(1f, 0.55f, 0.35f, 0f));
         eveningVignette = MakeFullScreen(canvasGo.transform, "EveningVignette", S("vignette"), new Color(0.13f, 0.1f, 0.2f, 0f));
@@ -663,6 +689,7 @@ public class PixelArtSkin : MonoBehaviour
         {
             if (tmp.gameObject.name == "InteractionPrompt") { worldPrompt = tmp; break; }
         }
+        if (worldPrompt != null && effects != null) effects.SetWorldPrompt(worldPrompt);
         if (worldPrompt == null) return;
         var go = worldPrompt.gameObject;
 
