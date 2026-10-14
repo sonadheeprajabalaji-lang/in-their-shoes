@@ -25,7 +25,7 @@ MonoBehaviour:
     hold SPACE to breathe, and tap Q or F when they appear.'
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
-  hourTransitionText: Your partner's become too tired to continue.
+  hourTransitionText: Your partner's too tired to continue.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.03
