@@ -12,6 +12,6 @@ Each chapter's room is drawn at runtime by `Assets/Scripts/PixelArtSkin.cs`. It 
 
 ## Tutorial and chapter start screens
 
-- `Assets/Scenes/Tutorial.unity` is the first scene in the build. `TutorialUI` builds one picture page at runtime (how to play on top, her four meters below) and then loads Chapter 1 on Enter. Keycaps light up when pressed, so players can try the keys.
+- `Assets/Scenes/Tutorial.unity` is the first scene in the build. `TutorialUI` builds one picture page at runtime (how to play on top, her four meters below) and then loads Chapter 1 on Enter.
 - Each chapter's start screen (`MeterIntroUI`) shows the chapter title, the four meter icons, the main task and that chapter's prompt keys, read from the main task's `jugglePrompts`, so it always matches the scene.
 - Keycaps and meter icons come from `Tools/pixel_art/generate_sprites_tutorial.py` (copy `out_tutorial/*.png` into `Assets/Resources/PixelArt`). Shared UI helpers are in `UIArt.cs`.
