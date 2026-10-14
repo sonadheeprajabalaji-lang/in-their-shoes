@@ -45,44 +45,45 @@ MonoBehaviour:
       mask: 1
   choiceTriggerTaskId: feeding
   responses:
-  - label: Make something she can eat
+  - label: "Look after her body"
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Ask how she's really feeling
-    nextChapterEase:
-      body: 1
-      mind: 1
-      feelingLikeAPerson: 0.85
-      mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Clear it away quietly
+    impactText: "Water and a snack are within reach every time she feeds, and her pain relief is on time. Healing goes a little easier.\nNext chapter: her Body drains more slowly."
+    learnText: "After a caesarean, women may need to take things easy for several weeks, can't drive for a few weeks, and shouldn't carry anything heavier than the baby. Recovering from any birth takes time."
+    helpText: "Bring water and a one-handed snack to every feed, keep track of her pain relief, and do the lifting, carrying and driving. Let her rest instead of expecting her to bounce back."
+    sourceText: "NHS, \"Caesarean section: recovery\""
+  - label: "Handle visitors and advice"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
+      mask: 0.85
+    impactText: "You set visiting times and ask people to bring food and keep it short. She doesn't have to smile through the pain for hours.\nNext chapter: The Mask drains more slowly."
+    learnText: "Newborns are at higher risk of infection, so health experts suggest limiting close contact and asking anyone unwell not to visit. Giving birth and caring for a newborn is exhausting."
+    helpText: "Be the gatekeeper. Tell visitors the rules before they come, ask them not to kiss the baby's face, and end visits when she's tired. Back her decisions in front of family."
+    sourceText: "Johns Hopkins Medicine, \"New parents and newborns: are visitors OK?\""
+  - label: "Take over some baby care"
+    nextChapterEase:
+      body: 1
+      mind: 0.85
+      feelingLikeAPerson: 1
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Carry on as normal
+    impactText: "You burp, change and settle the baby after each feed, so she can sleep in between.\nNext chapter: her Mind drains more slowly."
+    learnText: "Partners make a real difference to feeding. A review found that including fathers in breastfeeding support roughly doubled the chance of exclusive breastfeeding at 6 months, and reduced breastfeeding problems."
+    helpText: "Do everything except the feed itself: nappies, burping, settling and baths. Learn the baby's early hunger cues so you can bring the baby to her in time, and decide any feeding changes together."
+    sourceText: "Mahesh et al. (2018), BMC Public Health 18, doi:10.1186/s12889-018-6037-x"
+  - label: "Carry on as normal"
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  learnHeading: Did you know?
+    impactText: "She's crying again and says it's just hormones. You leave it there.\nNext chapter: all of her meters drain much faster."
+    learnText: "Up to 80% of new mothers get the baby blues, usually starting 3 to 5 days after the birth and easing within days. If low mood lasts beyond about two weeks, it may be postnatal depression."
+    helpText: "Support and reassurance from a partner make a real difference. If her low mood doesn't lift, help her talk to the midwife, GP or child and family health nurse."
+    sourceText: "The Royal Women's Hospital, \"Baby blues\" (thewomens.org.au); NHS, \"Postnatal depression\""
+  learnHeading: "In the first week after birth"
+  selfHourNotice: "She's tearful: \"It's just hormones.\""

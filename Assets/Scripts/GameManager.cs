@@ -276,8 +276,43 @@ public class GameManager : MonoBehaviour
         if (currentCue != null) return;   // already answering one cue at a time
 
         currentCue = cue;
+        ShowSelfHourNotice();
         responsePanel.SetActive(true);
         responseShownTime = Time.time;
+    }
+
+    TMP_Text selfHourNoticeText;
+
+    // What she says, shown just above the response buttons (which sit on
+    // the right of the screen), followed by "What do you do?".
+    void ShowSelfHourNotice()
+    {
+        if (string.IsNullOrWhiteSpace(chapterData.selfHourNotice) || responseButtons == null || responseButtons.Length == 0) return;
+
+        if (selfHourNoticeText == null)
+        {
+            var first = (RectTransform)responseButtons[0].transform;
+            var go = new GameObject("SelfHourNotice", typeof(RectTransform));
+            var rt = (RectTransform)go.transform;
+            rt.SetParent(first.parent, false);
+            rt.anchorMin = first.anchorMin;
+            rt.anchorMax = first.anchorMax;
+            rt.pivot = new Vector2(0.5f, 0f);
+            rt.sizeDelta = new Vector2(first.sizeDelta.x + 40f, 180f);
+            rt.anchoredPosition = first.anchoredPosition + new Vector2(0f, first.sizeDelta.y * 0.5f + 16f);
+
+            var t = go.AddComponent<TextMeshProUGUI>();
+            t.fontSize = 30f;
+            t.color = Color.white;
+            t.alignment = TextAlignmentOptions.Bottom;
+            t.enableWordWrapping = true;
+            t.richText = true;
+            t.raycastTarget = false;
+            selfHourNoticeText = t;
+        }
+
+        selfHourNoticeText.text = chapterData.selfHourNotice.Trim() +
+                                  "\n<size=80%><color=#EF9F27>What do you do?</color></size>";
     }
 
     void OnResponse(int index)

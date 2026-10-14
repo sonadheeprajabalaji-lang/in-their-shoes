@@ -45,44 +45,45 @@ MonoBehaviour:
       mask: 0.6
   choiceTriggerTaskId: get_ready
   responses:
-  - label: Make something she can eat
-    nextChapterEase:
-      body: 0.85
-      mind: 1
-      feelingLikeAPerson: 1
-      mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Ask how she's really feeling
-    nextChapterEase:
-      body: 1
-      mind: 1
-      feelingLikeAPerson: 0.85
-      mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Clear it away quietly
+  - label: "Take over the baby admin"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Carry on as normal
+    impactText: "You buy the nappies and answer the carer about food portions yourself. Tomorrow she can be at work without running the house from her phone."
+    learnText: "Australian mothers still do much more of the childcare. In 2020-21, mothers spent an average of 3 hours 34 minutes a day on childcare, compared with 2 hours 19 minutes for fathers."
+    helpText: "Own whole areas, like the nappy supply, the carer and drop-offs, including the remembering. COPE suggests talking together about the change and renegotiating tasks like drop-offs and pick-ups."
+    sourceText: "ABS, \"How Australians Use Their Time, 2020-21\"; COPE, \"Returning to work\" (cope.org.au)"
+  - label: "Ask how she's really feeling"
     nextChapterEase:
-      body: 3
-      mind: 3
-      feelingLikeAPerson: 3
-      mask: 3
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  learnHeading: Did you know?
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: "You say you know leaving the baby was hard, and ask how she really is. She tells you about crying in the car park, and the relief she felt guilty for."
+    learnText: "Going back to work can bring sadness, anxiety and guilt about leaving the baby, and for some women relief at a return to normality. Feeling a mix of these is normal."
+    helpText: "Ask about her day, not just the job. Make room for both the sadness and the relief, without judging either."
+    sourceText: "COPE, \"Returning to work\" (cope.org.au)"
+  - label: "Make the evening easier"
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: "You cook dinner and do the bath and bedtime, so the evening isn't a second shift for her."
+    learnText: "Nearly 30% of Australian working mothers report strong tension between work and family. Their strain eased when partners took on more of the paid and unpaid work."
+    helpText: "Plan the evenings together before her first week back: who cooks, and who does bath and bedtime. Batch cooking and grocery delivery save time on work nights."
+    sourceText: "AIFS, \"Persistent work-family strain among Australian mothers\" (Family Matters 86); COPE, \"Returning to work\" (cope.org.au)"
+  - label: "Carry on as normal"
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: "Work was fine, she says. You leave it there, and she does bedtime on her own after a full day."
+    learnText: "Balancing work and care is still often treated as the mother's job rather than a shared one, and that is part of why work-family strain lasts for many mothers."
+    helpText: "Don't wait to be asked. Notice the traces, like the work bag by the door, the note from the carer and the empty nappy box, and take one over tonight."
+    sourceText: "AIFS, \"Persistent work-family strain among Australian mothers\" (Family Matters 86)"
+  learnHeading: "Going back to work"
+  selfHourNotice: "The evening after her first day back. She says: \"Work was fine.\""

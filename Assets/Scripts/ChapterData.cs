@@ -67,6 +67,10 @@ public class ChapterData : ScriptableObject
 
     [Tooltip("Heading for the learning section of the card shown after each Self Hour response, e.g. \"In the first trimester\".")]
     public string learnHeading = "Did you know?";
+
+    [Tooltip("Shown above the Self Hour response buttons: what the partner notices and what she says, e.g. 'She says: \"I'm just excited.\"'. Followed by \"What do you do?\". Leave blank to show nothing.")]
+    [TextArea(1, 3)]
+    public string selfHourNotice;
 }
 
 // The four Partner Hour meters, used both as base drain rates and as

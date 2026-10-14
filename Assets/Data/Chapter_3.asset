@@ -45,44 +45,45 @@ MonoBehaviour:
       mask: 1
   choiceTriggerTaskId: hospital_bag
   responses:
-  - label: Make something she can eat
+  - label: "Make something she can eat"
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Ask how she's really feeling
+    impactText: "A small, plain dinner, early in the evening. The heartburn settles before bed, and she gets a few more hours of sleep.\nNext chapter: her Body drains more slowly."
+    learnText: "Heartburn is common in pregnancy, and more common from 12 weeks on. Eating close to bedtime and lying flat let stomach acid come back up while she sleeps."
+    helpText: "Offer small meals more often instead of three big ones, and avoid food in the 3 hours before bed. Go easy on rich, spicy or fatty food and caffeine, and add pillows so her head and shoulders are propped up at night."
+    sourceText: "NHS, \"Indigestion and heartburn in pregnancy\""
+  - label: "Help her rest"
+    nextChapterEase:
+      body: 1
+      mind: 0.85
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: "You set up pillows so she can sleep on her side, and you take the evening jobs. She wakes less, and her head is clearer in the morning.\nNext chapter: her Mind drains more slowly."
+    learnText: "Late in pregnancy the bump, needing to wee and heartburn all break up her sleep. From 28 weeks, going to sleep on her side rather than her back halves the risk of stillbirth."
+    helpText: "Help her get comfortable with a pillow under the bump and one between her knees, and encourage naps when she can. Take over evening chores so she can go to bed earlier."
+    sourceText: "HSE Ireland, \"Sleep problems during pregnancy\"; Safer Baby Bundle, \"Sleep on your side\" (saferbaby.org.au)"
+  - label: "Plan for after the birth"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Clear it away quietly
-    nextChapterEase:
-      body: 1
-      mind: 1
-      feelingLikeAPerson: 1
-      mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Carry on as normal
+    impactText: "You agree a visitor plan, freeze some meals and set up a feeding spot with water and snacks. One less thing for her to hold in her head.\nNext chapter: Feeling like a person drains more slowly."
+    learnText: "Newborns haven't built up their immune systems yet, so health experts advise limiting close contact with visitors at first, and agreeing the rules as a couple before the baby arrives."
+    helpText: "Decide now who visits and when, and who will tell people. Batch-cook and freeze meals, and agree how you'll share nights and chores, so the planning doesn't all fall to her."
+    sourceText: "Johns Hopkins Medicine, \"New parents and newborns: are visitors OK?\"; Pilkington et al. (2016), BMC Psychiatry 16:23"
+  - label: "Carry on as normal"
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  learnHeading: Did you know?
+    impactText: "She's up at 3 am with heartburn again, on her own, packing the hospital bag in her head.\nNext chapter: all of her meters drain much faster."
+    learnText: "Sleep problems affect around 70% of pregnant women and get worse in the third trimester. Poor sleep after birth is linked with more postnatal depression and anxiety."
+    helpText: "Notice the signs, like pillows piled on the couch or antacids on the bench. Ask what kept her up, and take one thing off her list today."
+    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
+  learnHeading: "In the third trimester"
+  selfHourNotice: "She's out of breath on the couch: \"I'm fine, just big.\""

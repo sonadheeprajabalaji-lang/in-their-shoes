@@ -45,44 +45,45 @@ MonoBehaviour:
       mask: 1
   choiceTriggerTaskId: settle_baby
   responses:
-  - label: Make something she can eat
+  - label: "Give her real sleep"
     nextChapterEase:
-      body: 0.85
-      mind: 1
+      body: 1
+      mind: 0.85
       feelingLikeAPerson: 1
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Ask how she's really feeling
+    impactText: "You take the baby for a block of hours and leave her phone in another room. She sleeps without listening for crying.\nNext chapter: her Mind drains more slowly."
+    learnText: "A new mother's sleep is broken into short pieces for months. One study found it was about twice as fragmented in the first weeks after birth, and poor sleep after birth is linked with more postnatal depression and anxiety."
+    helpText: "Take a whole block of the night, not just one feed, so she gets unbroken sleep. If she's breastfeeding, bring the baby to her, then do the burping, changing and settling yourself."
+    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
+  - label: "Ask how she's really feeling"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Clear it away quietly
+    impactText: "You mention the nurse's number on the fridge and ask if she told the nurse she was fine. She says she's not sure she is.\nNext chapter: Feeling like a person drains more slowly."
+    learnText: "Postnatal depression and anxiety affect up to 1 in 5 new mums and up to 1 in 10 new dads. Symptoms can start suddenly after birth, or build gradually over weeks and months."
+    helpText: "Name what you've noticed, listen without fixing, and offer to go with her to the GP or child and family health nurse. PANDA's helpline is 1300 726 306. If she talks about harming herself, call Lifeline on 13 11 14 or 000."
+    sourceText: "PANDA, \"Postnatal depression: signs and symptoms\" (panda.org.au)"
+  - label: "Take jobs off her plate"
     nextChapterEase:
-      body: 1
+      body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  - label: Carry on as normal
+    impactText: "Sterilising the bottles and the baby laundry become your jobs, not favours. Two fewer things are waiting for her at 11 pm.\nNext chapter: her Body drains more slowly."
+    learnText: "Health services advise new parents who are struggling to ask for practical help with shopping, chores and childcare, and to rest as much as they can."
+    helpText: "Take over whole jobs rather than single tasks, so she doesn't have to remember or ask. Owning the bottles, the laundry or the shopping takes away the planning as well as the work."
+    sourceText: "NHS, \"Postnatal depression\""
+  - label: "Carry on as normal"
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: 
-    learnText: 
-    helpText: 
-    sourceText: 
-  learnHeading: Did you know?
+    impactText: "Everyone's tired, she says. She reheats the same cup of tea for the third time.\nNext chapter: all of her meters drain much faster."
+    learnText: "Exhaustion is normal at six weeks, but it can also hide postnatal depression. Struggling to sleep even when there's time to rest is one of its signs."
+    helpText: "Don't take \"everyone's tired\" as the end of the conversation. Look at the traces, like cold tea and jobs piling up, then ask, and offer one specific thing you'll take over."
+    sourceText: "NHS, \"Postnatal depression\"; PANDA, \"Postnatal depression: signs and symptoms\" (panda.org.au)"
+  learnHeading: "Around six weeks after birth"
+  selfHourNotice: "She says: \"Everyone's tired.\""
