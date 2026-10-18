@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 4
   chapterTitle: The First Week Home
+  timelineText: "The first week after the birth"
+  bannerSeconds: 6
   weekContext: Week 1, postpartum
   obstacleText: "Birth recovery: stitches or a caesarean wound, bleeding, and milk coming in"
   mainTaskText: "Feeding the baby (cluster feeding)"

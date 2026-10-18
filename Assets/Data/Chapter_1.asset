@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 1
   chapterTitle: The First Trimester
+  timelineText: "First trimester"
+  bannerSeconds: 6
   weekContext: Nobody Knows Yet
   obstacleText: A work call has started. The nausea hits. Everyone is watching.
   mainTaskText: Work video call (pregnancy not announced yet)
