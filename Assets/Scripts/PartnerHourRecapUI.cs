@@ -16,7 +16,7 @@ using UnityEngine.UI;
 //   - why the meter that ran out drained, from ChapterData's drain stories
 //
 // Builds its own overlay canvas at runtime, like MeterIntroUI, so nothing
-// is needed in the scene. Space, Enter or a click continues (after a short
+// is needed in the scene. Enter or a click continues (after a short
 // pause, so it can't be skipped by accident).
 public class PartnerHourRecapUI : MonoBehaviour
 {
@@ -128,7 +128,7 @@ public class PartnerHourRecapUI : MonoBehaviour
         }
         story.text = sb.ToString().TrimEnd();
 
-        hint.text = "Now you come home. Look for what she couldn't get to.   (Space to continue)";
+        hint.text = "Now you come home. Look for what she couldn't get to.   (Enter to continue)";
 
         root.SetActive(true);
         shownAt = Time.unscaledTime;
@@ -138,8 +138,7 @@ public class PartnerHourRecapUI : MonoBehaviour
     {
         if (!IsShowing) return;
         if (Time.unscaledTime - shownAt < minShowSeconds) return;
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)
-            || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetMouseButtonDown(0))
         {
             Finish();
         }

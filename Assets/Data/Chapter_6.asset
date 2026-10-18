@@ -15,7 +15,7 @@ MonoBehaviour:
   chapterNumber: 6
   chapterTitle: First Day Back
   timelineText: "Six months after the birth"
-  bannerSeconds: 6
+  storyText: "Your baby is six months old, and today you go back to work. You were up before dawn to feed and express, and the milk still needs labelling. The nappy bag isn't packed, the carer needs a handover list, and you want to check in with her before you leave. None of your work clothes fit the way they used to. And every time you look at the baby, the guilt about leaving pulls at you. Get ready for work and get out the door."
   weekContext: Month 4, postpartum
   obstacleText: "Guilt and separation anxiety about leaving the baby"
   mainTaskText: "Getting ready for work"

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 // is assigned. Uses the pixel-art panel and button sprites from
 // Resources/PixelArt when they exist, and plain colours otherwise.
 //
-// Close it with the Continue button, Space or Enter. (Not E: E is the
+// Close it with the Continue button or Enter. (Not E: E is the
 // interact key, and the same press would reach the next object.)
 public class ResponseFeedbackUI : MonoBehaviour
 {
@@ -73,7 +73,7 @@ public class ResponseFeedbackUI : MonoBehaviour
         if (!IsShowing) return;
         // Ignore the first moment so the click that chose the response can't also close the card.
         if (Time.unscaledTime - shownAt < 0.4f) return;
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             Close();
         }
@@ -153,7 +153,7 @@ public class ResponseFeedbackUI : MonoBehaviour
         sources = NewText("Sources", card, 22, SourceColor);
         Spacer(card, 10);
 
-        continueButton = NewButton(card, "Continue  (Space)");
+        continueButton = NewButton(card, "Continue  (Enter)");
         continueButton.onClick.AddListener(Close);
     }
 

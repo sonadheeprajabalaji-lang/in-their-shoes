@@ -15,7 +15,7 @@ MonoBehaviour:
   chapterNumber: 4
   chapterTitle: The First Week Home
   timelineText: "The first week after the birth"
-  bannerSeconds: 6
+  storyText: "Your baby is five days old, and you're home. Your body is still healing: the stitches sting when you sit, you're still bleeding, and your milk has just come in, hard and sore. The baby wants to feed again, and again, and again. Visitors keep knocking, their cups are piling up in the sink, and you can't remember the last time you ate, had a drink or took your pain relief. Feed the baby, however long it takes."
   weekContext: Week 1, postpartum
   obstacleText: "Birth recovery: stitches or a caesarean wound, bleeding, and milk coming in"
   mainTaskText: "Feeding the baby (cluster feeding)"

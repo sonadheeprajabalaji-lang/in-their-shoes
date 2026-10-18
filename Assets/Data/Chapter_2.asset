@@ -15,7 +15,7 @@ MonoBehaviour:
   chapterNumber: 2
   chapterTitle: Setting Up the Nursery
   timelineText: "Second trimester"
-  bannerSeconds: 6
+  storyText: "You're twenty-four weeks pregnant, and everyone keeps telling you how exciting it must be. Tonight you're finally setting up the nursery: the cot is still in its box and there are tiny clothes everywhere. Dinner needs cooking, the washing is waiting, and Mum has already called twice. But everything you unpack starts another \"what if\". What if the birth goes wrong? What if you can't cope? What if you're not good at this? Your phone is full of searches you didn't mean to open. Set up the nursery, and try to keep the worries quiet."
   weekContext: Week 22, second trimester
   obstacleText: Worries about the birth and coping as a parent (intrusive 'what if'
     thoughts)

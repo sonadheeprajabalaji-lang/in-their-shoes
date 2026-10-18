@@ -15,7 +15,7 @@ MonoBehaviour:
   chapterNumber: 3
   chapterTitle: Packing the Hospital Bag
   timelineText: "Third trimester, close to the due date"
-  bannerSeconds: 6
+  storyText: "You're thirty-eight weeks pregnant, and the baby could come any day. You barely slept again: you woke every hour, the heartburn burned all night, and even the stairs leave you out of breath. The hospital bag is still half empty. The newborn clothes need washing, the hospital numbers need writing down, and dinner won't cook itself. And the messages keep coming: \"Any baby yet?\" Pack the hospital bag and get the house ready, before it's too late."
   weekContext: Week 37, third trimester
   obstacleText: "Broken sleep, heartburn and breathlessness"
   mainTaskText: "Packing the hospital bag and getting the house ready"

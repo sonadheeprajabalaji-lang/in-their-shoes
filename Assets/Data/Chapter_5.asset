@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 5
   chapterTitle: Three in the Morning
-  timelineText: "A few weeks after the birth"
-  bannerSeconds: 6
+  timelineText: "Six weeks after the birth"
+  storyText: "It's three in the morning, and your baby is six weeks old. You haven't slept more than two hours at a time in weeks, and everything has started to blur. The baby has been crying for an hour. The bottles still need sterilising, the baby's laundry is piled up by the machine, the tea you made has gone cold, and there's a missed call from the nurse you still haven't returned. Your eyes keep closing on their own. Settle the baby back to sleep."
   weekContext: Week 6, postpartum
   obstacleText: "Severe sleep deprivation"
   mainTaskText: "Settling a crying baby to sleep"

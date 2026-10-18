@@ -15,7 +15,7 @@ MonoBehaviour:
   chapterNumber: 1
   chapterTitle: The First Trimester
   timelineText: "First trimester"
-  bannerSeconds: 6
+  storyText: "You're eight weeks pregnant, and no one at work knows yet. You've been sick every morning this week, and today was no different, but you got dressed, made a coffee you couldn't drink, and sat down at the laptop like nothing was wrong. The stove is still on from lunch and the dishes are piling up in the sink. Then the video call starts. Five minutes in, the nausea rolls over you, and every face on the screen is looking at you. Get through the call without anyone guessing."
   weekContext: Nobody Knows Yet
   obstacleText: A work call has started. The nausea hits. Everyone is watching.
   mainTaskText: Work video call (pregnancy not announced yet)
