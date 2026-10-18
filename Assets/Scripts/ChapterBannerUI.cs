@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// A panel across the top of the screen at the start of each chapter's
+// A panel in the middle of the screen at the start of each chapter's
 // Partner Hour: where she is in her pregnancy or postpartum
 // (ChapterData.timelineText), then a short story that sets the scene and
 // ends on the main task (ChapterData.storyText). It stays up until the
@@ -67,7 +67,7 @@ public class ChapterBannerUI : MonoBehaviour
         if (!closing)
         {
             group.alpha = Mathf.Clamp01(t / FadeIn);
-            panel.anchoredPosition = new Vector2(0f, -28f + (1f - group.alpha) * 30f);   // drops in from the top
+            panel.anchoredPosition = new Vector2(0f, (1f - group.alpha) * 20f);   // settles into place
 
             // A gentle pulse on the hint once it's had time to be read.
             var c = hint.color;
@@ -86,7 +86,7 @@ public class ChapterBannerUI : MonoBehaviour
 
         float k = (Time.unscaledTime - closeStartedAt) / FadeOut;
         group.alpha = 1f - Mathf.Clamp01(k);
-        panel.anchoredPosition = new Vector2(0f, -28f + Mathf.Clamp01(k) * 30f);
+        panel.anchoredPosition = new Vector2(0f, Mathf.Clamp01(k) * 20f);
         if (k >= 1f)
         {
             root.SetActive(false);
@@ -130,7 +130,7 @@ public class ChapterBannerUI : MonoBehaviour
 
         // Border, then the panel inside it.
         panel = Rect("Banner", root.transform);
-        panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0.5f, 1f);
+        panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0.5f, 0.5f);   // centred on screen
         panel.sizeDelta = new Vector2(980, 0);   // fits between the meters (left) and the scene text box (right)
         panel.gameObject.AddComponent<Image>().color = BorderColor;
         var outer = panel.gameObject.AddComponent<VerticalLayoutGroup>();
