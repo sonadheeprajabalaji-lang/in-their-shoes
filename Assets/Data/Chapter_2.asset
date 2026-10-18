@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 2
   chapterTitle: Setting Up the Nursery
+  timelineText: "Second trimester"
+  bannerSeconds: 6
   weekContext: Week 22, second trimester
   obstacleText: Worries about the birth and coping as a parent (intrusive 'what if'
     thoughts)

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 3
   chapterTitle: Packing the Hospital Bag
+  timelineText: "Third trimester, close to the due date"
+  bannerSeconds: 6
   weekContext: Week 37, third trimester
   obstacleText: "Broken sleep, heartburn and breathlessness"
   mainTaskText: "Packing the hospital bag and getting the house ready"

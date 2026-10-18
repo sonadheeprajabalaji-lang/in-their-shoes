@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 5
   chapterTitle: Three in the Morning
+  timelineText: "A few weeks after the birth"
+  bannerSeconds: 6
   weekContext: Week 6, postpartum
   obstacleText: "Severe sleep deprivation"
   mainTaskText: "Settling a crying baby to sleep"

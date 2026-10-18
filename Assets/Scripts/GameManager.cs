@@ -239,6 +239,18 @@ public class GameManager : MonoBehaviour
 
         ShowOnly(partnerHourPanel);
 
+        // First the banner (where she is, the main obstacle and the main
+        // task) for a few seconds, with everything paused; then the hour
+        // starts and the meters begin draining.
+        if (chapterBanner == null) chapterBanner = new GameObject("ChapterBanner").AddComponent<ChapterBannerUI>();
+        if (partnerHourController.player != null) partnerHourController.player.InputLocked = true;
+        chapterBanner.Show(chapterData, BeginPartnerHourPlay);
+    }
+
+    ChapterBannerUI chapterBanner;
+
+    void BeginPartnerHourPlay()
+    {
         MeterRates carry = CarryoverState.ConsumeForNextChapter();
         meters.Configure(MeterRates.Multiply(chapterData.baseDrain, carry));
         meters.StartDraining();
