@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,12 @@ using UnityEngine.UI;
 // ends on the main task (ChapterData.storyText). It stays up until the
 // player presses Enter; then it fades out and the hour begins: the meters
 // start draining and she can move.
+//
+// Behind it, the whole screen is blurred and darkened so the story is the
+// first thing the player sees: just before showing, it takes a snapshot of
+// the screen, shrinks it (which blurs it) and stretches it back over the
+// screen. The game is paused while the banner is up, so a still picture
+// looks the same as the live room.
 //
 // Builds its own overlay canvas at runtime; GameManager creates one.
 public class ChapterBannerUI : MonoBehaviour
@@ -26,6 +33,8 @@ public class ChapterBannerUI : MonoBehaviour
     RectTransform panel;
     TMP_Text chapterLine, timeline, story, hint;
     Action onDone;
+    RawImage blurImage;
+    RenderTexture blurSmall, blurTiny;
     float shownAt;
     bool closing;
     float closeStartedAt;
@@ -40,6 +49,17 @@ public class ChapterBannerUI : MonoBehaviour
 
     public void Show(ChapterData data, Action done)
     {
+        StartCoroutine(ShowAfterSnapshot(data, done));
+    }
+
+    IEnumerator ShowAfterSnapshot(ChapterData data, Action done)
+    {
+        // Let the room and HUD draw a frame, then take the picture before the
+        // banner is visible.
+        root.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        MakeBlur();
+
         onDone = done;
         UseSceneFont();
 
@@ -90,11 +110,46 @@ public class ChapterBannerUI : MonoBehaviour
         if (k >= 1f)
         {
             root.SetActive(false);
+            FreeBlur();
             var cb = onDone;
             onDone = null;
             cb?.Invoke();
         }
     }
+
+    // ---------- blur ----------
+
+    void MakeBlur()
+    {
+        FreeBlur();
+        Texture2D shot = null;
+        try { shot = ScreenCapture.CaptureScreenshotAsTexture(); }
+        catch (Exception) { shot = null; }
+        if (shot == null) { blurImage.enabled = false; return; }   // the dark tint still covers the room
+
+        // Shrinking in two steps with smooth filtering, then letting the
+        // image stretch back up, gives a soft blur without a special shader.
+        int w = Mathf.Max(8, shot.width / 6), h = Mathf.Max(8, shot.height / 6);
+        // sRGB, since the project renders in linear colour; otherwise the
+        // picture would come out washed out.
+        blurSmall = new RenderTexture(w, h, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB) { filterMode = FilterMode.Bilinear };
+        blurTiny = new RenderTexture(Mathf.Max(4, w / 4), Mathf.Max(4, h / 4), 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB) { filterMode = FilterMode.Bilinear };
+        Graphics.Blit(shot, blurSmall);
+        Graphics.Blit(blurSmall, blurTiny);
+        Destroy(shot);
+
+        blurImage.texture = blurTiny;
+        blurImage.enabled = true;
+    }
+
+    void FreeBlur()
+    {
+        if (blurImage != null) blurImage.texture = null;
+        if (blurSmall != null) { blurSmall.Release(); Destroy(blurSmall); blurSmall = null; }
+        if (blurTiny != null) { blurTiny.Release(); Destroy(blurTiny); blurTiny = null; }
+    }
+
+    void OnDestroy() => FreeBlur();
 
     // Use the game's font (Merriweather, made at runtime by the pixel-art
     // skin), or failing that whatever the game's own text uses.
@@ -128,6 +183,18 @@ public class ChapterBannerUI : MonoBehaviour
         group = root.AddComponent<CanvasGroup>();
         group.blocksRaycasts = false;
 
+        // Blurred snapshot of the screen, then a dark tint over it.
+        var blur = Rect("Blur", root.transform);
+        Stretch(blur);
+        blurImage = blur.gameObject.AddComponent<RawImage>();
+        blurImage.raycastTarget = false;
+        blurImage.enabled = false;
+        var tint = Rect("Tint", root.transform);
+        Stretch(tint);
+        var tintImg = tint.gameObject.AddComponent<Image>();
+        tintImg.color = new Color(0.07f, 0.05f, 0.09f, 0.55f);
+        tintImg.raycastTarget = false;
+
         // Border, then the panel inside it.
         panel = Rect("Banner", root.transform);
         panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0.5f, 0.5f);   // centred on screen
@@ -159,6 +226,13 @@ public class ChapterBannerUI : MonoBehaviour
         Spacer(inner, 12);
         hint = Text(inner, 24, HintColor, TextAlignmentOptions.Right);
         hint.text = "Press Enter to begin";
+    }
+
+    static void Stretch(RectTransform rt)
+    {
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = rt.offsetMax = Vector2.zero;
     }
 
     static RectTransform Rect(string name, Transform parent)
