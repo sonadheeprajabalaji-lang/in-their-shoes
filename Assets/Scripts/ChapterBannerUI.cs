@@ -96,7 +96,12 @@ public class ChapterBannerUI : MonoBehaviour
     // it at runtime), so the banner matches.
     void UseSceneFont()
     {
-        TMP_FontAsset font = null;
+        TMP_FontAsset font = PixelArtSkin.CurrentFont;   // Merriweather
+        if (font != null)
+        {
+            foreach (var t in root.GetComponentsInChildren<TMP_Text>(true)) t.font = font;
+            return;
+        }
         foreach (var t in FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None))
         {
             if (t.font != null && !t.transform.IsChildOf(root.transform)) { font = t.font; break; }

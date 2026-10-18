@@ -34,6 +34,7 @@ public class MeterController : MonoBehaviour
     MeterRates baseDrain;
     MeterRates currentMultiplier = new MeterRates(1f, 1f, 1f, 1f);
     bool draining = false;
+    public bool IsDraining => draining;
 
     // Call this once, at the start of the chapter, before StartDraining.
     public void Configure(MeterRates chapterBaseDrain)
