@@ -198,7 +198,7 @@ public class ChapterBannerUI : MonoBehaviour
         // Border, then the panel inside it.
         panel = Rect("Banner", root.transform);
         panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0.5f, 0.5f);   // centred on screen
-        panel.sizeDelta = new Vector2(980, 0);   // fits between the meters (left) and the scene text box (right)
+        panel.sizeDelta = new Vector2(1060, 0);   // a little wider to keep the line length with the bigger margins
         panel.gameObject.AddComponent<Image>().color = BorderColor;
         var outer = panel.gameObject.AddComponent<VerticalLayoutGroup>();
         outer.padding = new RectOffset(5, 5, 5, 5);
@@ -210,7 +210,7 @@ public class ChapterBannerUI : MonoBehaviour
         var inner = Rect("Inside", panel);
         inner.gameObject.AddComponent<Image>().color = PanelColor;
         var v = inner.gameObject.AddComponent<VerticalLayoutGroup>();
-        v.padding = new RectOffset(48, 48, 24, 24);
+        v.padding = new RectOffset(80, 80, 48, 44);   // generous margin around the text
         v.spacing = 6;
         v.childAlignment = TextAnchor.UpperCenter;
         v.childControlWidth = v.childControlHeight = true;
