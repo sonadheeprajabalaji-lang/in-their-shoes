@@ -14,23 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 6
   chapterTitle: First Day Back
-  timelineText: "Six months after the birth"
-  storyText: "Your baby is six months old, and today you go back to work. You were up before dawn to feed and express, and the milk still needs labelling. The nappy bag isn't packed, the carer needs a handover list, and you want to check in with her before you leave. None of your work clothes fit the way they used to. And every time you look at the baby, the guilt about leaving pulls at you. Get ready for work and get out the door."
+  timelineText: Six months after the birth
+  storyText: Your baby is six months old, and today you go back to work. You were
+    up before dawn to feed and express, and the milk still needs labelling. The nappy
+    bag isn't packed, the carer needs a handover list, and you want to check in with
+    her before you leave. None of your work clothes fit the way they used to. And
+    every time you look at the baby, the guilt about leaving pulls at you. Get ready
+    for work and get out the door.
   weekContext: Month 4, postpartum
-  obstacleText: "Guilt and separation anxiety about leaving the baby"
-  mainTaskText: "Getting ready for work"
+  obstacleText: Guilt and separation anxiety about leaving the baby
+  mainTaskText: Getting ready for work
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
   showMeterIntro: 0
   showContentWarning: 0
-  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While getting ready for work, hold E and respond to the prompts: hold SPACE to get herself ready, tap Q to push past the clothes that don't fit, and tap F to quiet the worry loop."
-  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  meterIntroNote: 'Move with the arrow keys or WASD, and press E to use things. While
+    getting ready for work, hold E and respond to the prompts: hold SPACE to get
+    herself ready, tap Q to push past the clothes that don''t fit, and tap F to quiet
+    the worry loop.'
+  musicClip: {fileID: 8300000, guid: d45b17dd9d6da4113bdea9e7d56dbc7b, type: 3}
   ambienceClip: {fileID: 0}
-  hourTransitionText: "She's out the door. Part of her isn't."
-  bodyDrainStory: "She'd been up feeding and expressing before the day began, then rushing to get out the door."
-  mindDrainStory: "The handover list, the carer, the nappy bag and work all pulled at her at once."
-  personDrainStory: "Between being a mum and going back to work, there wasn't a moment where she was just herself."
-  maskDrainStory: "She had to look calm and ready for work while the guilt about leaving the baby sat just underneath."
+  hourTransitionText: She's out the door. Part of her isn't.
+  bodyDrainStory: She'd been up feeding and expressing before the day began, then
+    rushing to get out the door.
+  mindDrainStory: The handover list, the carer, the nappy bag and work all pulled
+    at her at once.
+  personDrainStory: Between being a mum and going back to work, there wasn't a moment
+    where she was just herself.
+  maskDrainStory: She had to look calm and ready for work while the guilt about leaving
+    the baby sat just underneath.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.02
@@ -38,13 +50,13 @@ MonoBehaviour:
     feelingLikeAPerson: 0.035
     mask: 0.035
   choices:
-  - label: "Sit down and have a moment"
+  - label: Sit down and have a moment
     multipliers:
       body: 1
       mind: 0.6
       feelingLikeAPerson: 1
       mask: 1.4
-  - label: "Push on and get out the door"
+  - label: Push on and get out the door
     multipliers:
       body: 1
       mind: 1.5
@@ -54,45 +66,64 @@ MonoBehaviour:
   mainTaskHitMeter: 2
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Take over the baby admin"
+  - label: Take over the baby admin
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You buy the nappies and answer the carer about food portions yourself. Tomorrow she can be at work without running the house from her phone."
-    learnText: "In a study of mothers, most said they alone were responsible for running household routines, like organising schedules. Feeling solely responsible was linked with lower wellbeing and lower satisfaction with their partner."
-    helpText: "Own whole areas, like the nappy supply, the carer and drop-offs, including the remembering. Agree together who is in charge of what, so she doesn't have to keep track of it all."
-    sourceText: "Ciciolla & Luthar (2019), Sex Roles 81:467-86"
-  - label: "Ask how she's really feeling"
+    impactText: You buy the nappies and answer the carer about food portions yourself.
+      Tomorrow she can be at work without running the house from her phone.
+    learnText: In a study of mothers, most said they alone were responsible for running
+      household routines, like organising schedules. Feeling solely responsible was
+      linked with lower wellbeing and lower satisfaction with their partner.
+    helpText: Own whole areas, like the nappy supply, the carer and drop-offs, including
+      the remembering. Agree together who is in charge of what, so she doesn't have
+      to keep track of it all.
+    sourceText: Ciciolla & Luthar (2019), Sex Roles 81:467-86
+  - label: Ask how she's really feeling
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You say you know leaving the baby was hard, and ask how she really is. She tells you about crying in the car park, and the relief she felt guilty for."
-    learnText: "Mothers returning to work after leave describe guilt, abandonment and loneliness at leaving their child, and often guilt is the first feeling. Many also feel joy at getting their working life back."
-    helpText: "Ask about her day, not just the job. Make room for both the guilt and the happiness, without judging either."
-    sourceText: "Rapisarda et al. (2024), Arch Womens Ment Health 27:607-18"
-  - label: "Make the evening easier"
+    impactText: You say you know leaving the baby was hard, and ask how she really
+      is. She tells you about crying in the car park, and the relief she felt guilty
+      for.
+    learnText: Mothers returning to work after leave describe guilt, abandonment
+      and loneliness at leaving their child, and often guilt is the first feeling.
+      Many also feel joy at getting their working life back.
+    helpText: Ask about her day, not just the job. Make room for both the guilt and
+      the happiness, without judging either.
+    sourceText: Rapisarda et al. (2024), Arch Womens Ment Health 27:607-18
+  - label: Make the evening easier
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You cook dinner and do the bath and bedtime, so the evening isn't a second shift for her."
-    learnText: "Practical support, good communication and relationship satisfaction were each linked with less depression for mothers in a review of 120 published studies."
-    helpText: "Plan the evenings together before her first week back: who cooks, and who does bath and bedtime. Batch cooking on the weekend saves time on work nights."
-    sourceText: "Pilkington et al. (2015), J Affect Disord 178:165-80"
-  - label: "Carry on as normal"
+    impactText: You cook dinner and do the bath and bedtime, so the evening isn't
+      a second shift for her.
+    learnText: Practical support, good communication and relationship satisfaction
+      were each linked with less depression for mothers in a review of 120 published
+      studies.
+    helpText: 'Plan the evenings together before her first week back: who cooks,
+      and who does bath and bedtime. Batch cooking on the weekend saves time on work
+      nights.'
+    sourceText: Pilkington et al. (2015), J Affect Disord 178:165-80
+  - label: Carry on as normal
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "Work was fine, she says. You leave it there, and she does bedtime on her own after a full day."
-    learnText: "When mothers carry the household load alone, research links it with lower wellbeing and lower satisfaction with their partner, even when the relationship is otherwise close."
-    helpText: "Don't wait to be asked. Notice the traces, like the work bag by the door, the note from the carer and the empty nappy box, and take one over tonight."
-    sourceText: "Ciciolla & Luthar (2019), Sex Roles 81:467-86"
-  learnHeading: "Going back to work"
-  selfHourNotice: "The evening after her first day back. She says: \"Work was fine.\""
+    impactText: Work was fine, she says. You leave it there, and she does bedtime
+      on her own after a full day.
+    learnText: When mothers carry the household load alone, research links it with
+      lower wellbeing and lower satisfaction with their partner, even when the relationship
+      is otherwise close.
+    helpText: Don't wait to be asked. Notice the traces, like the work bag by the
+      door, the note from the carer and the empty nappy box, and take one over tonight.
+    sourceText: Ciciolla & Luthar (2019), Sex Roles 81:467-86
+  learnHeading: Going back to work
+  selfHourNotice: 'The evening after her first day back. She says: "Work was fine."'

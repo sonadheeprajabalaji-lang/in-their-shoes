@@ -14,23 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 3
   chapterTitle: Packing the Hospital Bag
-  timelineText: "Third trimester, close to the due date"
-  storyText: "You're thirty-eight weeks pregnant, and the baby could come any day. You barely slept again: you woke every hour, the heartburn burned all night, and even the stairs leave you out of breath. The hospital bag is still half empty. The newborn clothes need washing, the hospital numbers need writing down, and dinner won't cook itself. And the messages keep coming: \"Any baby yet?\" Pack the hospital bag and get the house ready, before it's too late."
+  timelineText: Third trimester, close to the due date
+  storyText: 'You''re thirty-eight weeks pregnant, and the baby could come any day.
+    You barely slept again: you woke every hour, the heartburn burned all night,
+    and even the stairs leave you out of breath. The hospital bag is still half empty.
+    The newborn clothes need washing, the hospital numbers need writing down, and
+    dinner won''t cook itself. And the messages keep coming: "Any baby yet?" Pack
+    the hospital bag and get the house ready, before it''s too late.'
   weekContext: Week 37, third trimester
-  obstacleText: "Broken sleep, heartburn and breathlessness"
-  mainTaskText: "Packing the hospital bag and getting the house ready"
+  obstacleText: Broken sleep, heartburn and breathlessness
+  mainTaskText: Packing the hospital bag and getting the house ready
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
   showMeterIntro: 0
   showContentWarning: 0
-  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While packing the hospital bag, hold E and respond to the prompts: hold SPACE to catch her breath, tap Q to walk slowly, and tap F to notice the baby's kicks."
-  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  meterIntroNote: 'Move with the arrow keys or WASD, and press E to use things. While
+    packing the hospital bag, hold E and respond to the prompts: hold SPACE to catch
+    her breath, tap Q to walk slowly, and tap F to notice the baby''s kicks.'
+  musicClip: {fileID: 8300000, guid: 61e6a3f285cf84a7a844274acb435ebd, type: 3}
   ambienceClip: {fileID: 0}
-  hourTransitionText: "She has to lie down. The bag can wait."
-  bodyDrainStory: "Broken sleep, heartburn and breathlessness meant every bend and lift to pack the bag cost her something."
-  mindDrainStory: "Lists, hospital numbers and 'any baby yet?' messages piled up on a mind running on broken sleep."
-  personDrainStory: "She was getting everything ready for the baby, with nothing left over for herself."
-  maskDrainStory: "She kept replying 'all good, no baby yet!' and hid how uncomfortable and anxious she really was."
+  hourTransitionText: She has to lie down. The bag can wait.
+  bodyDrainStory: Broken sleep, heartburn and breathlessness meant every bend and
+    lift to pack the bag cost her something.
+  mindDrainStory: Lists, hospital numbers and 'any baby yet?' messages piled up on
+    a mind running on broken sleep.
+  personDrainStory: She was getting everything ready for the baby, with nothing left
+    over for herself.
+  maskDrainStory: She kept replying 'all good, no baby yet!' and hid how uncomfortable
+    and anxious she really was.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.035
@@ -38,13 +49,13 @@ MonoBehaviour:
     feelingLikeAPerson: 0.025
     mask: 0.02
   choices:
-  - label: "Stop and rest"
+  - label: Stop and rest
     multipliers:
       body: 0.5
       mind: 1.3
       feelingLikeAPerson: 1
       mask: 1
-  - label: "Keep packing"
+  - label: Keep packing
     multipliers:
       body: 1.6
       mind: 0.6
@@ -54,45 +65,75 @@ MonoBehaviour:
   mainTaskHitMeter: 0
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Make something she can eat"
+  - label: Make something she can eat
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "A small, plain dinner, early in the evening. The heartburn settles before bed, and she gets a few more hours of sleep.\nNext chapter: her Body drains more slowly."
-    learnText: "Heartburn affects about 44% of pregnant women, and reflux symptoms rise from about 26% in the first trimester to about 56% in the third."
-    helpText: "Smaller meals, no late-night eating and raising the head of the bed are the usual first steps. If heartburn keeps waking her, medicines work better than diet changes alone, so help her ask her midwife or GP."
-    sourceText: "Khurmatullina et al. (2026), BMC Pregnancy Childbirth 26:44; Phupong & Hanprasertpong (2015), Cochrane Database Syst Rev CD011379"
-  - label: "Help her rest"
+    impactText: 'A small, plain dinner, early in the evening. The heartburn settles
+      before bed, and she gets a few more hours of sleep.
+
+      Next chapter: her
+      Body drains more slowly.'
+    learnText: Heartburn affects about 44% of pregnant women, and reflux symptoms
+      rise from about 26% in the first trimester to about 56% in the third.
+    helpText: Smaller meals, no late-night eating and raising the head of the bed
+      are the usual first steps. If heartburn keeps waking her, medicines work better
+      than diet changes alone, so help her ask her midwife or GP.
+    sourceText: Khurmatullina et al. (2026), BMC Pregnancy Childbirth 26:44; Phupong
+      & Hanprasertpong (2015), Cochrane Database Syst Rev CD011379
+  - label: Help her rest
     nextChapterEase:
       body: 1
       mind: 0.85
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You set up pillows so she can sleep on her side, and you take the evening jobs. She wakes less, and her head is clearer in the morning.\nNext chapter: her Mind drains more slowly."
-    learnText: "Sleep problems affect around 70% of pregnant women and get worse in the third trimester. From 28 weeks, going to sleep on her back was linked with 2.6 times the odds of late stillbirth compared with her left side."
-    helpText: "Help her get comfortable on her side with pillows, and encourage naps when she can. Take over evening chores so she can go to bed earlier."
-    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71; Cronin et al. (2019), EClinicalMedicine 10:49-57"
-  - label: "Plan for after the birth"
+    impactText: 'You set up pillows so she can sleep on her side, and you take the
+      evening jobs. She wakes less, and her head is clearer in the morning.
+
+      Next
+      chapter: her Mind drains more slowly.'
+    learnText: Sleep problems affect around 70% of pregnant women and get worse in
+      the third trimester. From 28 weeks, going to sleep on her back was linked with
+      2.6 times the odds of late stillbirth compared with her left side.
+    helpText: Help her get comfortable on her side with pillows, and encourage naps
+      when she can. Take over evening chores so she can go to bed earlier.
+    sourceText: Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71; Cronin
+      et al. (2019), EClinicalMedicine 10:49-57
+  - label: Plan for after the birth
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
-    impactText: "You agree a visitor plan, freeze some meals and set up a feeding spot with water and snacks. One less thing for her to hold in her head.\nNext chapter: Feeling like a person drains more slowly."
-    learnText: "In a consensus study, perinatal experts recommended that couples work out together how they'll divide housework and baby care, as one way to prevent depression and anxiety after the birth."
-    helpText: "Decide now who visits and when, and who will tell people. Batch-cook and freeze meals, and agree how you'll share nights and chores, so the planning doesn't all fall to her."
-    sourceText: "Pilkington et al. (2016), BMC Psychiatry 16:23"
-  - label: "Carry on as normal"
+    impactText: 'You agree a visitor plan, freeze some meals and set up a feeding
+      spot with water and snacks. One less thing for her to hold in her head.
+
+      Next
+      chapter: Feeling like a person drains more slowly.'
+    learnText: In a consensus study, perinatal experts recommended that couples work
+      out together how they'll divide housework and baby care, as one way to prevent
+      depression and anxiety after the birth.
+    helpText: Decide now who visits and when, and who will tell people. Batch-cook
+      and freeze meals, and agree how you'll share nights and chores, so the planning
+      doesn't all fall to her.
+    sourceText: Pilkington et al. (2016), BMC Psychiatry 16:23
+  - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "She's up at 3 am with heartburn again, on her own, packing the hospital bag in her head.\nNext chapter: all of her meters drain faster."
-    learnText: "Sleep problems affect around 70% of pregnant women and get worse in the third trimester. Poor sleep after birth is linked with more postnatal depression and anxiety."
-    helpText: "Notice the signs, like pillows piled on the couch or antacids on the bench. Ask what kept her up, and take one thing off her list today."
-    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
-  learnHeading: "In the third trimester"
-  selfHourNotice: "She's out of breath on the couch: \"I'm fine, just big.\""
+    impactText: 'She''s up at 3 am with heartburn again, on her own, packing the
+      hospital bag in her head.
+
+      Next chapter: all of her meters drain faster.'
+    learnText: Sleep problems affect around 70% of pregnant women and get worse in
+      the third trimester. Poor sleep after birth is linked with more postnatal depression
+      and anxiety.
+    helpText: Notice the signs, like pillows piled on the couch or antacids on the
+      bench. Ask what kept her up, and take one thing off her list today.
+    sourceText: Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71
+  learnHeading: In the third trimester
+  selfHourNotice: 'She''s out of breath on the couch: "I''m fine, just big."'
