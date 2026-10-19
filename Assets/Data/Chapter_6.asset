@@ -13,84 +13,84 @@ MonoBehaviour:
   m_Name: Chapter_6
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 6
-  chapterTitle: First Day Back
+  chapterTitle: The Mothers' Group
   weekContext: Month 4, postpartum
-  obstacleText: "Guilt and separation anxiety about leaving the baby"
-  mainTaskText: "Getting ready for work"
+  obstacleText: "Low mood and anxiety creeping in: flatness and worry loops"
+  mainTaskText: "Hosting the mothers' group at home"
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
   showMeterIntro: 0
   showContentWarning: 0
-  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While getting ready for work, hold E and respond to the prompts: hold SPACE to get herself ready, tap Q to push past the clothes that don't fit, and tap F to quiet the worry loop."
+  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While hosting, hold E and respond to the prompts: hold SPACE to laugh along, tap Q to stop comparing her baby to theirs, and tap F to keep the smile on."
   musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
   ambienceClip: {fileID: 0}
-  hourTransitionText: "She's out the door. Part of her isn't."
-  bodyDrainStory: "She'd been up feeding and expressing before the day began, then rushing to get out the door."
-  mindDrainStory: "The handover list, the carer, the nappy bag and work all pulled at her at once."
-  personDrainStory: "Between being a mum and going back to work, there wasn't a moment where she was just herself."
-  maskDrainStory: "She had to look calm and ready for work while the guilt about leaving the baby sat just underneath."
+  hourTransitionText: "The last pram leaves. She closes the curtains."
+  bodyDrainStory: "She tidied the whole house before anyone arrived, on almost no sleep, and never sat down to eat."
+  mindDrainStory: "The worries looped all afternoon: is the baby feeding enough, sleeping enough, behind the others? Every comparison cost her more."
+  personDrainStory: "She laughed along all afternoon and felt far away the whole time, as if she were watching herself from across the room."
+  maskDrainStory: "She smiled, texted you 'All good!' and kept the living room spotless, so nobody would see how flat she felt."
   partnerHourSeconds: 120
   baseDrain:
     body: 0.02
-    mind: 0.035
+    mind: 0.03
     feelingLikeAPerson: 0.035
-    mask: 0.035
+    mask: 0.01
   choices:
-  - label: "Sit down and have a moment"
+  - label: "Step away for a moment"
     multipliers:
       body: 1
-      mind: 0.6
-      feelingLikeAPerson: 1
+      mind: 0.7
+      feelingLikeAPerson: 0.8
       mask: 1.4
-  - label: "Push on and get out the door"
+  - label: "Keep hosting until they leave"
     multipliers:
       body: 1
-      mind: 1.5
-      feelingLikeAPerson: 1
+      mind: 1.4
+      feelingLikeAPerson: 1.3
       mask: 0.6
-  choiceTriggerTaskId: get_ready
+  choiceTriggerTaskId: host_group
   mainTaskHitMeter: 2
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Take over the baby admin"
-    nextChapterEase:
-      body: 1
-      mind: 1
-      feelingLikeAPerson: 1
-      mask: 1
-    impactText: "You buy the nappies and answer the carer about food portions yourself. Tomorrow she can be at work without running the house from her phone."
-    learnText: "In a study of mothers, most said they alone were responsible for running household routines, like organising schedules. Feeling solely responsible was linked with lower wellbeing and lower satisfaction with their partner."
-    helpText: "Own whole areas, like the nappy supply, the carer and drop-offs, including the remembering. Agree together who is in charge of what, so she doesn't have to keep track of it all."
-    sourceText: "Ciciolla & Luthar (2019), Sex Roles 81:467-86"
   - label: "Ask how she's really feeling"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You say you know leaving the baby was hard, and ask how she really is. She tells you about crying in the car park, and the relief she felt guilty for."
-    learnText: "Mothers returning to work after leave describe guilt, abandonment and loneliness at leaving their child, and often guilt is the first feeling. Many also feel joy at getting their working life back."
-    helpText: "Ask about her day, not just the job. Make room for both the guilt and the happiness, without judging either."
-    sourceText: "Rapisarda et al. (2024), Arch Womens Ment Health 27:607-18"
-  - label: "Make the evening easier"
+    impactText: "You sit with her once the house is quiet and ask how she really is, not how the group went. After a while she says she's felt flat for weeks and can't stop worrying."
+    learnText: "Postnatal depression can start at any point in the first year, not just the early weeks. In a study of 10,000 women screened after birth, about 1 in 7 screened positive for depression, and two in three of them also had an anxiety disorder."
+    helpText: "Ask open questions at a calm moment and listen without fixing. If flatness or worry lasts more than two weeks, suggest she talks to her GP or child health nurse, and offer to go with her."
+    sourceText: "Wisner et al. (2013), JAMA Psychiatry 70(5):490-8"
+  - label: "Take over the house for a while"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You cook dinner and do the bath and bedtime, so the evening isn't a second shift for her."
+    impactText: "You take the dishes, the tidying and dinner without being asked. She doesn't have to keep the house looking fine tonight."
     learnText: "Practical support, good communication and relationship satisfaction were each linked with less depression for mothers in a review of 120 published studies."
-    helpText: "Plan the evenings together before her first week back: who cooks, and who does bath and bedtime. Batch cooking on the weekend saves time on work nights."
+    helpText: "Take over whole jobs, including noticing they need doing. Low mood makes small tasks feel huge, so fewer of them is real help."
     sourceText: "Pilkington et al. (2015), J Affect Disord 178:165-80"
+  - label: "Plan time that's just hers"
+    nextChapterEase:
+      body: 1
+      mind: 1
+      feelingLikeAPerson: 1
+      mask: 1
+    impactText: "You book a Saturday morning where you have the baby and she goes out on her own: a walk, a coffee, a friend who knew her before."
+    learnText: "Women interviewed about becoming a mother described first feeling they had lost parts of themselves, before their sense of identity grew to include being a mother."
+    helpText: "Make regular time she doesn't have to earn or plan, and protect it. Ask what she misses doing, and help make it happen."
+    sourceText: "Laney et al. (2015), Identity 15(2):126-45"
   - label: "Carry on as normal"
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "Work was fine, she says. You leave it there, and she does bedtime on her own after a full day."
-    learnText: "When mothers carry the household load alone, research links it with lower wellbeing and lower satisfaction with their partner, even when the relationship is otherwise close."
-    helpText: "Don't wait to be asked. Notice the traces, like the work bag by the door, the note from the carer and the empty nappy box, and take one over tonight."
-    sourceText: "Ciciolla & Luthar (2019), Sex Roles 81:467-86"
-  learnHeading: "Going back to work"
-  selfHourNotice: "The evening after her first day back. She says: \"Work was fine.\""
+    impactText: "She said it went fine, so you leave it there. The bedroom curtains stay drawn, and the worry list on her phone keeps growing."
+    learnText: "A review of studies on postpartum depression found many mothers don't tell anyone how they feel, held back by stigma, fear of being judged a bad mother, and not knowing their feelings were depression."
+    helpText: "Don't wait for her to bring it up. Notice the traces, like the untouched lunch, the drawn curtains and the 'All good!' text, and gently ask."
+    sourceText: "Dennis & Chung-Lee (2006), Birth 33(4):323-31"
+  learnHeading: "Around four months after birth"
+  selfHourNotice: "The house is quiet again. She texted you 'All good!' earlier. She says: \"It went fine.\""

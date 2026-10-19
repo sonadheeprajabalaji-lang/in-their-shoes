@@ -1597,7 +1597,7 @@ GameObject:
   - component: {fileID: 481779000}
   - component: {fileID: 481778999}
   m_Layer: 3
-  m_Name: Pack the nappy bag
+  m_Name: Tidy up before the guests
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1661,8 +1661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e071c409057c4132b2b32d84d8f6a014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
-  taskId: nappy_bag
-  displayName: "Pack the nappy bag"
+  taskId: tidy_up
+  displayName: "Tidy up before the guests"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -1674,9 +1674,9 @@ MonoBehaviour:
   indicatorScalePulse: 0.15
   cost:
     body: 0.15
-    mind: 0.2
+    mind: 0.05
     feelingLikeAPerson: 0.05
-    mask: 0.05
+    mask: 0
   completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
   holdCompleteClip: {fileID: 0}
   holdCancelClip: {fileID: 0}
@@ -2664,7 +2664,7 @@ GameObject:
   - component: {fileID: 710413124}
   - component: {fileID: 710413127}
   m_Layer: 3
-  m_Name: Check in with the carer
+  m_Name: Reply to your partner's text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2682,8 +2682,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e071c409057c4132b2b32d84d8f6a014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
-  taskId: carer_call
-  displayName: "Check in with the carer"
+  taskId: partner_text
+  displayName: "Reply to your partner's text"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -2694,10 +2694,10 @@ MonoBehaviour:
   indicatorBobHeight: 0.08
   indicatorScalePulse: 0.15
   cost:
-    body: 0.05
-    mind: 0.25
+    body: 0
+    mind: 0.1
     feelingLikeAPerson: 0.1
-    mask: 0.25
+    mask: 0.2
   completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
   holdCompleteClip: {fileID: 0}
   holdCancelClip: {fileID: 0}
@@ -4566,7 +4566,7 @@ GameObject:
   - component: {fileID: 1496638930}
   - component: {fileID: 1496638929}
   m_Layer: 3
-  m_Name: Get ready for work
+  m_Name: Host the mothers' group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4630,8 +4630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e071c409057c4132b2b32d84d8f6a014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
-  taskId: get_ready
-  displayName: "Get ready for work"
+  taskId: host_group
+  displayName: "Host the mothers' group"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -4650,30 +4650,20 @@ MonoBehaviour:
   holdCompleteClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
   holdCancelClip: {fileID: 0}
   holdDuration: 10
-  holdingLabel: "Hold E to keep getting ready"
+  holdingLabel: "Hold E to keep hosting"
   jugglePrompts:
-  - label: "Get herself ready"
+  - label: "Laugh along with the others"
     key: 32
     holdSeconds: 2
     interval: 4
     responseWindow: 4
     missCost:
-      body: 0.03
-      mind: 0
-      feelingLikeAPerson: 0
-      mask: 0
-  - label: "Push past the clothes that don't fit"
-    key: 113
-    holdSeconds: 0
-    interval: 3
-    responseWindow: 3
-    missCost:
       body: 0
       mind: 0
       feelingLikeAPerson: 0.04
       mask: 0
-  - label: "Quiet the worry loop"
-    key: 102
+  - label: "Stop comparing her baby to theirs"
+    key: 113
     holdSeconds: 0
     interval: 3
     responseWindow: 3
@@ -4682,6 +4672,16 @@ MonoBehaviour:
       mind: 0.04
       feelingLikeAPerson: 0
       mask: 0
+  - label: "Keep the smile on"
+    key: 102
+    holdSeconds: 0
+    interval: 3
+    responseWindow: 3
+    missCost:
+      body: 0
+      mind: 0
+      feelingLikeAPerson: 0
+      mask: 0.04
 --- !u!212 &1496638931
 SpriteRenderer:
   serializedVersion: 2
@@ -5168,7 +5168,7 @@ GameObject:
   - component: {fileID: 1617830084}
   - component: {fileID: 1617830083}
   m_Layer: 3
-  m_Name: Write the handover list
+  m_Name: Write down the worries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5247,8 +5247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e071c409057c4132b2b32d84d8f6a014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
-  taskId: handover_list
-  displayName: "Write the handover list"
+  taskId: worry_list
+  displayName: "Write down the worries"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -5260,7 +5260,7 @@ MonoBehaviour:
   indicatorScalePulse: 0.15
   cost:
     body: 0.05
-    mind: 0.3
+    mind: 0.15
     feelingLikeAPerson: 0.05
     mask: 0.05
   completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
@@ -6378,7 +6378,7 @@ GameObject:
   - component: {fileID: 1959020083}
   - component: {fileID: 1959020082}
   m_Layer: 3
-  m_Name: Express and label milk
+  m_Name: Eat lunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6442,8 +6442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e071c409057c4132b2b32d84d8f6a014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableTask
-  taskId: express_milk
-  displayName: "Express and label milk"
+  taskId: eat_lunch
+  displayName: "Eat lunch"
   promptText: Press E
   locked: 0
   showIndicator: 1
@@ -6454,9 +6454,9 @@ MonoBehaviour:
   indicatorBobHeight: 0.08
   indicatorScalePulse: 0.15
   cost:
-    body: 0.25
-    mind: 0.1
-    feelingLikeAPerson: 0.15
+    body: 0.05
+    mind: 0
+    feelingLikeAPerson: 0
     mask: 0
   completeClip: {fileID: 8300000, guid: bae92e77685d545008aa9707924599fc, type: 3}
   holdCompleteClip: {fileID: 0}

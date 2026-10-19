@@ -288,28 +288,29 @@ public class PixelArtSkin : MonoBehaviour
             }
         },
         {
-            // Postpartum ~4 months: getting ready for work.
+            // Postpartum ~4 months: low mood creeping in, hosting the mothers' group.
             6, new ChapterArt
             {
                 room = "room_base_ch6",
-                herPrefix = "her_work",
+                herPrefix = "her",
                 moodMeter = MoodMeter.Mind,
                 moodColor = new Color(0.43f, 0.41f, 0.59f, 0f),  // grey-violet worry
                 bubble = "worry_bubble",
                 tasks = new Dictionary<string, TaskArt>
                 {
-                    { "nappy_bag",     new TaskArt { todo = new[] { "nappybag_todo" }, done = "nappybag_packed", trace = new[] { "nappybag_no_nappies" } } },
-                    { "express_milk",  new TaskArt { todo = new[] { "milk_todo_0", "milk_todo_1" }, done = "milk_labelled", trace = new[] { "milk_unlabelled" } } },
-                    { "carer_call",    new TaskArt { todo = new[] { "phone_ring_0", "phone_ring_1" }, done = "phone_down", trace = new[] { "phone_missed" } } },
-                    { "handover_list", new TaskArt { todo = new[] { "note_todo_0", "note_todo_1" }, done = "note_done", trace = new[] { "note_half" } } },
+                    { "tidy_up",      new TaskArt { todo = new[] { "sink_dirty" }, done = "sink_clean", trace = new[] { "sink_dirty" } } },
+                    { "eat_lunch",    new TaskArt { todo = new[] { "eat_todo" }, done = "eat_done", trace = new[] { "eat_untouched" } } },
+                    { "partner_text", new TaskArt { todo = new[] { "phone_ring_0", "phone_ring_1" }, done = "phone_down", trace = new[] { "phone_missed" } } },
+                    { "worry_list",   new TaskArt { todo = new[] { "note_todo_0", "note_todo_1" }, done = "note_done", trace = new[] { "note_half" } } },
                 },
                 hold = new HoldArt
                 {
-                    idle = "outfit_idle",
-                    active = new[] { "outfit_trying_0", "outfit_trying_1", "outfit_trying_2", "outfit_trying_3" },
-                    activeFps = 1.5f,
-                    completed = "outfit_ready",
-                    cancelled = "outfit_pile",
+                    // The table set for guests; the gifts and card left behind if she stops early.
+                    idle = "visitors_todo_0",
+                    active = new[] { "visitors_todo_0", "visitors_todo_1" },
+                    activeFps = 2f,
+                    completed = "visitors_done",
+                    cancelled = "visitors_left",
                 },
                 furniture = new[]
                 {
