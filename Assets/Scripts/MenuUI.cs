@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// Shared pieces for the screens before the chapters (Title, Warning):
-// scene names, a full-screen canvas on the
+// Shared pieces for the screens before the chapters (Title, Warning,
+// Chapters list): scene names, a full-screen canvas on the
 // logo's Night background, buttons, and the logo sprites from
 // Resources/Logo. Like TutorialUI, every screen builds its UI at runtime,
 // so each scene only needs one component and a camera.
@@ -15,6 +15,7 @@ public static class MenuUI
     // Scene names, in play order. All must be in File > Build Profiles > Scenes.
     public const string TitleScene = "Title";
     public const string WarningScene = "Warning";
+    public const string ChaptersScene = "ChapterSelect";
     public const string TutorialScene = "Tutorial";
 
     // Logo palette (see in-their-shoes-logo/index.html).

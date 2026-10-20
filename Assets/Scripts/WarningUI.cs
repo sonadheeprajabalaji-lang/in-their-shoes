@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 // The Warning Scene: who the game is for, what it shows (and doesn't),
 // and where to get help. Shown once, after the Title Scene.
-// Continue (Enter) goes to the Tutorial, then Chapter 1; Stop here quits.
+// Continue (Enter) goes to the Chapters list; Stop here quits.
 public class WarningUI : MonoBehaviour
 {
-    public string nextSceneName = MenuUI.TutorialScene;
+    public string nextSceneName = MenuUI.ChaptersScene;
 
     // Seconds before Enter works, so the page can't be skipped by a key
     // still held from the Title Scene.
