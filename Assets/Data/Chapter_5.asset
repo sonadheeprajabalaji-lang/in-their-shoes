@@ -14,21 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 5
   chapterTitle: Three in the Morning
+  timelineText: Six weeks after the birth
+  storyText: It's three in the morning, and your baby is six weeks old. You haven't
+    slept more than two hours at a time in weeks, and everything has started to blur.
+    The baby has been crying for an hour. The bottles still need sterilising, the
+    baby's laundry is piled up by the machine, the tea you made has gone cold, and
+    there's a missed call from the nurse you still haven't returned. Your eyes keep
+    closing on their own. Settle the baby back to sleep.
   weekContext: Week 6, postpartum
-  obstacleText: "Severe sleep deprivation"
-  mainTaskText: "Settling a crying baby to sleep"
+  obstacleText: Severe sleep deprivation
+  mainTaskText: Settling a crying baby to sleep
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
   showMeterIntro: 0
   showContentWarning: 0
-  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While settling the baby, hold E and respond to the prompts: hold SPACE to rock and shush, tap Q to stay awake, and tap F to text back friends who are checking in."
-  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  meterIntroNote: 'Move with the arrow keys or WASD, and press E to use things. While
+    settling the baby, hold E and respond to the prompts: hold SPACE to rock and
+    shush, tap Q to stay awake, and tap F to text back friends who are checking in.'
+  musicClip: {fileID: 8300000, guid: bc751e4f296c643f5870ae35fcb3661a, type: 3}
   ambienceClip: {fileID: 0}
-  hourTransitionText: "The baby's finally asleep. She can't remember the last time she was."
-  bodyDrainStory: "Weeks of broken nights caught up with her, and rocking the baby at 3 a.m. took what little was left."
-  mindDrainStory: "With so little sleep everything blurred: the crying, the bottles and the nurse's questions ran together."
-  personDrainStory: "Up alone in the dark, she couldn't remember the last time she did something just for herself."
-  maskDrainStory: "When the nurse called she said she was coping, because saying otherwise felt like failing."
+  hourTransitionText: The baby's finally asleep. She can't remember the last time
+    she was.
+  bodyDrainStory: Weeks of broken nights caught up with her, and rocking the baby
+    at 3 a.m. took what little was left.
+  mindDrainStory: 'With so little sleep everything blurred: the crying, the bottles
+    and the nurse''s questions ran together.'
+  personDrainStory: Up alone in the dark, she couldn't remember the last time she
+    did something just for herself.
+  maskDrainStory: When the nurse called she said she was coping, because saying otherwise
+    felt like failing.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.03
@@ -36,13 +50,13 @@ MonoBehaviour:
     feelingLikeAPerson: 0.03
     mask: 0.025
   choices:
-  - label: "Put the baby down and step away"
+  - label: Put the baby down and step away
     multipliers:
       body: 1
       mind: 0.6
       feelingLikeAPerson: 1.4
       mask: 1
-  - label: "Keep rocking"
+  - label: Keep rocking
     multipliers:
       body: 1.3
       mind: 1.3
@@ -52,45 +66,78 @@ MonoBehaviour:
   mainTaskHitMeter: 1
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Give her real sleep"
+  - label: Give her real sleep
     nextChapterEase:
       body: 1
       mind: 0.85
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You take the baby for a block of hours and leave her phone in another room. She sleeps without listening for crying.\nNext chapter: her Mind drains more slowly."
-    learnText: "A new mother's sleep is broken into short pieces for months. One study found it was about twice as fragmented in the first weeks after birth, and poor sleep after birth is linked with more postnatal depression and anxiety."
-    helpText: "Take a whole block of the night, not just one feed, so she gets unbroken sleep. If she's breastfeeding, bring the baby to her, then do the burping, changing and settling yourself."
-    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
-  - label: "Ask how she's really feeling"
+    impactText: 'You take the baby for a block of hours and leave her phone in another
+      room. She sleeps without listening for crying.
+
+      Next chapter: her Mind
+      drains more slowly.'
+    learnText: A new mother's sleep is broken into short pieces for months. One study
+      found it was about twice as fragmented in the first weeks after birth, and
+      poor sleep after birth is linked with more postnatal depression and anxiety.
+    helpText: Take a whole block of the night, not just one feed, so she gets unbroken
+      sleep. If she's breastfeeding, bring the baby to her, then do the burping,
+      changing and settling yourself.
+    sourceText: Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71
+  - label: Ask how she's really feeling
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
-    impactText: "You mention the nurse's number on the fridge and ask if she told the nurse she was fine. She says she's not sure she is.\nNext chapter: Feeling like a person drains more slowly."
-    learnText: "About 17% of mothers worldwide have depression after giving birth, across 565 studies from 80 countries. Around 10% of fathers are affected too, and one parent's depression is linked with the other's."
-    helpText: "Name what you've noticed, listen without fixing, and offer to go with her to the GP or child and family health nurse. PANDA's helpline is 1300 726 306. If she talks about harming herself, call Lifeline on 13 11 14 or 000."
-    sourceText: "Wang et al. (2021), Transl Psychiatry 11:543; Thiel et al. (2020), Front Psychiatry 11:563287. Support services: PANDA 1300 726 306, Lifeline 13 11 14"
-  - label: "Take jobs off her plate"
+    impactText: 'You mention the nurse''s number on the fridge and ask if she told
+      the nurse she was fine. She says she''s not sure she is.
+
+      Next chapter:
+      Feeling like a person drains more slowly.'
+    learnText: About 17% of mothers worldwide have depression after giving birth,
+      across 565 studies from 80 countries. Around 10% of fathers are affected too,
+      and one parent's depression is linked with the other's.
+    helpText: Name what you've noticed, listen without fixing, and offer to go with
+      her to the GP or child and family health nurse. PANDA's helpline is 1300 726
+      306. If she talks about harming herself, call Lifeline on 13 11 14 or 000.
+    sourceText: 'Wang et al. (2021), Transl Psychiatry 11:543; Thiel et al. (2020),
+      Front Psychiatry 11:563287. Support services: PANDA 1300 726 306, Lifeline
+      13 11 14'
+  - label: Take jobs off her plate
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "Sterilising the bottles and the baby laundry become your jobs, not favours. Two fewer things are waiting for her at 11 pm.\nNext chapter: her Body drains more slowly."
-    learnText: "A review of 120 published studies found that practical support from a partner, along with emotional support, was linked with less depression after birth."
-    helpText: "Take over whole jobs rather than single tasks, so she doesn't have to remember or ask. Owning the bottles, the laundry or the shopping takes away the planning as well as the work."
-    sourceText: "Pilkington et al. (2015), J Affect Disord 178:165-80"
-  - label: "Carry on as normal"
+    impactText: 'Sterilising the bottles and the baby laundry become your jobs, not
+      favours. Two fewer things are waiting for her at 11 pm.
+
+      Next chapter:
+      her Body drains more slowly.'
+    learnText: A review of 120 published studies found that practical support from
+      a partner, along with emotional support, was linked with less depression after
+      birth.
+    helpText: Take over whole jobs rather than single tasks, so she doesn't have
+      to remember or ask. Owning the bottles, the laundry or the shopping takes away
+      the planning as well as the work.
+    sourceText: Pilkington et al. (2015), J Affect Disord 178:165-80
+  - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "Everyone's tired, she says. She reheats the same cup of tea for the third time.\nNext chapter: all of her meters drain faster."
-    learnText: "Exhaustion is expected at six weeks, but it isn't harmless. Poor sleep reported at 6 weeks after birth has been strongly linked with depressive symptoms at 6 to 12 weeks."
-    helpText: "Don't take \"everyone's tired\" as the end of the conversation. Look at the traces, like cold tea and jobs piling up, then ask, and offer one specific thing you'll take over."
-    sourceText: "Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71"
-  learnHeading: "Around six weeks after birth"
-  selfHourNotice: "She says: \"Everyone's tired.\""
+    impactText: 'Everyone''s tired, she says. She reheats the same cup of tea for
+      the third time.
+
+      Next chapter: all of her meters drain faster.'
+    learnText: Exhaustion is expected at six weeks, but it isn't harmless. Poor sleep
+      reported at 6 weeks after birth has been strongly linked with depressive symptoms
+      at 6 to 12 weeks.
+    helpText: Don't take "everyone's tired" as the end of the conversation. Look
+      at the traces, like cold tea and jobs piling up, then ask, and offer one specific
+      thing you'll take over.
+    sourceText: Witkowska-Zimny et al. (2024), Int J Womens Health 16:345-71
+  learnHeading: Around six weeks after birth
+  selfHourNotice: 'She says: "Everyone''s tired."'

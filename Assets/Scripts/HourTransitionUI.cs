@@ -56,8 +56,7 @@ public class HourTransitionUI : MonoBehaviour
         if (!IsShowing || dismissed) return;
         if (Time.unscaledTime - shownAt < minShowSeconds) return;
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)
-            || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetMouseButtonDown(0))
         {
             Finish();
         }
@@ -115,7 +114,7 @@ public class HourTransitionUI : MonoBehaviour
         hintRect.sizeDelta = new Vector2(600f, 60f);
         hintRect.anchoredPosition = new Vector2(0f, -120f);
         hint.alignment = TextAlignmentOptions.Center;
-        hint.text = "Press Space to continue";
+        hint.text = "Press Enter to continue";
     }
 
     TMP_Text CreateLabel(Transform parent, string name, float fontSize, Color color, FontStyles style)

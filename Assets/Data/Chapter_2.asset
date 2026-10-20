@@ -14,6 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 2
   chapterTitle: Setting Up the Nursery
+  timelineText: Second trimester
+  storyText: 'You''re twenty-four weeks pregnant, and everyone keeps telling you
+    how exciting it must be. Tonight you''re finally setting up the nursery: the
+    cot is still in its box and there are tiny clothes everywhere. Dinner needs cooking,
+    the washing is waiting, and Mum has already called twice. But everything you
+    unpack starts another "what if". What if the birth goes wrong? What if you can''t
+    cope? What if you''re not good at this? Your phone is full of searches you didn''t
+    mean to open. Set up the nursery, and try to keep the worries quiet.'
   weekContext: Week 22, second trimester
   obstacleText: Worries about the birth and coping as a parent (intrusive 'what if'
     thoughts)
@@ -26,13 +34,17 @@ MonoBehaviour:
     setting up the nursery, hold E to keep sorting through it while you respond to
     the prompts: tap SPACE to keep sorting, Q to sound excited for mum, and F to
     quiet the what-ifs.'
-  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  musicClip: {fileID: 8300000, guid: c0171005c1321417589faa4c699f032e, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: The what-ifs win, for tonight. She needs to stop.
-  bodyDrainStory: "Lifting boxes and building furniture with a pregnant body tired her out faster than she expected."
-  mindDrainStory: "Every tiny baby thing set off another 'what if' about the birth and being a parent, until she couldn't think straight."
-  personDrainStory: "The whole evening was about the baby. There was no room left for her as herself."
-  maskDrainStory: "On the phone to Mum she had to sound excited, so the worries stayed hidden behind it."
+  bodyDrainStory: Lifting boxes and building furniture with a pregnant body tired
+    her out faster than she expected.
+  mindDrainStory: Every tiny baby thing set off another 'what if' about the birth
+    and being a parent, until she couldn't think straight.
+  personDrainStory: The whole evening was about the baby. There was no room left
+    for her as herself.
+  maskDrainStory: On the phone to Mum she had to sound excited, so the worries stayed
+    hidden behind it.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.02
@@ -56,45 +68,81 @@ MonoBehaviour:
   mainTaskHitMeter: 1
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Talk about the worries"
+  - label: Talk about the worries
     nextChapterEase:
       body: 1
       mind: 0.85
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "She admits the what-ifs keep her up at night, and that she didn't want to sound ungrateful. Saying them out loud makes them smaller.\nNext chapter: her Mind drains more slowly."
-    learnText: "Depression after birth affects about 17% of mothers worldwide, and around 10% of fathers have depression around pregnancy and birth. One parent's depression is linked with the other's."
-    helpText: "Start with what you noticed (\"I saw you were reading about labour. What's on your mind?\") and share your own worries too. If the worry is constant or stops her enjoying things, encourage her to talk to her midwife or GP, or call PANDA on 1300 726 306."
-    sourceText: "Wang et al. (2021), Transl Psychiatry 11:543; Thiel et al. (2020), Front Psychiatry 11:563287. Support services: PANDA 1300 726 306, Lifeline 13 11 14"
-  - label: "Help with the nursery"
+    impactText: 'She admits the what-ifs keep her up at night, and that she didn''t
+      want to sound ungrateful. Saying them out loud makes them smaller.
+
+      Next
+      chapter: her Mind drains more slowly.'
+    learnText: Depression after birth affects about 17% of mothers worldwide, and
+      around 10% of fathers have depression around pregnancy and birth. One parent's
+      depression is linked with the other's.
+    helpText: Start with what you noticed ("I saw you were reading about labour.
+      What's on your mind?") and share your own worries too. If the worry is constant
+      or stops her enjoying things, encourage her to talk to her midwife or GP, or
+      call PANDA on 1300 726 306.
+    sourceText: 'Wang et al. (2021), Transl Psychiatry 11:543; Thiel et al. (2020),
+      Front Psychiatry 11:563287. Support services: PANDA 1300 726 306, Lifeline
+      13 11 14'
+  - label: Help with the nursery
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You fit the car seat and carry the heavy boxes, and leave the tiny clothes for her to sort. She keeps the part that feels exciting, without the strain.\nNext chapter: her Body drains more slowly."
-    learnText: "Practical help matters as much as kind words. A review of 120 published studies found that emotional and practical support from a partner was linked with less depression during pregnancy and after birth."
-    helpText: "Experts recommend partners do the heavy lifting and carrying, and take on household tasks without being asked. Ask which parts of getting ready she'd like to do herself."
-    sourceText: "Pilkington et al. (2015), J Affect Disord 178:165-80; Pilkington et al. (2016), BMC Psychiatry 16:23"
-  - label: "Plan something for the two of you"
+    impactText: 'You fit the car seat and carry the heavy boxes, and leave the tiny
+      clothes for her to sort. She keeps the part that feels exciting, without the
+      strain.
+
+      Next chapter: her Body drains more slowly.'
+    learnText: Practical help matters as much as kind words. A review of 120 published
+      studies found that emotional and practical support from a partner was linked
+      with less depression during pregnancy and after birth.
+    helpText: Experts recommend partners do the heavy lifting and carrying, and take
+      on household tasks without being asked. Ask which parts of getting ready she'd
+      like to do herself.
+    sourceText: Pilkington et al. (2015), J Affect Disord 178:165-80; Pilkington
+      et al. (2016), BMC Psychiatry 16:23
+  - label: Plan something for the two of you
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
-    impactText: "A quiet dinner, no baby talk. For one evening she's your partner again, not only someone about to have a baby.\nNext chapter: Feeling like a person drains more slowly."
-    learnText: "Emotional closeness and feeling supported by a partner are among the factors most consistently linked with lower depression and anxiety around pregnancy and birth."
-    helpText: "Experts suggest small, regular signs of love and appreciation, like making her a cup of tea or giving her a massage. Keep making time for the two of you as the birth gets closer."
-    sourceText: "Pilkington et al. (2015), J Affect Disord 178:165-80; Pilkington et al. (2016), BMC Psychiatry 16:23"
-  - label: "Carry on as normal"
+    impactText: 'A quiet dinner, no baby talk. For one evening she''s your partner
+      again, not only someone about to have a baby.
+
+      Next chapter: Feeling
+      like a person drains more slowly.'
+    learnText: Emotional closeness and feeling supported by a partner are among the
+      factors most consistently linked with lower depression and anxiety around pregnancy
+      and birth.
+    helpText: Experts suggest small, regular signs of love and appreciation, like
+      making her a cup of tea or giving her a massage. Keep making time for the two
+      of you as the birth gets closer.
+    sourceText: Pilkington et al. (2015), J Affect Disord 178:165-80; Pilkington
+      et al. (2016), BMC Psychiatry 16:23
+  - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "She keeps saying she's just excited, and keeps the worries to herself.\nNext chapter: all of her meters drain faster."
-    learnText: "The second trimester is often called the easy one, but in one study, depression during pregnancy was the strongest predictor of depression after the birth."
-    helpText: "Watch for worry that won't switch off, trouble sleeping, or pulling away from people, and raise it early with her midwife or GP rather than waiting until after the birth."
-    sourceText: "Leigh & Milgrom (2008), BMC Psychiatry 8:24"
-  learnHeading: "In the second trimester"
-  selfHourNotice: "She says: \"I'm just excited.\""
+    impactText: 'She keeps saying she''s just excited, and keeps the worries to herself.
+
+      Next
+      chapter: all of her meters drain faster.'
+    learnText: The second trimester is often called the easy one, but in one study,
+      depression during pregnancy was the strongest predictor of depression after
+      the birth.
+    helpText: Watch for worry that won't switch off, trouble sleeping, or pulling
+      away from people, and raise it early with her midwife or GP rather than waiting
+      until after the birth.
+    sourceText: Leigh & Milgrom (2008), BMC Psychiatry 8:24
+  learnHeading: In the second trimester
+  selfHourNotice: 'She says: "I''m just excited."'

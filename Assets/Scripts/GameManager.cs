@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         var button = copy.GetComponent<Button>();
         button.onClick.RemoveAllListeners();
         var label = copy.GetComponentInChildren<TMP_Text>(true);
-        if (label != null) label.text = "Next Chapter";
+        if (label != null) label.text = "Next Chapter  (Enter)";
         return button;
     }
 
@@ -210,9 +210,27 @@ public class GameManager : MonoBehaviour
         responsePanel.SetActive(false);
     }
 
-    // Enter works on the content warning as well as the Continue button.
+    static void SetButtonLabel(Button button, string text)
+    {
+        if (button == null) return;
+        var label = button.GetComponentInChildren<TMP_Text>(true);
+        if (label != null) label.text = text;
+    }
+
+    // Enter works on the content warning as well as the Continue button,
+    // and on the end screen (Next Chapter, or Play again on the last one).
     void Update()
     {
+        bool enter = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter);
+        // The short pause stops the Enter that closed the last learning card
+        // from also skipping the end screen.
+        if (enter && endPanel != null && endPanel.activeInHierarchy && Time.unscaledTime - endPanelShownAt > 0.5f)
+        {
+            if (nextChapterButton != null && nextChapterButton.gameObject.activeInHierarchy) nextChapterButton.onClick.Invoke();
+            else if (restartButton != null && restartButton.gameObject.activeInHierarchy) restartButton.onClick.Invoke();
+            return;
+        }
+
         if (contentWarningPanel != null && contentWarningPanel.activeInHierarchy
             && (meterIntro == null || !meterIntro.IsShowing)
             && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
@@ -239,6 +257,18 @@ public class GameManager : MonoBehaviour
 
         ShowOnly(partnerHourPanel);
 
+        // First the banner (where she is, the main obstacle and the main
+        // task) for a few seconds, with everything paused; then the hour
+        // starts and the meters begin draining.
+        if (chapterBanner == null) chapterBanner = new GameObject("ChapterBanner").AddComponent<ChapterBannerUI>();
+        if (partnerHourController.player != null) partnerHourController.player.InputLocked = true;
+        chapterBanner.Show(chapterData, BeginPartnerHourPlay);
+    }
+
+    ChapterBannerUI chapterBanner;
+
+    void BeginPartnerHourPlay()
+    {
         MeterRates carry = CarryoverState.ConsumeForNextChapter();
         meters.Configure(MeterRates.Multiply(chapterData.baseDrain, carry));
         meters.StartDraining();
@@ -404,8 +434,14 @@ public class GameManager : MonoBehaviour
         // one, OnAllCuesResolved fires instead.
     }
 
+    float endPanelShownAt;
+
     void OnAllCuesResolved()
     {
+        endPanelShownAt = Time.unscaledTime;
+        // Enter moves on from the end screen too (see Update), so say so.
+        SetButtonLabel(nextChapterButton, "Next Chapter  (Enter)");
+        SetButtonLabel(restartButton, "Play again  (Enter)");
         selfHourController.EndRoaming();
         ShowOnly(endPanel);
     }

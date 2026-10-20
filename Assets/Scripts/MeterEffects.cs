@@ -87,12 +87,13 @@ public class MeterEffects : MonoBehaviour
     static readonly Color HitColor = new Color32(255, 70, 60, 255);
     readonly List<Bar> bars = new List<Bar>();
     bool barColoursKnown;
-    float partnerStartedAt;
+    float partnerStartedAt = -100f;   // no blink until the meters first start draining
 
     TextMeshPro caption;
     float captionUntil;
     bool shownBody, shownMind, shownPerson;
     bool wasPartner;
+    bool wasDraining;
 
     public void Init(GameManager gm, GridPlayerController player, Func<bool> isPartnerHour,
                      Transform overlayCanvas, IEnumerable<SpriteRenderer> doubled)
@@ -174,9 +175,14 @@ public class MeterEffects : MonoBehaviour
         if (partner && !wasPartner)
         {
             shownBody = shownMind = shownPerson = false;   // new hour, new captions
-            partnerStartedAt = Time.time;                  // and the bars blink again
         }
         wasPartner = partner;
+
+        // The bars blink when the meters actually start draining, which is
+        // after the chapter banner has gone (see ChapterBannerUI).
+        bool draining = gm != null && gm.meters != null && gm.meters.IsDraining;
+        if (draining && !wasDraining) partnerStartedAt = Time.time;
+        wasDraining = draining;
 
         float body = 1f, mind = 1f, person = 1f;
         if (partner && gm != null && gm.meters != null)

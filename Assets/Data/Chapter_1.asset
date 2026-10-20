@@ -14,6 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 1
   chapterTitle: The First Trimester
+  timelineText: First trimester
+  storyText: You're eight weeks pregnant, and no one at work knows yet. You've been
+    sick every morning this week, and today was no different, but you got dressed,
+    made a coffee you couldn't drink, and sat down at the laptop like nothing was
+    wrong. The stove is still on from lunch and the dishes are piling up in the sink.
+    Then the video call starts. Five minutes in, the nausea rolls over you, and every
+    face on the screen is looking at you. Get through the call without anyone guessing.
   weekContext: Nobody Knows Yet
   obstacleText: A work call has started. The nausea hits. Everyone is watching.
   mainTaskText: Work video call (pregnancy not announced yet)
@@ -24,13 +31,17 @@ MonoBehaviour:
   meterIntroNote: 'Move with the arrow keys or WASD, and press E to use things. On
     the work call, hold E to stay in the meeting while you respond to the prompts:
     hold SPACE to breathe, and tap Q or F when they appear.'
-  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  musicClip: {fileID: 8300000, guid: ab34415a9e52e4e84968163557b7126d, type: 3}
   ambienceClip: {fileID: 0}
   hourTransitionText: Your partner's become too tired to continue.
-  bodyDrainStory: "Waves of nausea and first-trimester tiredness wore her body down while she kept on her feet around the kitchen."
-  mindDrainStory: "She tried to follow the call, breathe through the nausea and answer questions all at once, and her focus gave out."
-  personDrainStory: "She couldn't eat, rest or step away for a minute. The whole day was work and nausea, with nothing in it for her."
-  maskDrainStory: "No one at work knows she's pregnant yet. Smiling on camera while hiding the nausea wore the mask through."
+  bodyDrainStory: Waves of nausea and first-trimester tiredness wore her body down
+    while she kept on her feet around the kitchen.
+  mindDrainStory: She tried to follow the call, breathe through the nausea and answer
+    questions all at once, and her focus gave out.
+  personDrainStory: She couldn't eat, rest or step away for a minute. The whole day
+    was work and nausea, with nothing in it for her.
+  maskDrainStory: No one at work knows she's pregnant yet. Smiling on camera while
+    hiding the nausea wore the mask through.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.03
@@ -54,45 +65,81 @@ MonoBehaviour:
   mainTaskHitMeter: 3
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Make something she can eat"
+  - label: Make something she can eat
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "She manages a few bites of something plain, and the next wave of nausea is a little easier to ride out.\nNext chapter: her Body drains more slowly."
-    learnText: "Nausea and vomiting affect up to 70% of pregnant women. It usually starts around 6 to 8 weeks, peaks between 10 and 16 weeks, and settles by 16 to 20 weeks."
-    helpText: "Most women manage with changes to diet and daily routine, although there's little trial evidence on which changes work best. Ginger may help mild nausea. Ask what she can face, and offer small amounts of plain food often."
-    sourceText: "Liu et al. (2022), Front Med 8:809270; Fejzo et al. (2019), Nat Rev Dis Primers 5:62; Matthews et al. (2015), Cochrane Database Syst Rev CD007575"
-  - label: "Ask how she's really feeling"
+    impactText: 'She manages a few bites of something plain, and the next wave of
+      nausea is a little easier to ride out.
+
+      Next chapter: her Body drains
+      more slowly.'
+    learnText: Nausea and vomiting affect up to 70% of pregnant women. It usually
+      starts around 6 to 8 weeks, peaks between 10 and 16 weeks, and settles by 16
+      to 20 weeks.
+    helpText: Most women manage with changes to diet and daily routine, although
+      there's little trial evidence on which changes work best. Ginger may help mild
+      nausea. Ask what she can face, and offer small amounts of plain food often.
+    sourceText: Liu et al. (2022), Front Med 8:809270; Fejzo et al. (2019), Nat Rev
+      Dis Primers 5:62; Matthews et al. (2015), Cochrane Database Syst Rev CD007575
+  - label: Ask how she's really feeling
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 0.85
       mask: 1
-    impactText: "She admits the day was much harder than she let on, and she isn't carrying it alone any more.\nNext chapter: Feeling like a person drains more slowly."
-    learnText: "In a Norwegian study, women with nausea and vomiting in pregnancy had lower quality of life. Among those with severe symptoms, 43% said it had a major impact on their relationship with their partner."
-    helpText: "Start with what you noticed (\"Lunch went untouched. Was the nausea bad today?\") and listen without rushing to fix it. A review of 120 studies found that emotional closeness, good communication and partner support protect against depression and anxiety in pregnancy and after birth."
-    sourceText: "Heitmann et al. (2017), BMC Pregnancy Childbirth 17:231; Pilkington et al. (2015), J Affect Disord 178:165-80"
-  - label: "Clear it away quietly"
+    impactText: 'She admits the day was much harder than she let on, and she isn''t
+      carrying it alone any more.
+
+      Next chapter: Feeling like a person drains
+      more slowly.'
+    learnText: In a Norwegian study, women with nausea and vomiting in pregnancy
+      had lower quality of life. Among those with severe symptoms, 43% said it had
+      a major impact on their relationship with their partner.
+    helpText: Start with what you noticed ("Lunch went untouched. Was the nausea
+      bad today?") and listen without rushing to fix it. A review of 120 studies
+      found that emotional closeness, good communication and partner support protect
+      against depression and anxiety in pregnancy and after birth.
+    sourceText: Heitmann et al. (2017), BMC Pregnancy Childbirth 17:231; Pilkington
+      et al. (2015), J Affect Disord 178:165-80
+  - label: Clear it away quietly
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "The mess is gone when she walks past, which takes one thing off her list. But she may not know you noticed how hard today was.\nNext chapter: no change to her meters."
-    learnText: "In a Norwegian study, nausea and vomiting in pregnancy lowered women's quality of life. Women with severe symptoms reported a major impact on household chores, their work, their social life and their relationship with their partner."
-    helpText: "Experts recommend partners take on household tasks without being asked. Pair it with a few words (\"I've got the dishes, go and rest\") so the help also tells her she has been seen."
-    sourceText: "Heitmann et al. (2017), BMC Pregnancy Childbirth 17:231; Pilkington et al. (2016), BMC Psychiatry 16:23"
-  - label: "Carry on as normal"
+    impactText: 'The mess is gone when she walks past, which takes one thing off
+      her list. But she may not know you noticed how hard today was.
+
+      Next
+      chapter: no change to her meters.'
+    learnText: In a Norwegian study, nausea and vomiting in pregnancy lowered women's
+      quality of life. Women with severe symptoms reported a major impact on household
+      chores, their work, their social life and their relationship with their partner.
+    helpText: Experts recommend partners take on household tasks without being asked.
+      Pair it with a few words ("I've got the dishes, go and rest") so the help also
+      tells her she has been seen.
+    sourceText: Heitmann et al. (2017), BMC Pregnancy Childbirth 17:231; Pilkington
+      et al. (2016), BMC Psychiatry 16:23
+  - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "Nothing changes for her. She keeps pushing through the nausea and tiredness on her own.\nNext chapter: all of her meters drain faster."
-    learnText: "Severe vomiting in pregnancy (hyperemesis gravidarum) affects between 0.3% and 10.8% of pregnant women. Many women with nausea need more than diet changes, such as fluids, vitamins or anti-nausea medicine."
-    helpText: "Notice it and share the load. If she can't keep food or fluids down, help her see a GP or midwife. Treatment is available, and a common anti-nausea combination (doxylamine with vitamin B6) hasn't been found to harm the baby."
-    sourceText: "Fejzo et al. (2019), Nat Rev Dis Primers 5:62; Liu et al. (2022), Front Med 8:809270"
-  learnHeading: "In the first trimester"
-  selfHourNotice: "She's lying on the couch: \"Just tired.\""
+    impactText: 'Nothing changes for her. She keeps pushing through the nausea and
+      tiredness on her own.
+
+      Next chapter: all of her meters drain faster.'
+    learnText: Severe vomiting in pregnancy (hyperemesis gravidarum) affects between
+      0.3% and 10.8% of pregnant women. Many women with nausea need more than diet
+      changes, such as fluids, vitamins or anti-nausea medicine.
+    helpText: Notice it and share the load. If she can't keep food or fluids down,
+      help her see a GP or midwife. Treatment is available, and a common anti-nausea
+      combination (doxylamine with vitamin B6) hasn't been found to harm the baby.
+    sourceText: Fejzo et al. (2019), Nat Rev Dis Primers 5:62; Liu et al. (2022),
+      Front Med 8:809270
+  learnHeading: In the first trimester
+  selfHourNotice: 'She''s lying on the couch: "Just tired."'

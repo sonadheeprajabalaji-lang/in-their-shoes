@@ -13,6 +13,13 @@ public class ChapterData : ScriptableObject
     public int chapterNumber = 1;
     public string chapterTitle;
 
+    [Header("Chapter banner (top of the screen when the Partner Hour starts)")]
+    [Tooltip("Where she is in her pregnancy or postpartum, e.g. \"First trimester\". Shown large on the banner, above the story.")]
+    public string timelineText;
+    [Tooltip("A short scene in the second person that sets up the chapter: where she is, the main obstacle, the chores in the room, and ending on the main task. Shown on the banner; the hour starts when the player presses Enter.")]
+    [TextArea(4, 12)]
+    public string storyText;
+
     [Tooltip("Shown on the context cutscene, e.g. \"Week 5, postpartum\"")]
     public string weekContext;
 

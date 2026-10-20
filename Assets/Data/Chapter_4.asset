@@ -14,21 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChapterData
   chapterNumber: 4
   chapterTitle: The First Week Home
+  timelineText: The first week after the birth
+  storyText: 'Your baby is five days old, and you''re home. Your body is still healing:
+    the stitches sting when you sit, you''re still bleeding, and your milk has just
+    come in, hard and sore. The baby wants to feed again, and again, and again. Visitors
+    keep knocking, their cups are piling up in the sink, and you can''t remember
+    the last time you ate, had a drink or took your pain relief. Feed the baby, however
+    long it takes.'
   weekContext: Week 1, postpartum
-  obstacleText: "Birth recovery: stitches or a caesarean wound, bleeding, and milk coming in"
-  mainTaskText: "Feeding the baby (cluster feeding)"
+  obstacleText: 'Birth recovery: stitches or a caesarean wound, bleeding, and milk
+    coming in'
+  mainTaskText: Feeding the baby (cluster feeding)
   contentWarningText: This game explores the emotional and physical strain of pregnancy
     and early parenthood. You can exit at any time.
   showMeterIntro: 0
   showContentWarning: 0
-  meterIntroNote: "Move with the arrow keys or WASD, and press E to use things. While feeding the baby, hold E and respond to the prompts: hold SPACE to read the baby's cues, tap Q to keep track of the clock, and tap F to smile for the visitors."
-  musicClip: {fileID: 8300000, guid: d07933339b41041bfa75e510f625b122, type: 3}
+  meterIntroNote: 'Move with the arrow keys or WASD, and press E to use things. While
+    feeding the baby, hold E and respond to the prompts: hold SPACE to read the baby''s
+    cues, tap Q to keep track of the clock, and tap F to smile for the visitors.'
+  musicClip: {fileID: 8300000, guid: 1397ba73600c54ad99545d11e0ec4ce1, type: 3}
   ambienceClip: {fileID: 0}
-  hourTransitionText: "The baby's asleep at last. So is she, sitting up."
-  bodyDrainStory: "She's still healing from the birth (stitches or a wound, bleeding, milk coming in) and was feeding for hours on top of it."
-  mindDrainStory: "Hours of cluster feeding, the door and the pain meant her mind never got to settle."
-  personDrainStory: "She hadn't eaten, had a drink or taken her pain relief. Her own needs kept going behind the baby's."
-  maskDrainStory: "With visitors at the door she put on a happy new-mum face over the pain and exhaustion."
+  hourTransitionText: The baby's asleep at last. So is she, sitting up.
+  bodyDrainStory: She's still healing from the birth (stitches or a wound, bleeding,
+    milk coming in) and was feeding for hours on top of it.
+  mindDrainStory: Hours of cluster feeding, the door and the pain meant her mind
+    never got to settle.
+  personDrainStory: She hadn't eaten, had a drink or taken her pain relief. Her own
+    needs kept going behind the baby's.
+  maskDrainStory: With visitors at the door she put on a happy new-mum face over
+    the pain and exhaustion.
   partnerHourSeconds: 120
   baseDrain:
     body: 0.04
@@ -36,13 +50,13 @@ MonoBehaviour:
     feelingLikeAPerson: 0.03
     mask: 0.03
   choices:
-  - label: "Stop feeding for now"
+  - label: Stop feeding for now
     multipliers:
       body: 0.6
       mind: 1.4
       feelingLikeAPerson: 1
       mask: 1
-  - label: "Keep feeding through the pain"
+  - label: Keep feeding through the pain
     multipliers:
       body: 1.6
       mind: 0.7
@@ -52,45 +66,76 @@ MonoBehaviour:
   mainTaskHitMeter: 0
   mainTaskHitFraction: 0.5
   responses:
-  - label: "Look after her body"
+  - label: Look after her body
     nextChapterEase:
       body: 0.85
       mind: 1
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "Water and a snack are within reach every time she feeds, and her pain relief is on time. Healing goes a little easier.\nNext chapter: her Body drains more slowly."
-    learnText: "How severe a woman's pain is in the days after birth, whatever the type of birth, predicts whether the pain lasts, and in one study it also predicted postnatal depression."
-    helpText: "Keep track of her pain relief so it doesn't lapse, bring water and a one-handed snack to every feed, and do the lifting, carrying and driving while she recovers."
-    sourceText: "Horvath et al. (2024), J Pain Res 17:35-44; Eisenach et al. (2008), Pain 140:87-94"
-  - label: "Handle visitors and advice"
+    impactText: 'Water and a snack are within reach every time she feeds, and her
+      pain relief is on time. Healing goes a little easier.
+
+      Next chapter:
+      her Body drains more slowly.'
+    learnText: How severe a woman's pain is in the days after birth, whatever the
+      type of birth, predicts whether the pain lasts, and in one study it also predicted
+      postnatal depression.
+    helpText: Keep track of her pain relief so it doesn't lapse, bring water and
+      a one-handed snack to every feed, and do the lifting, carrying and driving
+      while she recovers.
+    sourceText: Horvath et al. (2024), J Pain Res 17:35-44; Eisenach et al. (2008),
+      Pain 140:87-94
+  - label: Handle visitors and advice
     nextChapterEase:
       body: 1
       mind: 1
       feelingLikeAPerson: 1
       mask: 0.85
-    impactText: "You set visiting times and ask people to bring food and keep it short. She doesn't have to smile through the pain for hours.\nNext chapter: The Mask drains more slowly."
-    learnText: "The baby blues peak around days 4 to 6 after birth. Reviews recommend preparing families to give the new mother rest and support in those first days, and reassuring her that the feelings are common and usually pass."
-    helpText: "Be the gatekeeper. Agree the visiting rules together, tell people before they come, and end visits when she's tired. Back her decisions in front of family."
-    sourceText: "Tosto et al. (2023), J Pers Med 13:154"
-  - label: "Take over some baby care"
+    impactText: 'You set visiting times and ask people to bring food and keep it
+      short. She doesn''t have to smile through the pain for hours.
+
+      Next chapter:
+      The Mask drains more slowly.'
+    learnText: The baby blues peak around days 4 to 6 after birth. Reviews recommend
+      preparing families to give the new mother rest and support in those first days,
+      and reassuring her that the feelings are common and usually pass.
+    helpText: Be the gatekeeper. Agree the visiting rules together, tell people before
+      they come, and end visits when she's tired. Back her decisions in front of
+      family.
+    sourceText: Tosto et al. (2023), J Pers Med 13:154
+  - label: Take over some baby care
     nextChapterEase:
       body: 1
       mind: 0.85
       feelingLikeAPerson: 1
       mask: 1
-    impactText: "You burp, change and settle the baby after each feed, so she can sleep in between.\nNext chapter: her Mind drains more slowly."
-    learnText: "Partners make a real difference to feeding. A review found that including fathers in breastfeeding support roughly doubled the chance of exclusive breastfeeding at 6 months, and reduced breastfeeding problems."
-    helpText: "Do everything except the feed itself: nappies, burping, settling and baths. Learn the baby's early hunger cues so you can bring the baby to her in time, and decide any feeding changes together."
-    sourceText: "Mahesh et al. (2018), BMC Public Health 18"
-  - label: "Carry on as normal"
+    impactText: 'You burp, change and settle the baby after each feed, so she can
+      sleep in between.
+
+      Next chapter: her Mind drains more slowly.'
+    learnText: Partners make a real difference to feeding. A review found that including
+      fathers in breastfeeding support roughly doubled the chance of exclusive breastfeeding
+      at 6 months, and reduced breastfeeding problems.
+    helpText: 'Do everything except the feed itself: nappies, burping, settling and
+      baths. Learn the baby''s early hunger cues so you can bring the baby to her
+      in time, and decide any feeding changes together.'
+    sourceText: Mahesh et al. (2018), BMC Public Health 18
+  - label: Carry on as normal
     nextChapterEase:
       body: 3
       mind: 3
       feelingLikeAPerson: 3
       mask: 3
-    impactText: "She's crying again and says it's just hormones. You leave it there.\nNext chapter: all of her meters drain faster."
-    learnText: "About 39% of new mothers get the baby blues (studies range from 14% to 76%). It usually passes within about 10 days, but it is a known risk factor for postnatal depression."
-    helpText: "Reassurance and support make a difference. If her low mood hasn't lifted after the first week or two, help her talk to the midwife, GP or child and family health nurse."
-    sourceText: "Tosto et al. (2023), J Pers Med 13:154"
-  learnHeading: "In the first week after birth"
-  selfHourNotice: "She's tearful: \"It's just hormones.\""
+    impactText: 'She''s crying again and says it''s just hormones. You leave it there.
+
+      Next
+      chapter: all of her meters drain faster.'
+    learnText: About 39% of new mothers get the baby blues (studies range from 14%
+      to 76%). It usually passes within about 10 days, but it is a known risk factor
+      for postnatal depression.
+    helpText: Reassurance and support make a difference. If her low mood hasn't lifted
+      after the first week or two, help her talk to the midwife, GP or child and
+      family health nurse.
+    sourceText: Tosto et al. (2023), J Pers Med 13:154
+  learnHeading: In the first week after birth
+  selfHourNotice: 'She''s tearful: "It''s just hormones."'
