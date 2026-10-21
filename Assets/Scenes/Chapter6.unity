@@ -5042,7 +5042,7 @@ MonoBehaviour:
   hourTransition: {fileID: 0}
   logger: {fileID: 1549917788}
   restartButton: {fileID: 2118493556}
-  nextSceneName: 
+  nextSceneName: Info
   nextChapterButton: {fileID: 0}
 --- !u!4 &1549917786
 Transform:

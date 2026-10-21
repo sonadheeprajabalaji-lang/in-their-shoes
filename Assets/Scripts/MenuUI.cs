@@ -17,6 +17,7 @@ public static class MenuUI
     public const string WarningScene = "Warning";
     public const string ChaptersScene = "ChapterSelect";
     public const string TutorialScene = "Tutorial";
+    public const string InfoScene = "Info";
 
     // Logo palette (see in-their-shoes-logo/index.html).
     public static readonly Color Night = new Color32(28, 25, 40, 255);

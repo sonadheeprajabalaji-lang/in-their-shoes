@@ -440,7 +440,8 @@ public class GameManager : MonoBehaviour
     {
         endPanelShownAt = Time.unscaledTime;
         // Enter moves on from the end screen too (see Update), so say so.
-        SetButtonLabel(nextChapterButton, "Next Chapter  (Enter)");
+        // After Chapter 6 the "next scene" is the Info scene, not a chapter.
+        SetButtonLabel(nextChapterButton, nextSceneName == MenuUI.InfoScene ? "Continue  (Enter)" : "Next Chapter  (Enter)");
         SetButtonLabel(restartButton, "Play again  (Enter)");
         selfHourController.EndRoaming();
         ShowOnly(endPanel);
