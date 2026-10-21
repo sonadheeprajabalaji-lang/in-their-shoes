@@ -106,6 +106,20 @@ public static class MenuUI
 
     // ---------- controls ----------
 
+    // The line under the wordmark: "A walk through her day" on the Title,
+    // "Now walk beside her" on the End scene. Centred, below the wordmark.
+    public static TMPro.TMP_Text Tagline(RectTransform parent, string text, RectTransform wordmark)
+    {
+        var t = UIArt.Text(parent, text, 38, Cream, TMPro.TextAlignmentOptions.Center);
+        t.fontStyle = TMPro.FontStyles.Italic;
+        t.enableWordWrapping = false;
+        var rt = (RectTransform)t.transform;
+        rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.sizeDelta = new Vector2(1000, 60);
+        rt.anchoredPosition = wordmark.anchoredPosition - new Vector2(0, wordmark.sizeDelta.y / 2f + 46f);
+        return t;
+    }
+
     public static Button Button(Transform parent, string label, float width, UnityEngine.Events.UnityAction onClick)
     {
         var img = UIArt.Panel(parent, "Button_" + label, "ui_button", 1f);

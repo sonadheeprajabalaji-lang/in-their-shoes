@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // The End Scene, after the Info scene: the In Their Shoes logo, shown
-// whole, and one button, "Play again (Enter)", which goes back to the
+// whole, "Now walk beside her" under it, and one button, "Play again (Enter)", which goes back to the
 // chapter list to start again from the beginning. Builds its UI at runtime
 // like the other menu screens.
 public class EndUI : MonoBehaviour
@@ -56,6 +56,7 @@ public class EndUI : MonoBehaviour
         var word = MenuUI.LogoImage(root, "wordmark-dark", 820).rectTransform;
         word.anchorMin = word.anchorMax = new Vector2(0.5f, 0.5f);
         word.anchoredPosition = new Vector2(0, -55);
+        MenuUI.Tagline(root, "Now walk beside her", word);
 
         var button = MenuUI.Button(root, "Play again  (Enter)", 420, PlayAgain);
         var brt = (RectTransform)button.transform;
