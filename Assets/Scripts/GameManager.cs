@@ -140,6 +140,12 @@ public class GameManager : MonoBehaviour
             partnerRecap = new GameObject("PartnerHourRecap").AddComponent<PartnerHourRecapUI>();
         }
 
+        // Pause button and menu (Esc): Resume, Jump to chapter, Exit game.
+        if (FindFirstObjectByType<PauseMenuUI>() == null)
+        {
+            new GameObject("PauseMenu").AddComponent<PauseMenuUI>();
+        }
+
         AudioManager.Get().PlayMusic(chapterData.musicClip);
         AudioManager.Get().PlayAmbience(chapterData.ambienceClip);
 
@@ -221,6 +227,7 @@ public class GameManager : MonoBehaviour
     // and on the end screen (Next Chapter, or Play again on the last one).
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         bool enter = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter);
         // The short pause stops the Enter that closed the last learning card
         // from also skipping the end screen.

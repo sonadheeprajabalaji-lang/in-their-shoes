@@ -81,6 +81,7 @@ public class ChapterBannerUI : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (!IsShowing) return;
         float t = Time.unscaledTime - shownAt;
 

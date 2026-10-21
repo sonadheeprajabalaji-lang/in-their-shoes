@@ -46,6 +46,7 @@ public class Interactor : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (holding != null)
         {
             UpdateHold();

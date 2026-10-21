@@ -136,6 +136,7 @@ public class PartnerHourRecapUI : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (!IsShowing) return;
         if (Time.unscaledTime - shownAt < minShowSeconds) return;
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetMouseButtonDown(0))

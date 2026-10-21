@@ -70,6 +70,7 @@ public class ResponseFeedbackUI : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (!IsShowing) return;
         // Ignore the first moment so the click that chose the response can't also close the card.
         if (Time.unscaledTime - shownAt < 0.4f) return;

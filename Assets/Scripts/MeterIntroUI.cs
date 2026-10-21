@@ -40,6 +40,7 @@ public class MeterIntroUI : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (!IsShowing) return;
         // Ignore the first moment so the Enter or click that left the
         // content warning can't also skip this screen.
