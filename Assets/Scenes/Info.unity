@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458e2303955b46f786b9e71e1666b33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: ChapterSelect
+  nextSceneName: End
   minReadSeconds: 1.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

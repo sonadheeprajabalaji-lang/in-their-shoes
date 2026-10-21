@@ -7,12 +7,12 @@ using UnityEngine.UI;
 // emotional support a birthing partner may need (and encouragement for
 // the partner playing), where to read more, and who to call.
 //
-// Links open in the browser when clicked. Enter goes back to the chapter
-// list; Quit closes the game. Builds its UI at runtime like the other menu
+// Links open in the browser when clicked. Next (Enter) goes to the End
+// scene. Builds its UI at runtime like the other menu
 // screens, so the scene only needs this component and a camera.
 public class InfoUI : MonoBehaviour
 {
-    public string nextSceneName = MenuUI.ChaptersScene;
+    public string nextSceneName = MenuUI.EndScene;
 
     // Seconds before Enter works, so the Enter that left Chapter 6 can't
     // skip straight past this page.
@@ -58,11 +58,7 @@ public class InfoUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) Continue();
     }
 
-    void Continue()
-    {
-        CarryoverState.Reset();
-        MenuUI.Load(nextSceneName);
-    }
+    void Continue() => MenuUI.Load(nextSceneName);
 
     // ---------- UI ----------
 
@@ -117,9 +113,7 @@ public class InfoUI : MonoBehaviour
             "<b>In an emergency, call 000</b>",
             672);
 
-        var buttons = UIArt.Row(page.transform, "Buttons", 30);
-        MenuUI.Button(buttons.transform, "Quit", 240, MenuUI.Quit);
-        MenuUI.Button(buttons.transform, "Back to chapters  (Enter)", 460, Continue);
+        MenuUI.Button(page.transform, "Next  (Enter)", 360, Continue);
     }
 
     static void Heading(Transform parent, string text)
