@@ -51,6 +51,8 @@ public class ChapterData : ScriptableObject
     public AudioClip musicClip;
     [Tooltip("Looping ambient background sound for the room (distinct from music).")]
     public AudioClip ambienceClip;
+    [Tooltip("The story read aloud, played while the chapter banner is up. The music and ambience wait until the player presses Enter.")]
+    public AudioClip storyVoiceover;
 
     [Header("Hour transition")]
     [Tooltip("Shown briefly between Partner Hour ending and Self Hour starting.")]

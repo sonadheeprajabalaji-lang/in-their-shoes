@@ -146,8 +146,11 @@ public class GameManager : MonoBehaviour
             new GameObject("PauseMenu").AddComponent<PauseMenuUI>();
         }
 
-        AudioManager.Get().PlayMusic(chapterData.musicClip);
-        AudioManager.Get().PlayAmbience(chapterData.ambienceClip);
+        // Music and ambience start when the chapter banner closes (see
+        // BeginPartnerHourPlay), so the story voiceover plays on its own.
+        // Stop whatever the previous chapter left playing.
+        AudioManager.Get().StopMusic();
+        AudioManager.Get().StopAmbience();
 
         ApplySceneText();
 
@@ -270,6 +273,11 @@ public class GameManager : MonoBehaviour
         // starts and the meters begin draining.
         if (chapterBanner == null) chapterBanner = new GameObject("ChapterBanner").AddComponent<ChapterBannerUI>();
         if (partnerHourController.player != null) partnerHourController.player.InputLocked = true;
+
+        // The story is read aloud while the banner is up, with no music.
+        AudioManager.Get().StopMusic();
+        AudioManager.Get().StopAmbience();
+        AudioManager.Get().PlayVoice(chapterData.storyVoiceover);
         chapterBanner.Show(chapterData, BeginPartnerHourPlay);
     }
 
@@ -277,6 +285,12 @@ public class GameManager : MonoBehaviour
 
     void BeginPartnerHourPlay()
     {
+        // Enter closed the banner: the voiceover stops if it hasn't
+        // finished, and the chapter's music and ambience begin.
+        AudioManager.Get().StopVoice();
+        AudioManager.Get().PlayMusic(chapterData.musicClip);
+        AudioManager.Get().PlayAmbience(chapterData.ambienceClip);
+
         MeterRates carry = CarryoverState.ConsumeForNextChapter();
         meters.Configure(MeterRates.Multiply(chapterData.baseDrain, carry));
         meters.StartDraining();

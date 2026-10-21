@@ -1,7 +1,8 @@
 using UnityEngine;
 
 // A simple persistent audio hub: one looping channel for music, one
-// looping channel for ambience, and a shared one-shot channel for SFX.
+// looping channel for ambience, a shared one-shot channel for SFX, and a
+// voice channel for the story voiceovers.
 // Survives scene loads (DontDestroyOnLoad), so Chapter1 -> Chapter2 can
 // either keep music playing or deliberately swap it.
 //
@@ -14,10 +15,12 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float musicVolume = 0.6f;
     [Range(0f, 1f)] public float ambienceVolume = 0.5f;
     [Range(0f, 1f)] public float sfxVolume = 0.8f;
+    [Range(0f, 1f)] public float voiceVolume = 1f;
 
     AudioSource music;
     AudioSource ambience;
     AudioSource sfx;
+    AudioSource voice;
 
     public static AudioManager Get()
     {
@@ -52,6 +55,11 @@ public class AudioManager : MonoBehaviour
         sfx = gameObject.AddComponent<AudioSource>();
         sfx.playOnAwake = false;
         sfx.volume = sfxVolume;
+
+        voice = gameObject.AddComponent<AudioSource>();
+        voice.loop = false;
+        voice.playOnAwake = false;
+        voice.volume = voiceVolume;
     }
 
     // ---------- Music ----------
@@ -79,6 +87,29 @@ public class AudioManager : MonoBehaviour
     }
 
     public void StopAmbience() => ambience.Stop();
+
+    // ---------- Voice ----------
+
+    // The story voiceover read over the chapter banner. Plays once.
+    public void PlayVoice(AudioClip clip)
+    {
+        voice.Stop();
+        if (clip == null) return;
+        voice.clip = clip;
+        voice.volume = voiceVolume;
+        voice.Play();
+    }
+
+    public void StopVoice() => voice.Stop();
+
+    // For the pause menu: pause and carry on from the same spot.
+    public void PauseVoice(bool pause)
+    {
+        if (pause) voice.Pause();
+        else voice.UnPause();
+    }
+
+    public bool IsVoicePlaying => voice.isPlaying;
 
     // ---------- SFX ----------
 

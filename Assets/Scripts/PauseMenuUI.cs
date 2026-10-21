@@ -71,6 +71,7 @@ public class PauseMenuUI : MonoBehaviour
         paused = true;
         savedTimeScale = Time.timeScale > 0f ? Time.timeScale : 1f;
         Time.timeScale = 0f;
+        AudioManager.Get().PauseVoice(true);   // the story voiceover waits too
         menu.SetActive(true);
         pauseButton.SetActive(false);
         if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
@@ -82,6 +83,7 @@ public class PauseMenuUI : MonoBehaviour
         paused = false;
         resumedFrame = Time.frameCount;
         Time.timeScale = savedTimeScale;
+        AudioManager.Get().PauseVoice(false);
         menu.SetActive(false);
         pauseButton.SetActive(true);
         if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
@@ -90,6 +92,7 @@ public class PauseMenuUI : MonoBehaviour
     void Leave(string scene)
     {
         paused = false;
+        AudioManager.Get().StopVoice();
         Time.timeScale = 1f;
         MenuUI.Load(scene);
     }
