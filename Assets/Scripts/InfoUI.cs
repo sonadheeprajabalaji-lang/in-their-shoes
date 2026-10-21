@@ -73,7 +73,7 @@ public class InfoUI : MonoBehaviour
         page.childForceExpandWidth = false;
 
         // Title of the project.
-        MenuUI.Wordmark(page.transform, 110);
+        MenuUI.Wordmark(page.transform, 70);
         UIArt.Size(UIArt.Text(page.transform, "Thank you for playing", 28, MenuUI.Mist), 1200, -1);
 
         // Two columns: about the prototype and supporting her | read more and get help.

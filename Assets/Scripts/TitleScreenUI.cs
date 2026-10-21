@@ -65,7 +65,7 @@ public class TitleScreenUI : MonoBehaviour
         you.fillOrigin = (int)Image.OriginVertical.Bottom;
         stitch = Layer(mark, "mark-layer-stitch", out _, out _);
 
-        wordRt = MenuUI.Wordmark(root, 180);
+        wordRt = MenuUI.Wordmark(root, 115);
         wordRt.anchorMin = wordRt.anchorMax = new Vector2(0.5f, 0.5f);
         wordHome = wordRt.anchoredPosition = new Vector2(0, -75);
         word = wordRt.gameObject.AddComponent<CanvasGroup>();
