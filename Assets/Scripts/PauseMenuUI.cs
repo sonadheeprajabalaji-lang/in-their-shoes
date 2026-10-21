@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// The pause button in every chapter (top-right corner, or Esc), and the
+// The pause button in every chapter (top-right corner, a pause symbol;
+// Esc works too), and the
 // menu it opens:
 //   Resume (Enter)    back to the chapter, just as it was (Esc works too)
 //   Jump to chapter   the ChapterSelect scene
@@ -106,16 +107,27 @@ public class PauseMenuUI : MonoBehaviour
         scaler.matchWidthOrHeight = 0.5f;
         root.AddComponent<GraphicRaycaster>();
 
-        // Pause button, top-right corner. Its click is read in Update, so
-        // it has no onClick of its own.
-        var button = MenuUI.Button(root.transform, "Pause  (Esc)", 220, () => { });
+        // Pause button, top-right corner: a square button with the pause
+        // symbol (two bars) instead of a label. Its click is read in Update,
+        // so it has no onClick of its own.
+        var button = MenuUI.Button(root.transform, "", 72, () => { });
         pauseButton = button.gameObject;
         pauseButtonRt = (RectTransform)button.transform;
         pauseButtonRt.anchorMin = pauseButtonRt.anchorMax = pauseButtonRt.pivot = new Vector2(1f, 1f);
-        pauseButtonRt.sizeDelta = new Vector2(220, 60);
+        pauseButtonRt.sizeDelta = new Vector2(72, 72);
         pauseButtonRt.anchoredPosition = new Vector2(-24f, -20f);
         var label = button.GetComponentInChildren<TMP_Text>();
-        if (label != null) label.fontSize = 24;
+        if (label != null) Destroy(label.gameObject);
+        foreach (float x in new[] { -9f, 9f })
+        {
+            var bar = UIArt.Rect("PauseBar", pauseButtonRt);
+            bar.anchorMin = bar.anchorMax = bar.pivot = new Vector2(0.5f, 0.5f);
+            bar.sizeDelta = new Vector2(11f, 32f);
+            bar.anchoredPosition = new Vector2(x, 0f);
+            var img = bar.gameObject.AddComponent<Image>();
+            img.color = UIArt.KeyText;
+            img.raycastTarget = false;
+        }
 
         // The menu: a dark cover over the game and a card in the middle.
         menu = UIArt.Rect("PauseMenu", root.transform).gameObject;
