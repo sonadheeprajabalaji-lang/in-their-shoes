@@ -53,7 +53,7 @@ public class EndUI : MonoBehaviour
             img.raycastTarget = false;
         }
 
-        var word = MenuUI.LogoImage(root, "wordmark-dark", 820).rectTransform;
+        var word = MenuUI.Wordmark(root, 180);
         word.anchorMin = word.anchorMax = new Vector2(0.5f, 0.5f);
         word.anchoredPosition = new Vector2(0, -55);
         MenuUI.Tagline(root, "Now walk beside her", word);

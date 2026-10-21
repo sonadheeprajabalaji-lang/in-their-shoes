@@ -104,6 +104,40 @@ public static class MenuUI
         return img;
     }
 
+    // ---------- game name ----------
+
+    // The game's name in Jim Nightshade: "In Their" in Cream, "Shoes" in
+    // Rose, like the logo's wordmark. Replaces the wordmark image so the
+    // name can use this font. fontSize 180 is about the width of the old
+    // 820-wide wordmark.
+    static TMPro.TMP_FontAsset nameFont;
+    public static TMPro.TMP_FontAsset NameFont
+    {
+        get
+        {
+            if (nameFont != null) return nameFont;
+            var ttf = Resources.Load<Font>("PixelArt/Fonts/JimNightshade-Regular");
+            if (ttf != null) nameFont = TMPro.TMP_FontAsset.CreateFontAsset(ttf);
+            return nameFont;
+        }
+    }
+
+    public static RectTransform Wordmark(Transform parent, float fontSize)
+    {
+        var t = UIArt.Text(parent,
+            "In Their <color=#" + ColorUtility.ToHtmlStringRGB(Rose) + ">Shoes</color>",
+            fontSize, Cream, TMPro.TextAlignmentOptions.Center);
+        if (NameFont != null) t.font = NameFont;
+        t.richText = true;
+        t.enableWordWrapping = false;
+        var rt = (RectTransform)t.transform;
+        rt.name = "Wordmark";
+        float w = fontSize * 5f, h = fontSize * 1.1f;
+        rt.sizeDelta = new Vector2(w, h);
+        UIArt.Size(t, w, h);   // for screens that place it in a layout
+        return rt;
+    }
+
     // ---------- controls ----------
 
     // The line under the wordmark: "A walk through her day" on the Title,
