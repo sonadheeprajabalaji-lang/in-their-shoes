@@ -106,17 +106,16 @@ public static class MenuUI
 
     // ---------- game name ----------
 
-    // The game's name in Jim Nightshade: "In Their" in Cream, "Shoes" in
+    // The game's name in Lavishly Yours: "In Their" in Cream, "Shoes" in
     // Rose, like the logo's wordmark. Replaces the wordmark image so the
-    // name can use this font. fontSize 180 is about the width of the old
-    // 820-wide wordmark.
+    // name can use this font. At fontSize 180 the name is about 920 wide.
     static TMPro.TMP_FontAsset nameFont;
     public static TMPro.TMP_FontAsset NameFont
     {
         get
         {
             if (nameFont != null) return nameFont;
-            var ttf = Resources.Load<Font>("PixelArt/Fonts/JimNightshade-Regular");
+            var ttf = Resources.Load<Font>("PixelArt/Fonts/LavishlyYours-Regular");
             if (ttf != null) nameFont = TMPro.TMP_FontAsset.CreateFontAsset(ttf);
             return nameFont;
         }
@@ -132,7 +131,7 @@ public static class MenuUI
         t.enableWordWrapping = false;
         var rt = (RectTransform)t.transform;
         rt.name = "Wordmark";
-        float w = fontSize * 5f, h = fontSize * 1.1f;
+        float w = fontSize * 5.5f, h = fontSize * 1.1f;
         rt.sizeDelta = new Vector2(w, h);
         UIArt.Size(t, w, h);   // for screens that place it in a layout
         return rt;
