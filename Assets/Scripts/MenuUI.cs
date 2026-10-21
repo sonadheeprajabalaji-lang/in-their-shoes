@@ -69,13 +69,12 @@ public static class MenuUI
         return raw;
     }
 
-    // The logo as on the End scene: the three mark layers stacked, the
-    // name under them. centreY is the mark's centre; returns the name.
-    public static RectTransform FullLogo(Transform parent, float centreY)
+    // Just the logo's mark (the two shoes), without the name.
+    public static RectTransform Mark(Transform parent, float centreY, float size)
     {
         var mark = UIArt.Rect("Mark", parent);
         mark.anchorMin = mark.anchorMax = new Vector2(0.5f, 0.5f);
-        mark.sizeDelta = new Vector2(300, 300);
+        mark.sizeDelta = new Vector2(size, size);
         mark.anchoredPosition = new Vector2(0, centreY);
         foreach (var layer in new[] { "mark-layer-partner", "mark-layer-you", "mark-layer-stitch" })
         {
@@ -86,10 +85,7 @@ public static class MenuUI
             img.preserveAspect = true;
             img.raycastTarget = false;
         }
-        var word = Wordmark(parent, 115);
-        word.anchorMin = word.anchorMax = new Vector2(0.5f, 0.5f);
-        word.anchoredPosition = new Vector2(0, centreY - 225);
-        return word;
+        return mark;
     }
 
     static Texture2D gradient;

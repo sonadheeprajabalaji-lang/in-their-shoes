@@ -458,7 +458,7 @@ public class GameManager : MonoBehaviour
     }
 
     // The screen between chapters, dressed like the Title, Info and End
-    // scenes: their Night-to-Dusk background, the logo, and the button(s)
+    // scenes: their Night-to-Dusk background, the logo's mark, and the button(s)
     // in the same style as Play again on the End scene. Laid over the
     // scene's EndPanel on its own canvas so the room and HUD don't show
     // through. The scene's own buttons stay active (hidden) because Enter
@@ -479,7 +479,7 @@ public class GameManager : MonoBehaviour
         endScreen.AddComponent<GraphicRaycaster>();
 
         MenuUI.Background(rt);
-        MenuUI.FullLogo(rt, 170);
+        MenuUI.Mark(rt, 70, 380);   // the logo's mark only, no game name
 
         var buttons = new System.Collections.Generic.List<Button>();
         if (nextChapterButton != null && nextChapterButton.gameObject.activeInHierarchy) buttons.Add(nextChapterButton);
