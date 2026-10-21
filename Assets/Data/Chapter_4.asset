@@ -34,6 +34,7 @@ MonoBehaviour:
     cues, tap Q to keep track of the clock, and tap F to smile for the visitors.'
   musicClip: {fileID: 8300000, guid: 1397ba73600c54ad99545d11e0ec4ce1, type: 3}
   ambienceClip: {fileID: 0}
+  storyVoiceover: {fileID: 8300000, guid: 8f894f89f6c349ae8aaca3f659b2f428, type: 3}
   hourTransitionText: The baby's asleep at last. So is she, sitting up.
   bodyDrainStory: She's still healing from the birth (stitches or a wound, bleeding,
     milk coming in) and was feeding for hours on top of it.

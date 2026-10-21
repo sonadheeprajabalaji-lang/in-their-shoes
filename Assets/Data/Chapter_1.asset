@@ -33,6 +33,7 @@ MonoBehaviour:
     hold SPACE to breathe, and tap Q or F when they appear.'
   musicClip: {fileID: 8300000, guid: ab34415a9e52e4e84968163557b7126d, type: 3}
   ambienceClip: {fileID: 0}
+  storyVoiceover: {fileID: 8300000, guid: 14795f76a8e845059bbbf9e43e4eef48, type: 3}
   hourTransitionText: Your partner's become too tired to continue.
   bodyDrainStory: Waves of nausea and first-trimester tiredness wore her body down
     while she kept on her feet around the kitchen.

@@ -36,6 +36,7 @@ MonoBehaviour:
     quiet the what-ifs.'
   musicClip: {fileID: 8300000, guid: c0171005c1321417589faa4c699f032e, type: 3}
   ambienceClip: {fileID: 0}
+  storyVoiceover: {fileID: 8300000, guid: 6a4543a7fec542488324b61c6d4b1496, type: 3}
   hourTransitionText: The what-ifs win, for tonight. She needs to stop.
   bodyDrainStory: Lifting boxes and building furniture with a pregnant body tired
     her out faster than she expected.

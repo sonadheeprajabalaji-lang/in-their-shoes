@@ -33,6 +33,7 @@ MonoBehaviour:
     shush, tap Q to stay awake, and tap F to text back friends who are checking in.'
   musicClip: {fileID: 8300000, guid: bc751e4f296c643f5870ae35fcb3661a, type: 3}
   ambienceClip: {fileID: 0}
+  storyVoiceover: {fileID: 8300000, guid: d4ea217f85b744ecb032d6416eb67ac1, type: 3}
   hourTransitionText: The baby's finally asleep. She can't remember the last time
     she was.
   bodyDrainStory: Weeks of broken nights caught up with her, and rocking the baby

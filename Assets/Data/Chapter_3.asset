@@ -33,6 +33,7 @@ MonoBehaviour:
     her breath, tap Q to walk slowly, and tap F to notice the baby''s kicks.'
   musicClip: {fileID: 8300000, guid: 61e6a3f285cf84a7a844274acb435ebd, type: 3}
   ambienceClip: {fileID: 0}
+  storyVoiceover: {fileID: 8300000, guid: da750e1433ba42c3aa3e7e27f22ee99c, type: 3}
   hourTransitionText: She has to lie down. The bag can wait.
   bodyDrainStory: Broken sleep, heartburn and breathlessness meant every bend and
     lift to pack the bag cost her something.

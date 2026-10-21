@@ -34,6 +34,7 @@ MonoBehaviour:
     the worry loop.'
   musicClip: {fileID: 8300000, guid: d45b17dd9d6da4113bdea9e7d56dbc7b, type: 3}
   ambienceClip: {fileID: 0}
+  storyVoiceover: {fileID: 8300000, guid: 6079e90fdcbe42128ee335702e98dbf8, type: 3}
   hourTransitionText: She's out the door. Part of her isn't.
   bodyDrainStory: She'd been up feeding and expressing before the day began, then
     rushing to get out the door.
