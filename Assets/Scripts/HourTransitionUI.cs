@@ -53,6 +53,7 @@ public class HourTransitionUI : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (!IsShowing || dismissed) return;
         if (Time.unscaledTime - shownAt < minShowSeconds) return;
 

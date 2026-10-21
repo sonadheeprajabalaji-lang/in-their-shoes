@@ -50,6 +50,7 @@ public class GridPlayerController : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         if (moving)
         {
             moveT += Time.deltaTime / moveDuration;

@@ -155,6 +155,7 @@ public class JuggleController : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         foreach (var lane in lanes)
         {
             if (lane.activeUntil < 0f)

@@ -17,6 +17,8 @@ public static class MenuUI
     public const string WarningScene = "Warning";
     public const string ChaptersScene = "ChapterSelect";
     public const string TutorialScene = "Tutorial";
+    public const string InfoScene = "Info";
+    public const string EndScene = "End";
 
     // Logo palette (see in-their-shoes-logo/index.html).
     public static readonly Color Night = new Color32(28, 25, 40, 255);
@@ -53,6 +55,37 @@ public static class MenuUI
         raw.texture = GradientTexture();
         raw.raycastTarget = false;
         return (RectTransform)go.transform;
+    }
+
+    // Just the Night-to-Dusk background, stretched over parent: for
+    // screens inside a chapter that should look like the menu screens.
+    public static RawImage Background(Transform parent)
+    {
+        var bg = UIArt.Rect("Background", parent);
+        UIArt.Stretch(bg);
+        var raw = bg.gameObject.AddComponent<RawImage>();
+        raw.texture = GradientTexture();
+        raw.raycastTarget = true;   // nothing behind it can be clicked
+        return raw;
+    }
+
+    // Just the logo's mark (the two shoes), without the name.
+    public static RectTransform Mark(Transform parent, float centreY, float size)
+    {
+        var mark = UIArt.Rect("Mark", parent);
+        mark.anchorMin = mark.anchorMax = new Vector2(0.5f, 0.5f);
+        mark.sizeDelta = new Vector2(size, size);
+        mark.anchoredPosition = new Vector2(0, centreY);
+        foreach (var layer in new[] { "mark-layer-partner", "mark-layer-you", "mark-layer-stitch" })
+        {
+            var rt = UIArt.Rect(layer, mark);
+            UIArt.Stretch(rt);
+            var img = rt.gameObject.AddComponent<Image>();
+            img.sprite = Logo(layer);
+            img.preserveAspect = true;
+            img.raycastTarget = false;
+        }
+        return mark;
     }
 
     static Texture2D gradient;
@@ -102,7 +135,54 @@ public static class MenuUI
         return img;
     }
 
+    // ---------- game name ----------
+
+    // The game's name in Merriweather Bold (the game's own font): "In Their"
+    // in Cream, "Shoes" in Rose, like the logo's wordmark.
+    // At fontSize 115 it is about 830 wide, like the old 820-wide image.
+    static TMPro.TMP_FontAsset nameFont;
+    public static TMPro.TMP_FontAsset NameFont
+    {
+        get
+        {
+            if (nameFont != null) return nameFont;
+            var ttf = Resources.Load<Font>("PixelArt/Fonts/Merriweather-Bold");
+            if (ttf != null) nameFont = TMPro.TMP_FontAsset.CreateFontAsset(ttf);
+            return nameFont;
+        }
+    }
+
+    public static RectTransform Wordmark(Transform parent, float fontSize)
+    {
+        var t = UIArt.Text(parent,
+            "In Their <color=#" + ColorUtility.ToHtmlStringRGB(Rose) + ">Shoes</color>",
+            fontSize, Cream, TMPro.TextAlignmentOptions.Center);
+        if (NameFont != null) t.font = NameFont;
+        t.richText = true;
+        t.enableWordWrapping = false;
+        var rt = (RectTransform)t.transform;
+        rt.name = "Wordmark";
+        float w = fontSize * 8.5f, h = fontSize * 1.1f;
+        rt.sizeDelta = new Vector2(w, h);
+        UIArt.Size(t, w, h);   // for screens that place it in a layout
+        return rt;
+    }
+
     // ---------- controls ----------
+
+    // The line under the wordmark: "A walk through her day" on the Title,
+    // "Now walk beside her" on the End scene. Centred, below the wordmark.
+    public static TMPro.TMP_Text Tagline(RectTransform parent, string text, RectTransform wordmark)
+    {
+        var t = UIArt.Text(parent, text, 38, Cream, TMPro.TextAlignmentOptions.Center);
+        t.fontStyle = TMPro.FontStyles.Italic;
+        t.enableWordWrapping = false;
+        var rt = (RectTransform)t.transform;
+        rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.sizeDelta = new Vector2(1000, 60);
+        rt.anchoredPosition = wordmark.anchoredPosition - new Vector2(0, wordmark.sizeDelta.y / 2f + 46f);
+        return t;
+    }
 
     public static Button Button(Transform parent, string label, float width, UnityEngine.Events.UnityAction onClick)
     {

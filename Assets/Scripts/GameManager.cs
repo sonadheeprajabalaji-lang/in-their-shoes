@@ -140,6 +140,12 @@ public class GameManager : MonoBehaviour
             partnerRecap = new GameObject("PartnerHourRecap").AddComponent<PartnerHourRecapUI>();
         }
 
+        // Pause button and menu (Esc): Resume, Jump to chapter, Exit game.
+        if (FindFirstObjectByType<PauseMenuUI>() == null)
+        {
+            new GameObject("PauseMenu").AddComponent<PauseMenuUI>();
+        }
+
         AudioManager.Get().PlayMusic(chapterData.musicClip);
         AudioManager.Get().PlayAmbience(chapterData.ambienceClip);
 
@@ -221,6 +227,7 @@ public class GameManager : MonoBehaviour
     // and on the end screen (Next Chapter, or Play again on the last one).
     void Update()
     {
+        if (PauseMenuUI.IsBlocking) return;   // the pause menu has the keys
         bool enter = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter);
         // The short pause stops the Enter that closed the last learning card
         // from also skipping the end screen.
@@ -256,6 +263,7 @@ public class GameManager : MonoBehaviour
         partnerChoice = -1;
 
         ShowOnly(partnerHourPanel);
+        PauseMenuUI.ShowButton(true);   // hidden on the end screen if this is a replay
 
         // First the banner (where she is, the main obstacle and the main
         // task) for a few seconds, with everything paused; then the hour
@@ -440,10 +448,61 @@ public class GameManager : MonoBehaviour
     {
         endPanelShownAt = Time.unscaledTime;
         // Enter moves on from the end screen too (see Update), so say so.
-        SetButtonLabel(nextChapterButton, "Next Chapter  (Enter)");
+        // After Chapter 6 the "next scene" is the Info scene, not a chapter.
+        SetButtonLabel(nextChapterButton, nextSceneName == MenuUI.InfoScene ? "Continue  (Enter)" : "Next Chapter  (Enter)");
         SetButtonLabel(restartButton, "Play again  (Enter)");
         selfHourController.EndRoaming();
         ShowOnly(endPanel);
+        BuildEndScreen();
+        PauseMenuUI.ShowButton(false);
+    }
+
+    // The screen between chapters, dressed like the Title, Info and End
+    // scenes: their Night-to-Dusk background, the logo's mark, and the button(s)
+    // in the same style as Play again on the End scene. Laid over the
+    // scene's EndPanel on its own canvas so the room and HUD don't show
+    // through. The scene's own buttons stay active (hidden) because Enter
+    // and the new buttons press them.
+    GameObject endScreen;
+
+    void BuildEndScreen()
+    {
+        if (endScreen != null || endPanel == null) return;
+        MenuUI.EnsureEventSystem();
+
+        var rt = UIArt.Rect("EndScreen", endPanel.transform);
+        UIArt.Stretch(rt);
+        endScreen = rt.gameObject;
+        var canvas = endScreen.AddComponent<Canvas>();
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 800;   // over the room and HUD, under the pause menu
+        endScreen.AddComponent<GraphicRaycaster>();
+
+        MenuUI.Background(rt);
+        MenuUI.Mark(rt, 70, 380);   // the logo's mark only, no game name
+
+        var buttons = new System.Collections.Generic.List<Button>();
+        if (nextChapterButton != null && nextChapterButton.gameObject.activeInHierarchy) buttons.Add(nextChapterButton);
+        if (restartButton != null && restartButton.gameObject.activeInHierarchy) buttons.Add(restartButton);
+
+        var row = UIArt.Row(rt, "Buttons", 40);
+        var rowRt = (RectTransform)row.transform;
+        rowRt.anchorMin = rowRt.anchorMax = rowRt.pivot = new Vector2(0.5f, 0f);
+        rowRt.sizeDelta = new Vector2(1200, 76);
+        rowRt.anchoredPosition = new Vector2(0, 132);
+        foreach (var source in buttons)
+        {
+            var b = source;
+            var label = b.GetComponentInChildren<TMP_Text>(true);
+            MenuUI.Button(row.transform, label != null ? label.text : "Continue  (Enter)", 420, () => b.onClick.Invoke());
+
+            // Hide the original but keep it active for the Enter key.
+            var group = b.GetComponent<CanvasGroup>();
+            if (group == null) group = b.gameObject.AddComponent<CanvasGroup>();
+            group.alpha = 0f;
+            group.interactable = false;
+            group.blocksRaycasts = false;
+        }
     }
 
     // Fills the top-right box with this chapter's obstacle and main task.
