@@ -25,6 +25,15 @@ public class PauseMenuUI : MonoBehaviour
 
     public static bool IsPaused => paused;
 
+    static PauseMenuUI instance;
+
+    // Hide the pause button on screens where there's nothing to pause
+    // (the end-of-chapter screen).
+    public static void ShowButton(bool show)
+    {
+        if (instance != null && !paused) instance.pauseButton.SetActive(show);
+    }
+
     // True while paused, and for a frame after resuming so the Enter or
     // click that pressed Resume isn't also read by the game.
     public static bool IsBlocking => paused || Time.frameCount - resumedFrame <= 1;
@@ -36,6 +45,7 @@ public class PauseMenuUI : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         paused = false;
         Build();
         menu.SetActive(false);

@@ -57,6 +57,41 @@ public static class MenuUI
         return (RectTransform)go.transform;
     }
 
+    // Just the Night-to-Dusk background, stretched over parent: for
+    // screens inside a chapter that should look like the menu screens.
+    public static RawImage Background(Transform parent)
+    {
+        var bg = UIArt.Rect("Background", parent);
+        UIArt.Stretch(bg);
+        var raw = bg.gameObject.AddComponent<RawImage>();
+        raw.texture = GradientTexture();
+        raw.raycastTarget = true;   // nothing behind it can be clicked
+        return raw;
+    }
+
+    // The logo as on the End scene: the three mark layers stacked, the
+    // name under them. centreY is the mark's centre; returns the name.
+    public static RectTransform FullLogo(Transform parent, float centreY)
+    {
+        var mark = UIArt.Rect("Mark", parent);
+        mark.anchorMin = mark.anchorMax = new Vector2(0.5f, 0.5f);
+        mark.sizeDelta = new Vector2(300, 300);
+        mark.anchoredPosition = new Vector2(0, centreY);
+        foreach (var layer in new[] { "mark-layer-partner", "mark-layer-you", "mark-layer-stitch" })
+        {
+            var rt = UIArt.Rect(layer, mark);
+            UIArt.Stretch(rt);
+            var img = rt.gameObject.AddComponent<Image>();
+            img.sprite = Logo(layer);
+            img.preserveAspect = true;
+            img.raycastTarget = false;
+        }
+        var word = Wordmark(parent, 115);
+        word.anchorMin = word.anchorMax = new Vector2(0.5f, 0.5f);
+        word.anchoredPosition = new Vector2(0, centreY - 225);
+        return word;
+    }
+
     static Texture2D gradient;
     static Texture2D GradientTexture()
     {
